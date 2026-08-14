@@ -1,0 +1,110 @@
+book_id: SISTEMA_BOGATSTVA
+schema_version: 1
+rules:
+  - id: SB-CTX-001
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: LONG_DISTANCE_PERSON_ANTECEDENT
+    description: >-
+      A third-person pronoun has no compatible person antecedent in the fast local window,
+      but one or more compatible person candidates exist two to four sentences back.
+      Review whether the long-distance link is clear enough in literary context.
+    positive_examples:
+      - "Анна вошла. Она сняла пальто."
+    negative_examples:
+      - "Анна вошла. За окном гремел дождь. В коридоре было темно. Она сняла пальто."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null
+
+  - id: SB-CTX-002
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: UNMARKED_DIALOGUE_SPEAKER_SWITCH
+    description: >-
+      Three or more consecutive dialogue turns occur in a context with at least three
+      plausible person participants, while too few turns carry explicit speech attribution.
+      Review speaker ownership before relying on alternation alone.
+    positive_examples:
+      - "Анна, Милена и Лера остановились. — Да, — сказала Анна. — Нет, — ответила Милена."
+    negative_examples:
+      - "Анна, Милена и Лера остановились. — Ты уверена? — Да. — Тогда идём."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null
+
+  - id: SB-CTX-003
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: ZERO_SUBJECT_AMBIGUITY
+    description: >-
+      A sentence begins with a gendered finite past-tense verb and omits an explicit
+      nominative person subject while multiple recent people are morphologically compatible.
+      Russian pro-drop can be natural, so this is a focused ambiguity review rather than BLOCK.
+    positive_examples:
+      - "Анна встретила Германа. Улыбнулась и отвернулась."
+    negative_examples:
+      - "Анна встретила Милену. Улыбнулась и отвернулась."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null
+
+  - id: SB-CTX-004
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: STANZA_CHALLENGES_FAST_AMBIGUITY
+    description: >-
+      The fast morphology/recency layer reports an ambiguous personal pronoun while
+      supplied Stanza coreference evidence assigns that pronoun to a specific chain.
+      Compare both evidence sources; the model output does not automatically resolve the prose.
+    positive_examples:
+      - "Анна вошла. Она села."
+    negative_examples:
+      - "Анна встретила Милену. Она ушла."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null
+
+  - id: SB-CTX-005
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: STANZA_LONG_DISTANCE_CHAIN
+    description: >-
+      Supplied Stanza evidence contains a coreference chain spanning at least three
+      sentence positions. Surface the full chain to the editor because long-distance
+      reference errors are easy to miss in line-by-line review.
+    positive_examples:
+      - "Борис вошёл. Он сел."
+    negative_examples:
+      - "Борис вошёл. Анна закрыла дверь. В комнате стало тихо. Он сел."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null
+
+  - id: SB-CTX-006
+    owner_family: semantic_coreference
+    severity: REVIEW
+    name: STANZA_ZERO_MENTION
+    description: >-
+      Supplied Stanza evidence contains an empty/zero coreference mention. Preserve it as
+      explicit pro-drop evidence for the editor; zero mentions are model evidence, not a
+      deterministic claim that the omitted subject is wrong.
+    positive_examples:
+      - "Анна вошла. Она улыбнулась."
+    negative_examples:
+      - "Анна вошла. Улыбнулась."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_semantic_coreference.py
+    affected_stages: [QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: semantic-coreference-v2-2026-08-14
+    superseded_by: null

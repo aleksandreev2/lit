@@ -20,6 +20,7 @@ CHECK_COMMANDS = (
     ("regression_locks", ["scripts/regression_check.py"]),
     ("russian_naturalness_corpus", ["scripts/russian_naturalness.py", "--self-test"]),
     ("pronoun_coreference_corpus", ["scripts/pronoun_coreference.py", "--self-test"]),
+    ("semantic_coreference_corpus", ["scripts/semantic_coreference.py", "--self-test"]),
     ("dependency_graph", ["scripts/dependency_graph.py", "config/dependency_graph.yaml"]),
 )
 
@@ -49,6 +50,7 @@ def _dependency_paths(root: Path, chapter: int) -> list[Path]:
         root / "canon/active_arc.yaml",
         root / "rules/regressions.yaml",
         root / "rules/pronoun_regressions.yaml",
+        root / "rules/semantic_coreference_regressions.yaml",
         root / "research/ledger.yaml",
         root / "config/dependency_graph.yaml",
         root / "sync/manifest.yaml",
@@ -123,8 +125,16 @@ def generate_report(root: Path, output_dir: Path, revision: str) -> dict:
             "id": "chapter_qa_artifacts",
             "status": "NOT_RUN",
             "note": (
-                "No explicit current chapter source was supplied; per-chapter naturalness and "
-                "pronoun/coreference findings are generated only with the chapter QA artifact package."
+                "No explicit current chapter source was supplied; per-chapter naturalness, pronoun, "
+                "and contextual semantic/coreference findings are generated only with an explicit source."
+            ),
+        },
+        {
+            "id": "stanza_semantic_challenger",
+            "status": "NOT_RUN",
+            "note": (
+                "Transformer coreference evidence is optional/manual and requires explicitly provisioned "
+                "Russian Stanza model assets; CI does not download them implicitly."
             ),
         },
         {

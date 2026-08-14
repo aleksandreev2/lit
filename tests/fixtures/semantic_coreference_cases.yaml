@@ -1,0 +1,195 @@
+schema_version: 1
+cases:
+  - id: long_distance_bad
+    text: |-
+      Анна вошла.
+      За окном гремел дождь.
+      В коридоре было темно.
+      Она сняла пальто.
+    expected_rules: [SB-CTX-001]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: long_distance_guard
+    text: |-
+      Анна вошла.
+      Она сняла пальто.
+    expected_rules: []
+    guards_rules: [SB-CTX-001]
+    expected_status: PASS
+
+  - id: dialogue_three_speakers_bad
+    text: |-
+      Анна, Милена и Лера остановились у двери.
+      — Ты уверена?
+      — Да.
+      — Тогда идём.
+    expected_rules: [SB-CTX-002]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: dialogue_attributed_guard
+    text: |-
+      Анна, Милена и Лера остановились у двери.
+      — Ты уверена? — спросила Анна.
+      — Да, — ответила Милена.
+      — Тогда идём, — сказала Лера.
+    expected_rules: []
+    guards_rules: [SB-CTX-002]
+    expected_status: PASS
+
+  - id: zero_subject_bad
+    text: |-
+      Анна встретила Милену.
+      Улыбнулась и отвернулась.
+    expected_rules: [SB-CTX-003]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: zero_subject_guard
+    text: |-
+      Анна встретила Германа.
+      Улыбнулась и отвернулась.
+    expected_rules: []
+    guards_rules: [SB-CTX-003]
+    expected_status: PASS
+
+  - id: stanza_challenges_fast_bad
+    text: |-
+      Анна встретила Милену.
+      Она ушла.
+    stanza_evidence:
+      status: REVIEW
+      engine: stanza
+      coreference_chains:
+        - index: 0
+          representative_text: Милена
+          mentions:
+            - sentence: 0
+              start_word: 2
+              end_word: 3
+              text: Милену
+              is_zero: false
+            - sentence: 1
+              start_word: 0
+              end_word: 1
+              text: Она
+              is_zero: false
+    expected_rules: [SB-CTX-004]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: stanza_not_supplied_guard
+    text: |-
+      Анна встретила Милену.
+      Она ушла.
+    expected_rules: []
+    guards_rules: [SB-CTX-004]
+    expected_status: PASS
+
+  - id: stanza_long_chain_bad
+    text: |-
+      Борис вошёл.
+      Он осмотрел комнату.
+      Анна закрыла дверь.
+      Борис сел у окна.
+    stanza_evidence:
+      status: REVIEW
+      engine: stanza
+      coreference_chains:
+        - index: 0
+          representative_text: Борис
+          mentions:
+            - sentence: 0
+              start_word: 0
+              end_word: 1
+              text: Борис
+              is_zero: false
+            - sentence: 1
+              start_word: 0
+              end_word: 1
+              text: Он
+              is_zero: false
+            - sentence: 3
+              start_word: 0
+              end_word: 1
+              text: Борис
+              is_zero: false
+    expected_rules: [SB-CTX-005]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: stanza_short_chain_guard
+    text: |-
+      Борис вошёл.
+      Он сел.
+    stanza_evidence:
+      status: REVIEW
+      engine: stanza
+      coreference_chains:
+        - index: 0
+          representative_text: Борис
+          mentions:
+            - sentence: 0
+              start_word: 0
+              end_word: 1
+              text: Борис
+              is_zero: false
+            - sentence: 1
+              start_word: 0
+              end_word: 1
+              text: Он
+              is_zero: false
+    expected_rules: []
+    guards_rules: [SB-CTX-005]
+    expected_status: PASS
+
+  - id: stanza_zero_bad
+    text: |-
+      Анна вошла.
+      Улыбнулась.
+    stanza_evidence:
+      status: REVIEW
+      engine: stanza
+      coreference_chains:
+        - index: 0
+          representative_text: Анна
+          mentions:
+            - sentence: 0
+              start_word: 0
+              end_word: 1
+              text: Анна
+              is_zero: false
+            - sentence: 1
+              start_word: [0, 0]
+              end_word: [0, 0]
+              text: "_"
+              is_zero: true
+    expected_rules: [SB-CTX-006]
+    guards_rules: []
+    expected_status: REVIEW
+
+  - id: stanza_zero_guard
+    text: |-
+      Анна вошла.
+      Она улыбнулась.
+    stanza_evidence:
+      status: REVIEW
+      engine: stanza
+      coreference_chains:
+        - index: 0
+          representative_text: Анна
+          mentions:
+            - sentence: 0
+              start_word: 0
+              end_word: 1
+              text: Анна
+              is_zero: false
+            - sentence: 1
+              start_word: 0
+              end_word: 1
+              text: Она
+              is_zero: false
+    expected_rules: []
+    guards_rules: [SB-CTX-006]
+    expected_status: PASS

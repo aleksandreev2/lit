@@ -8,6 +8,7 @@
     "source",
     "regression_rules",
     "pronoun_rules",
+    "semantic_coreference_rules",
     "parent_runtime_sha256",
     "character_state_sha256",
     "artifacts"
@@ -33,6 +34,15 @@
       "additionalProperties": false
     },
     "pronoun_rules": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "semantic_coreference_rules": {
       "type": "object",
       "required": ["path", "sha256"],
       "properties": {

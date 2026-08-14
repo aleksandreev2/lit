@@ -37,12 +37,15 @@ nodes:
   - id: pronoun_coreference_qa
     kind: QA
     depends_on: [rules, character_state, chapter_text]
+  - id: semantic_coreference_qa
+    kind: QA
+    depends_on: [rules, character_state, chapter_text]
   - id: fact_qa
     kind: QA
     depends_on: [research, chapter_text]
   - id: generated_artifact_manifest
     kind: EVIDENCE
-    depends_on: [rules, chapter_text]
+    depends_on: [rules, character_state, chapter_text]
   - id: qa_manifest
     kind: EVIDENCE
     depends_on:
@@ -53,6 +56,7 @@ nodes:
       - regression_qa
       - naturalness_qa
       - pronoun_coreference_qa
+      - semantic_coreference_qa
       - fact_qa
   - id: freeze
     kind: FREEZE

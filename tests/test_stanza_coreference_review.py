@@ -65,3 +65,33 @@ def test_document_payload_serializes_dependency_and_coreference_evidence() -> No
         "Анна",
         "Она",
     ]
+    assert all(item["is_zero"] is False for item in payload["coreference_chains"][0]["mentions"])
+
+
+def test_document_payload_preserves_zero_mentions() -> None:
+    sentence = SimpleNamespace(
+        words=[
+            SimpleNamespace(
+                id=1,
+                text="Улыбнулась",
+                lemma="улыбнуться",
+                upos="VERB",
+                feats="Gender=Fem|Number=Sing|Tense=Past",
+                head=0,
+                deprel="root",
+            )
+        ]
+    )
+    zero = SimpleNamespace(sentence=0, start_word=(0, 0), end_word=(0, 0))
+    chain = SimpleNamespace(
+        index=0,
+        representative_text="Анна",
+        representative_index=0,
+        mentions=[zero],
+    )
+    doc = SimpleNamespace(sentences=[sentence], coref=[chain])
+
+    payload = document_payload(doc)
+    mention = payload["coreference_chains"][0]["mentions"][0]
+    assert mention["text"] == "_"
+    assert mention["is_zero"] is True

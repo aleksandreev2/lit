@@ -22,7 +22,8 @@ No command is wired to `current/025` automatically. Chapter 25 remains `NOT_STAR
 - `repeated_phrases.json` — deterministic repeated 3–5 token phrases.
 - `text_signals.json` — existing short-reply/reviewer-agent rules exposed as reusable data.
 - `russian_naturalness.json` — morphology-aware Russian government/calque/collocation findings.
-- `pronoun_coreference.json` — local pronoun/coreference candidate evidence for ambiguous antecedents, gender/number conflicts and possessive/reflexive review.
+- `pronoun_coreference.json` — fast local pronoun/coreference evidence.
+- `semantic_coreference.json` — contextual long-distance, speaker-ownership and zero-subject review evidence; Stanza remains `NOT_RUN` unless explicit model output is supplied to the standalone semantic reviewer.
 - `comeback_signals.json` — `поэтому / вот именно / тем более` candidates.
 - `entity_mentions.json` — low-confidence capitalized entity/name candidates.
 - `knowledge_claim_candidates.json` — lines containing knowledge/belief acquisition language.
@@ -32,7 +33,9 @@ No command is wired to `current/025` automatically. Chapter 25 remains `NOT_STAR
 - `chapter_delta_candidate.json` — deliberately empty promotion proposal scaffold with `automatic_promotion_allowed: false`.
 - `artifact_manifest.json` — source/rule bindings plus every generated artifact hash and byte size.
 
-`qa_artifact_check.py` validates the manifest schema, source hash, both regression-rule registry hashes, artifact path containment, SHA-256 and byte size. Any post-generation mutation of the source, rules or artifacts breaks verification.
+`qa_artifact_check.py` validates the manifest schema, source hash, naturalness/dialogue rules, pronoun rules, semantic-coreference rules, artifact path containment, SHA-256 and byte size. Any post-generation mutation of the source, rule registries or artifacts breaks verification.
+
+Character state is also an explicit dependency of the generated artifact package. Changing aliases, grammatical gender or other structured character evidence invalidates pronoun/coreference output and the downstream generated-artifact evidence path.
 
 ## Detection classes
 
@@ -42,7 +45,7 @@ Deterministic output means the same input/revision produces the same report. It 
 - `HEURISTIC` — a reproducible review candidate that needs editor judgment.
 - semantic-only rules remain outside automatic PASS/BLOCK unless a later semantic reviewer records evidence.
 
-Entity extraction is intentionally conservative and labeled low confidence. It does not claim NER-grade truth. Pronoun/coreference findings are also REVIEW candidates rather than automatic corrections; see `docs/PRONOUN_COREFERENCE_QA.md`.
+Entity extraction is intentionally conservative and labeled low confidence. It does not claim NER-grade truth. Pronoun/coreference findings are REVIEW candidates rather than automatic corrections; see `docs/PRONOUN_COREFERENCE_QA.md` and `docs/SEMANTIC_COREFERENCE_QA.md`.
 
 ## Russian NLP evaluation
 
@@ -67,7 +70,7 @@ Machine-detectable rules are schema-backed and carry:
 - introduction provenance;
 - supersession link.
 
-The main naturalness/dialogue registry lives at `rules/regressions.yaml`. Pronoun/coreference rules live at `rules/pronoun_regressions.yaml`; `scripts/regression_check.py` validates both and rejects duplicate stable IDs across registries.
+The main naturalness/dialogue registry lives at `rules/regressions.yaml`. Fast pronoun/coreference rules live at `rules/pronoun_regressions.yaml`. Contextual rules live at `rules/semantic_coreference_regressions.yaml`. `scripts/regression_check.py` validates all registries and rejects duplicate stable IDs across them.
 
 Run:
 
@@ -75,6 +78,7 @@ Run:
 python scripts/regression_check.py
 python scripts/russian_naturalness.py --self-test
 python scripts/pronoun_coreference.py --self-test
+python scripts/semantic_coreference.py --self-test
 ```
 
 Deterministic or heuristic rules without an existing fixture/test file fail the register check. The specialized corpora additionally require both bad-case coverage and explicit false-positive guards for their executable rules.

@@ -47,6 +47,13 @@ def validate_manifest(manifest_path: Path) -> list[str]:
     errors.extend(_verify_binding(base, manifest["source"], "SOURCE"))
     errors.extend(_verify_binding(base, manifest["regression_rules"], "RULES"))
     errors.extend(_verify_binding(base, manifest["pronoun_rules"], "PRONOUN_RULES"))
+    errors.extend(
+        _verify_binding(
+            base,
+            manifest["semantic_coreference_rules"],
+            "SEMANTIC_COREFERENCE_RULES",
+        )
+    )
 
     seen_paths: set[str] = set()
     for artifact in manifest["artifacts"]:
