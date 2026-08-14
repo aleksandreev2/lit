@@ -7,7 +7,8 @@ from pathlib import Path
 
 
 def _mention_payload(doc, mention) -> dict:
-    if isinstance(mention.start_word, tuple) or isinstance(mention.end_word, tuple):
+    is_zero = isinstance(mention.start_word, tuple) or isinstance(mention.end_word, tuple)
+    if is_zero:
         text = "_"
     else:
         words = doc.sentences[mention.sentence].words[mention.start_word : mention.end_word]
@@ -17,6 +18,7 @@ def _mention_payload(doc, mention) -> dict:
         "start_word": mention.start_word,
         "end_word": mention.end_word,
         "text": text,
+        "is_zero": is_zero,
     }
 
 
@@ -55,7 +57,8 @@ def document_payload(doc) -> dict:
         "automatic_rewrite_allowed": False,
         "note": (
             "Transformer-based semantic challenger output. It is evidence for editorial review, "
-            "not a deterministic literary PASS and not an authority over canon."
+            "not a deterministic literary PASS and not an authority over canon. Zero mentions "
+            "are preserved explicitly when Stanza emits them."
         ),
     }
 
