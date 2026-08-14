@@ -6,6 +6,12 @@ GitHub is the execution/state layer: schemas, runtime, invariants, QA manifests,
 
 > Important: this repository is currently **public**. Do not commit private story material, unpublished full chapters, secrets, API keys, or sensitive reference files unless the repository visibility is intentionally changed.
 
+## Read first
+
+- Repository-wide agent/infrastructure rules: `AGENTS.md`
+- Detailed prompt for continuing Production Engine work in a fresh ChatGPT chat: `docs/NEW_CHAT_BOOTSTRAP_PROMPT.md`
+- Third-party tooling registry: `docs/TOOLING_AND_INTEGRATIONS.md`
+
 ## Current machine state
 
 - Canon/HAPPENED through chapter 24.
