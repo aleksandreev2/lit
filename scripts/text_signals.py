@@ -22,13 +22,7 @@ def token_count(text: str) -> int:
     return sum(1 for token in tokenize(text) if re.search(r"\w", token.text, re.UNICODE))
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Deterministic Russian fiction dialogue/prose review signals.")
-    parser.add_argument("path", type=Path)
-    parser.add_argument("--json", dest="json_output", action="store_true")
-    args = parser.parse_args()
-
-    lines = args.path.read_text(encoding="utf-8").splitlines()
+def analyze_lines(lines: list[str]) -> list[dict]:
     findings: list[dict] = []
     short_run: list[tuple[int, str]] = []
 
@@ -40,7 +34,10 @@ def main() -> int:
                     "rule": "SB-DIA-001",
                     "severity": "REVIEW",
                     "line": short_run[0][0],
-                    "message": f"{len(short_run)} consecutive short dialogue turns; inspect for telegraph/AI ping-pong.",
+                    "message": (
+                        f"{len(short_run)} consecutive short dialogue turns; "
+                        "inspect for telegraph/AI ping-pong."
+                    ),
                     "excerpt": " | ".join(text for _, text in short_run[:5]),
                 }
             )
@@ -81,13 +78,26 @@ def main() -> int:
             flush_short_run()
 
     flush_short_run()
+    return findings
 
-    payload = {"file": str(args.path), "findings": findings, "count": len(findings)}
+
+def analyze_path(path: Path) -> dict:
+    findings = analyze_lines(path.read_text(encoding="utf-8").splitlines())
+    return {"file": str(path), "findings": findings, "count": len(findings)}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Deterministic Russian fiction dialogue/prose review signals.")
+    parser.add_argument("path", type=Path)
+    parser.add_argument("--json", dest="json_output", action="store_true")
+    args = parser.parse_args()
+
+    payload = analyze_path(args.path)
     if args.json_output:
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
-        print(f"TEXT_SIGNALS: {len(findings)} review finding(s)")
-        for finding in findings:
+        print(f"TEXT_SIGNALS: {payload['count']} review finding(s)")
+        for finding in payload["findings"]:
             print(
                 f"- {finding['rule']} line {finding['line']}: {finding['message']} :: "
                 f"{finding['excerpt']}"
