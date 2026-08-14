@@ -1,47 +1,172 @@
 book_id: SISTEMA_BOGATSTVA
-schema_version: 1
+schema_version: 2
 rules:
   - id: SB-DIA-001
+    owner_family: dialogue
     severity: BLOCK
     name: TELEGRAPH_AI_PING_PONG
-    description: "Do not build calm dialogue from chained minimal service turns. Short turns require a pragmatic reason."
+    description: >-
+      Do not build calm dialogue from chained minimal service turns. Short turns
+      require a pragmatic reason.
+    positive_examples:
+      - "A short reply is justified by interruption, urgency, shock, or action."
+    negative_examples:
+      - "Three or more calm service replies merely shuttle exposition back and forth."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_qa_artifacts.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-DIA-002
+    owner_family: dialogue
     severity: BLOCK
     name: CONVENIENT_QUESTION
-    description: "A question must belong to the character, not exist only to cue the next exposition answer."
+    description: >-
+      A question must belong to the character, not exist only to cue the next
+      exposition answer.
+    positive_examples:
+      - "The question follows from the speaker's goal, confusion, or missing knowledge."
+    negative_examples:
+      - "A generic question exists only so the next speaker can explain a large fact block."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_qa_artifacts.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-DIA-003
+    owner_family: dialogue
     severity: BLOCK
     name: REVIEWER_AGENT
-    description: "Characters must not routinely certify German's answer as logical/honest/correct for the reader."
+    description: >-
+      Characters must not routinely certify German's answer as logical, honest,
+      or correct for the reader.
+    positive_examples:
+      - "A reaction advances the character's own goal or emotion."
+    negative_examples:
+      - "The listener says the equivalent of 'logical' only to certify exposition."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_qa_artifacts.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-DIA-004
+    owner_family: dialogue
     severity: BLOCK
     name: SEMANTIC_ECHO
-    description: "Do not automatically mirror an already-complete instruction or meaning in the next turn."
+    description: >-
+      Do not automatically mirror an already-complete instruction or meaning in
+      the next turn.
+    positive_examples:
+      - "The next turn adds a new intention, objection, detail, or emotional consequence."
+    negative_examples:
+      - "The next speaker restates the same completed instruction in different words."
+    detection_type: SEMANTIC
+    fixture_test_path: null
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-DIA-005
+    owner_family: dialogue
     severity: REVIEW
     name: MICRO_PUNCHLINE_DEFAULT
-    description: "Do not force clever symmetrical one-liners or witty comeback closure into ordinary dialogue."
+    description: >-
+      Do not force clever symmetrical one-liners or witty comeback closure into
+      ordinary dialogue.
+    positive_examples:
+      - "Ordinary speech may end unevenly, practically, or without a punchline."
+    negative_examples:
+      - "Every exchange closes with a neat mirrored joke or comeback."
+    detection_type: SEMANTIC
+    fixture_test_path: null
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-KNW-001
+    owner_family: knowledge
     severity: BLOCK
     name: KNOWLEDGE_PROVENANCE
     description: >-
-      Exact secret/sum/private fact used by a character needs an on-page or
-      previously approved source, explicit inference, or current reveal.
+      Exact secret, sum, or private fact used by a character needs an on-page or
+      approved source, explicit inference, or current reveal.
+    positive_examples:
+      - "Knowledge ledger records how and when the character acquired the fact."
+    negative_examples:
+      - "A character knows a private exact amount with no witnessed, told, or inferred source."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_provenance.py
+    affected_stages: [PREWRITE, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-CHR-001
+    owner_family: character
     severity: BLOCK
     name: MILENA_ACCESS_GATE
-    description: "No expensive request/material flirt before earned social bridge and personal recognition."
+    description: >-
+      No expensive request or material flirt before an earned social bridge and
+      personal recognition.
+    positive_examples:
+      - "Material escalation follows an established social bridge and recognition."
+    negative_examples:
+      - "An expensive request appears before the relationship has earned that access."
+    detection_type: SEMANTIC
+    fixture_test_path: null
+    affected_stages: [PREWRITE, DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: inherited-project-rule
+    superseded_by: null
+
   - id: SB-CHR-002
+    owner_family: character
     severity: BLOCK
     name: GERMAN_EXPERTISE_LEAP
     description: >-
       Wealth does not instantly make German expert in finance, crypto, business,
-      cars, sex, fashion or property.
+      cars, sex, fashion, or property.
+    positive_examples:
+      - "German researches, asks, experiments, or relies on a specialist where appropriate."
+    negative_examples:
+      - "New wealth is treated as automatic expert competence in an unrelated domain."
+    detection_type: SEMANTIC
+    fixture_test_path: null
+    affected_stages: [PREWRITE, DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: inherited-project-rule
+    superseded_by: null
+
   - id: SB-PROC-001
+    owner_family: process
     severity: BLOCK
     name: FROZEN_HASH_MISMATCH
-    description: "Any post-freeze text change invalidates dependent QA until rerun against the exact revision hash."
+    description: >-
+      Any post-freeze dependency change invalidates dependent QA until rerun
+      against the exact revision hash.
+    positive_examples:
+      - "Changed runtime marks continuity QA, freeze, and release artifacts stale."
+    negative_examples:
+      - "A previous PASS remains valid after a bound dependency hash changes."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_invalidation.py
+    affected_stages: [FINAL_TEXT_FROZEN, AUTHOR_APPROVED, HAPPENED]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
+
   - id: SB-RES-001
+    owner_family: research
     severity: BLOCK
     name: SEARCH_FIRST_REALITY
-    description: "Date-sensitive or real-world claims require research evidence appropriate to story date/location before prose promotion."
+    description: >-
+      Date-sensitive or real-world claims require research evidence appropriate
+      to story date and location before prose promotion.
+    positive_examples:
+      - "A volatile claim is linked to a scoped research record with freshness metadata."
+    negative_examples:
+      - "A current price is reused as an exact historical price without historical evidence."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_provenance.py
+    affected_stages: [PREWRITE, QA_IN_PROGRESS, FINAL_CANDIDATE, FINAL_TEXT_FROZEN]
+    introduced_by: bootstrap-v2-2026-08-14
+    superseded_by: null
