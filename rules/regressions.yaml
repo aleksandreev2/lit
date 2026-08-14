@@ -24,7 +24,9 @@ rules:
   - id: SB-KNW-001
     severity: BLOCK
     name: KNOWLEDGE_PROVENANCE
-    description: "Exact secret/sum/private fact used by a character needs an on-page or previously approved source, explicit inference, or current reveal."
+    description: >-
+      Exact secret/sum/private fact used by a character needs an on-page or
+      previously approved source, explicit inference, or current reveal.
   - id: SB-CHR-001
     severity: BLOCK
     name: MILENA_ACCESS_GATE
@@ -32,7 +34,9 @@ rules:
   - id: SB-CHR-002
     severity: BLOCK
     name: GERMAN_EXPERTISE_LEAP
-    description: "Wealth does not instantly make German expert in finance, crypto, business, cars, sex, fashion or property."
+    description: >-
+      Wealth does not instantly make German expert in finance, crypto, business,
+      cars, sex, fashion or property.
   - id: SB-PROC-001
     severity: BLOCK
     name: FROZEN_HASH_MISMATCH

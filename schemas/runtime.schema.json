@@ -22,7 +22,18 @@
       "required": ["number", "status"],
       "properties": {
         "number": {"type": "integer", "minimum": 1},
-        "status": {"enum": ["NOT_STARTED", "PREWRITE", "WORKING", "FROZEN_FOR_AUTHOR_REVIEW"]}
+        "status": {
+          "enum": [
+            "NOT_STARTED",
+            "PREWRITE",
+            "DRAFT_READY_FOR_EDITOR",
+            "QA_IN_PROGRESS",
+            "FINAL_CANDIDATE",
+            "FINAL_TEXT_FROZEN",
+            "AUTHOR_APPROVED",
+            "HAPPENED"
+          ]
+        }
       },
       "additionalProperties": true
     },
