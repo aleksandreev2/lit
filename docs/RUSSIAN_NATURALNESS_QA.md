@@ -14,7 +14,7 @@ adverb that cannot safely carry the intended predicate by itself.
 Examples that are detected:
 
 - `Я ладно.` — `SB-RUS-001`, blocking deterministic signal.
-- `Я нормально.` — `SB-RUS-002`, high-confidence review signal.
+- `Я нормально.` — `SB-RUS-002`, blocking deterministic signal in a standalone statement.
 - `Я всё нормально.` — `SB-RUS-003`, blocking deterministic signal.
 - `Ты рано.` — `SB-RUS-004`, medium-confidence review signal.
 
