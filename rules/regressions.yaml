@@ -204,18 +204,19 @@ rules:
 
   - id: SB-RUS-002
     owner_family: russian_naturalness
-    severity: REVIEW
+    severity: BLOCK
     name: BARE_PERSONAL_STATE_ADVERB
     description: >-
-      Bare personal pronoun plus a state adverb often signals machine-like
-      ellipsis or a dropped verb/complement.
+      Bare personal pronoun plus a state adverb in a standalone statement is a
+      high-confidence machine-like fragment or a dropped verb/complement.
     positive_examples:
       - "Я нормально себя чувствую."
       - "У меня всё нормально."
+      - "Ты нормально?"
     negative_examples:
       - "Я нормально."
       - "Она хорошо."
-    detection_type: HEURISTIC
+    detection_type: DETERMINISTIC
     fixture_test_path: tests/test_russian_naturalness.py
     affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
     introduced_by: russian-naturalness-v1-2026-08-14
@@ -228,8 +229,8 @@ rules:
       skip_if_question: true
       confidence: HIGH
       message: >-
-        Possible incomplete personal-state predicate; check whether a required
-        verb or complement was dropped.
+        Incomplete personal-state predicate in a standalone statement; a
+        required verb, complement, or Russian possessive-state construction is missing.
       suggestions:
         - "Я в порядке."
         - "У меня всё нормально."
