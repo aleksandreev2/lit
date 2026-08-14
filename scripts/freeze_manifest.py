@@ -4,21 +4,23 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 
 from dependency_graph import transitive_dependents, validate_graph_file
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_ROLES = {
-    "CHAPTER_TEXT",
-    "PARENT_RUNTIME",
-    "CHARACTER_STATE",
-    "REGRESSION_RULES",
-    "RESEARCH_MANIFEST",
-    "QA_MANIFEST",
-    "GENERATED_ARTIFACT_MANIFEST",
+ROLE_NODES = {
+    "CHAPTER_TEXT": "chapter_text",
+    "PARENT_RUNTIME": "runtime",
+    "CHARACTER_STATE": "character_state",
+    "REGRESSION_RULES": "rules",
+    "RESEARCH_MANIFEST": "research",
+    "QA_MANIFEST": "qa_manifest",
+    "GENERATED_ARTIFACT_MANIFEST": "generated_artifact_manifest",
 }
+REQUIRED_ROLES = set(ROLE_NODES)
 
 
 def sha256(path: Path) -> str:
@@ -28,6 +30,10 @@ def sha256(path: Path) -> str:
 def _resolve(base: Path, value: str) -> Path:
     path = Path(value)
     return path if path.is_absolute() else (base / path).resolve()
+
+
+def _relative_path(source: Path, base: Path) -> str:
+    return os.path.relpath(source.resolve(), base.resolve())
 
 
 def _schema_errors(manifest: dict, schema_path: Path) -> list[str]:
@@ -46,27 +52,23 @@ def build_manifest(spec_path: Path, output_path: Path) -> dict:
     inputs: list[dict] = []
     for item in spec["inputs"]:
         source_path = _resolve(spec_base, item["path"])
-        relative = source_path.relative_to(output_base) if source_path.is_relative_to(output_base) else source_path
         inputs.append(
             {
                 "role": item["role"],
                 "node_id": item["node_id"],
-                "path": str(relative),
+                "path": _relative_path(source_path, output_base),
                 "sha256": sha256(source_path),
             }
         )
 
     graph_path = _resolve(spec_base, spec["graph_path"])
-    graph_relative = (
-        graph_path.relative_to(output_base) if graph_path.is_relative_to(output_base) else graph_path
-    )
     return {
         "book_id": spec["book_id"],
         "schema_version": spec["schema_version"],
         "chapter": spec["chapter"],
         "inputs": inputs,
         "qa_gates": spec["qa_gates"],
-        "graph_path": str(graph_relative),
+        "graph_path": _relative_path(graph_path, output_base),
     }
 
 
@@ -94,20 +96,25 @@ def verify_manifest(manifest_path: Path) -> tuple[list[str], set[str]]:
     graph_nodes = {node["id"] for node in graph["nodes"]}
     changed_nodes: set[str] = set()
     for item in manifest["inputs"]:
+        role = item["role"]
         node_id = item["node_id"]
+        expected_node = ROLE_NODES[role]
+        if node_id != expected_node:
+            errors.append(f"FREEZE_ROLE_NODE {role}: {node_id}, expected {expected_node}")
+            changed_nodes.add(expected_node)
+            continue
         if node_id not in graph_nodes:
-            errors.append(f"FREEZE_NODE {item['role']}: unknown graph node {node_id}")
+            errors.append(f"FREEZE_NODE {role}: unknown graph node {node_id}")
+            changed_nodes.add(node_id)
             continue
         path = _resolve(base, item["path"])
         if not path.exists():
-            errors.append(f"FREEZE_INPUT {item['role']}: missing {path}")
+            errors.append(f"FREEZE_INPUT {role}: missing {path}")
             changed_nodes.add(node_id)
             continue
         actual = sha256(path)
         if actual != item["sha256"]:
-            errors.append(
-                f"FREEZE_HASH {item['role']}: expected={item['sha256']} actual={actual}"
-            )
+            errors.append(f"FREEZE_HASH {role}: expected={item['sha256']} actual={actual}")
             changed_nodes.add(node_id)
 
     for gate, status in manifest["qa_gates"].items():
@@ -136,7 +143,10 @@ def main() -> int:
     if args.command == "build":
         manifest = build_manifest(args.spec, args.output)
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        args.output.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
         errors, _ = verify_manifest(args.output)
         if errors:
             print("FREEZE_BUILD: FAIL")
