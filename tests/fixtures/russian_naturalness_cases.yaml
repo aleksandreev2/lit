@@ -1,0 +1,98 @@
+schema_version: 1
+cases:
+  - id: bad-001
+    text: "— Я ладно."
+    expected_rules: [SB-RUS-001]
+  - id: bad-002
+    text: "Я ладно!"
+    expected_rules: [SB-RUS-001]
+  - id: bad-003
+    text: "— Он ладно."
+    expected_rules: [SB-RUS-001]
+  - id: bad-004
+    text: "— Я нормально."
+    expected_rules: [SB-RUS-002]
+  - id: bad-005
+    text: "— Я хорошо."
+    expected_rules: [SB-RUS-002]
+  - id: bad-006
+    text: "— Я плохо."
+    expected_rules: [SB-RUS-002]
+  - id: bad-007
+    text: "— Мы нормально."
+    expected_rules: [SB-RUS-002]
+  - id: bad-008
+    text: "— Она хорошо."
+    expected_rules: [SB-RUS-002]
+  - id: bad-009
+    text: "— Я всё нормально."
+    expected_rules: [SB-RUS-003]
+  - id: bad-010
+    text: "— Она всё хорошо."
+    expected_rules: [SB-RUS-003]
+  - id: bad-011
+    text: "— Мы все нормально."
+    expected_rules: [SB-RUS-003]
+  - id: bad-012
+    text: "— Ты рано."
+    expected_rules: [SB-RUS-004]
+  - id: bad-013
+    text: "— Он поздно."
+    expected_rules: [SB-RUS-004]
+  - id: good-001
+    text: "— Ладно."
+    expected_rules: []
+  - id: good-002
+    text: "— Я в порядке."
+    expected_rules: []
+  - id: good-003
+    text: "— У меня всё нормально."
+    expected_rules: []
+  - id: good-004
+    text: "— Со мной всё нормально."
+    expected_rules: []
+  - id: good-005
+    text: "— Всё нормально."
+    expected_rules: []
+  - id: good-006
+    text: "— Я нормально себя чувствую."
+    expected_rules: []
+  - id: good-007
+    text: "— Я нормально говорю по-русски."
+    expected_rules: []
+  - id: good-008
+    text: "— Я хорошо помню этот день."
+    expected_rules: []
+  - id: good-009
+    text: "— Я плохо спал."
+    expected_rules: []
+  - id: good-010
+    text: "— Я всё нормально сделал."
+    expected_rules: []
+  - id: good-011
+    text: "— Я нормально, спасибо."
+    expected_rules: []
+  - id: good-012
+    text: "— Ты нормально?"
+    expected_rules: []
+  - id: good-013
+    text: "— Ты рано пришёл."
+    expected_rules: []
+  - id: good-014
+    text: "— Ты рано?"
+    expected_rules: []
+  - id: good-015
+    text: "— Я, ладно, пойду домой."
+    expected_rules: []
+  - id: good-016
+    text: "Он нормально работал."
+    expected_rules: []
+  - id: good-017
+    text: "Я поздно вернулся."
+    expected_rules: []
+  - id: good-018
+    text: "Она хорошо выглядела."
+    expected_rules: []
+  - id: good-019
+    text: "Мы всё нормально обсудили."
+    expected_rules: []
