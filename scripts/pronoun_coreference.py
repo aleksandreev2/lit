@@ -43,8 +43,16 @@ def _morph_analyzer() -> pymorphy3.MorphAnalyzer:
 @lru_cache(maxsize=8192)
 def _morph_word(word: str) -> dict:
     parses = _morph_analyzer().parse(word)
-    noun_parses = [parse for parse in parses if parse.tag.POS == "NOUN"]
-    primary = noun_parses[0] if noun_parses else parses[0]
+    primary = parses[0]
+    noun_parses = (
+        [
+            parse
+            for parse in parses
+            if parse.tag.POS == "NOUN" and parse.normal_form == primary.normal_form
+        ]
+        if primary.tag.POS == "NOUN"
+        else []
+    )
     grammemes = set(primary.tag.grammemes)
     return {
         "text": word,
