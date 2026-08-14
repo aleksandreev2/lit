@@ -1,0 +1,30 @@
+book_id: SISTEMA_BOGATSTVA
+schema_version: 1
+through_chapter: 24
+last_approved_chapter:
+  number: 24
+  title: "Весь остаток"
+current_chapter:
+  number: 25
+  status: NOT_STARTED
+story:
+  date: "2026-07-25"
+  time_anchor: "after 12:36, later driving back toward Artik"
+system:
+  current_quota_usd: 1000000.00
+  deadline: "2026-08-01T12:36:18+04:00"
+  prior_cycle_closed: true
+assets:
+  bitcoin:
+    amount_btc: 7.74166346
+    acquisition_cost_usd: 498717.96
+    custody_state: CLIENT_ACCOUNT_PENDING_CUSTODY_DECISION
+open_operational_tasks:
+  - id: REVUELTO_RESEARCH
+    owner: ARMAN_PETROSYAN
+    status: OPEN
+    note: "Research Lamborghini Revuelto; dark green / Verde Ermes preferred. No purchase/contact yet."
+  - id: BTC_CUSTODY_OPTIONS
+    owner: ARMAN_PETROSYAN
+    status: OPEN
+    note: "Prepare custody/storage options; German should not improvise wallet setup."
