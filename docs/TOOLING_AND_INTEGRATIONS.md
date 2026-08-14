@@ -46,6 +46,11 @@ Pinned Russian morphological analyzer used by the naturalness and fast pronoun/c
 
 Source: `https://github.com/no-plagiarism/pymorphy3`
 
+### Contextual semantic/coreference review
+`semantic_coreference.py` is project-owned REVIEW infrastructure layered on top of Razdel/pymorphy3 evidence. It extends reference inspection beyond the one-sentence fast window, flags under-attributed multi-party dialogue runs, detects ambiguous omitted subjects, and can compare fast findings with externally supplied Stanza coreference evidence.
+
+It is intentionally heuristic. It never auto-rewrites prose and every executable `SB-CTX-*` rule has both bad-case and false-positive fixture coverage.
+
 ### Vale 3.17.1
 Official markup-aware prose linter. We use it primarily as a configurable deterministic rule engine for project-specific anti-regressions. It is **not** treated as a Russian literary editor and cannot replace dialogue/POV review. CI pins the Vale binary version rather than using `latest`.
 
@@ -59,6 +64,8 @@ LanguageTool supports Russian proofreading and can be run locally. It is intenti
 Stanford NLP Stanza is available through the optional `coref` dependency group. Current Stanza exposes dependency parsing and Russian CorefUD coreference. The project adapter requests `tokenize,pos,lemma,depparse,coref`, records dependency/coreference evidence, and always returns reviewer evidence rather than an editorial PASS.
 
 The adapter sets `download_method=None`, so it does not silently download or refresh Stanza or Hugging Face model assets during chapter review. Russian model installation must be an explicit separate operation. Stanza remains outside `.[qa]` because the transformer coreference tier is materially heavier than the fast mandatory morphology-based audit.
+
+The adapter now preserves empty/zero coreference mentions with explicit `is_zero` metadata when they are present in Stanza output. The engine does not assume Russian input will always produce such mentions. Speaker metadata facilities in recent Stanza releases are useful when transcript speakers are already supplied; they are not treated as raw-fiction speaker inference.
 
 Source: `https://github.com/stanfordnlp/stanza`
 
@@ -93,6 +100,11 @@ Source: `https://github.com/natasha/natasha`
 spaCy-based coreference extension evaluated specifically for the pronoun/coreference phase. Its documented supported languages are English, French, German and Polish; Russian is not supported, so it was rejected instead of adding a non-working dependency.
 
 Source: `https://github.com/richardpaulhudson/coreferee`
+
+### BookNLP
+BookNLP was evaluated because its pipeline includes literary coreference and quotation/speaker attribution. The public installation and model path is English-oriented, including an English spaCy model and LitBank-based resources. That makes it a poor runtime dependency for this Russian production engine despite the useful architecture. We retain the quote-attribution idea, but implement only a conservative Russian multi-party dialogue REVIEW heuristic rather than importing an English model stack.
+
+Source: `https://github.com/booknlp/booknlp`
 
 ### NousResearch/autonovel
 Useful ideas: mechanical + LLM “two immune systems”, state propagation debt, chapter comparison/revision loops. Not imported directly because it is an autonomous generation pipeline and would conflict with the author-approval/freeze workflow. We adapt architectural ideas instead.
