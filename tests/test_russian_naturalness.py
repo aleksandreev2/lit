@@ -104,6 +104,12 @@ def test_lexical_collocation_and_full_sentence_calques_are_scoped() -> None:
     assert good["status"] == "PASS"
 
 
+def test_shower_calque_does_not_capture_genitive_plural_souls() -> None:
+    payload = analyze_text("Он взял пять душ под опеку.", load_rules(RULES))
+    assert payload["status"] == "PASS"
+    assert payload["findings"] == []
+
+
 def test_review_only_possession_calques_remain_review() -> None:
     payload = analyze_text("Я имею идею. Я имею вопрос.", load_rules(RULES))
     assert payload["status"] == "REVIEW"
