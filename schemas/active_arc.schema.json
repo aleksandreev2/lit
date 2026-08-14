@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/active-arc.schema.json",
+  "title": "Sistema Bogatstva Active Arc State",
+  "type": "object",
+  "required": [
+    "book_id",
+    "schema_version",
+    "canon_through",
+    "happened",
+    "active_threads",
+    "hard_future_locks",
+    "proposals"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "canon_through": {"type": "integer", "minimum": 0},
+    "happened": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["chapter", "event"],
+        "properties": {
+          "chapter": {"type": "integer", "minimum": 1},
+          "event": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    },
+    "active_threads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["ACTIVE", "OPEN", "BLOCKED", "RESOLVED", "CLOSED"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "hard_future_locks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "rule": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    },
+    "proposals": {"type": "array"}
+  },
+  "additionalProperties": true
+}
