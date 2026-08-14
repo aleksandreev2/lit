@@ -3,26 +3,168 @@
   "$id": "https://example.invalid/sistema-bogatstva/chapter-manifest.schema.json",
   "title": "Sistema Bogatstva Chapter Manifest",
   "type": "object",
-  "required": ["book_id", "chapter", "stage", "parent_runtime_through", "source_sync", "research", "qa", "freeze"],
+  "required": [
+    "book_id",
+    "chapter",
+    "stage",
+    "parent_runtime_through",
+    "author_instructions",
+    "source_sync",
+    "research",
+    "qa",
+    "freeze"
+  ],
   "properties": {
     "book_id": {"const": "SISTEMA_BOGATSTVA"},
     "chapter": {"type": "integer", "minimum": 1},
-    "stage": {"enum": ["NOT_STARTED", "PREWRITE", "WORKING", "DRAFT_READY_FOR_EDITOR", "FROZEN_FOR_AUTHOR_REVIEW", "APPROVED"]},
+    "stage": {
+      "enum": [
+        "NOT_STARTED",
+        "PREWRITE",
+        "DRAFT_READY_FOR_EDITOR",
+        "QA_IN_PROGRESS",
+        "FINAL_CANDIDATE",
+        "FINAL_TEXT_FROZEN",
+        "AUTHOR_APPROVED",
+        "HAPPENED"
+      ]
+    },
     "parent_runtime_through": {"type": "integer", "minimum": 0},
     "author_instructions": {"type": "array"},
-    "source_sync": {"type": "object"},
-    "research": {"type": "object"},
-    "qa": {"type": "object"},
+    "source_sync": {
+      "type": "object",
+      "required": ["runtime_sha256", "character_profiles", "approved_chapters", "production_rules"],
+      "properties": {
+        "runtime_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "character_profiles": {"type": "array"},
+        "approved_chapters": {"type": "array"},
+        "production_rules": {"type": "array"}
+      },
+      "additionalProperties": false
+    },
+    "research": {
+      "type": "object",
+      "required": ["required", "completed"],
+      "properties": {
+        "required": {"type": "array"},
+        "completed": {"type": "array"}
+      },
+      "additionalProperties": false
+    },
+    "qa": {
+      "type": "object",
+      "required": [
+        "structural",
+        "dialogue",
+        "prose_pov",
+        "character",
+        "continuity_knowledge",
+        "regression",
+        "russian_proofread",
+        "fact_recheck",
+        "text_preflight",
+        "final_reread"
+      ],
+      "properties": {
+        "structural": {"$ref": "#/$defs/qaStatus"},
+        "dialogue": {"$ref": "#/$defs/qaStatus"},
+        "prose_pov": {"$ref": "#/$defs/qaStatus"},
+        "character": {"$ref": "#/$defs/qaStatus"},
+        "continuity_knowledge": {"$ref": "#/$defs/qaStatus"},
+        "regression": {"$ref": "#/$defs/qaStatus"},
+        "russian_proofread": {"$ref": "#/$defs/qaStatus"},
+        "fact_recheck": {"$ref": "#/$defs/qaStatus"},
+        "text_preflight": {"$ref": "#/$defs/qaStatus"},
+        "final_reread": {"$ref": "#/$defs/qaStatus"}
+      },
+      "additionalProperties": false
+    },
     "freeze": {
       "type": "object",
-      "required": ["chapter_sha256", "final_text_frozen", "author_approved"],
+      "required": [
+        "chapter_sha256",
+        "final_text_frozen",
+        "author_approved",
+        "author_approval_evidence_id"
+      ],
       "properties": {
-        "chapter_sha256": {"type": ["string", "null"]},
+        "chapter_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{64}$"
+        },
         "final_text_frozen": {"type": "boolean"},
-        "author_approved": {"type": "boolean"}
+        "author_approved": {"type": "boolean"},
+        "author_approval_evidence_id": {"type": ["string", "null"], "minLength": 1}
       },
-      "additionalProperties": true
+      "additionalProperties": false
     }
   },
-  "additionalProperties": true
+  "$defs": {
+    "qaStatus": {
+      "enum": ["PENDING", "PASS", "BLOCK", "REVIEW", "STALE", "NOT_APPLICABLE"]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "NOT_STARTED",
+              "PREWRITE",
+              "DRAFT_READY_FOR_EDITOR",
+              "QA_IN_PROGRESS",
+              "FINAL_CANDIDATE"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "freeze": {
+            "properties": {
+              "chapter_sha256": {"type": "null"},
+              "final_text_frozen": {"const": false},
+              "author_approved": {"const": false},
+              "author_approval_evidence_id": {"type": "null"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"stage": {"const": "FINAL_TEXT_FROZEN"}}},
+      "then": {
+        "properties": {
+          "freeze": {
+            "properties": {
+              "chapter_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "final_text_frozen": {"const": true},
+              "author_approved": {"const": false},
+              "author_approval_evidence_id": {"type": "null"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"stage": {"enum": ["AUTHOR_APPROVED", "HAPPENED"]}}},
+      "then": {
+        "properties": {
+          "freeze": {
+            "properties": {
+              "chapter_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "final_text_frozen": {"const": true},
+              "author_approved": {"const": true},
+              "author_approval_evidence_id": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
 }
