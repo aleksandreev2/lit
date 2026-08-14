@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/structured-state.schema.json",
+  "title": "Sistema Bogatstva Structured State",
+  "type": "object",
+  "required": [
+    "book_id",
+    "schema_version",
+    "as_of_chapter",
+    "characters",
+    "relationships",
+    "locations",
+    "assets_money",
+    "active_threads",
+    "future_locks",
+    "proposals"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "as_of_chapter": {"type": "integer", "minimum": 0},
+    "characters": {"type": "array", "items": {"$ref": "#/$defs/character"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}},
+    "locations": {"type": "array", "items": {"$ref": "#/$defs/location"}},
+    "assets_money": {"type": "array", "items": {"$ref": "#/$defs/assetMoney"}},
+    "active_threads": {"type": "array", "items": {"$ref": "#/$defs/thread"}},
+    "future_locks": {"type": "array", "items": {"$ref": "#/$defs/futureLock"}},
+    "proposals": {"type": "array", "items": {"$ref": "#/$defs/proposal"}}
+  },
+  "$defs": {
+    "factIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^SB-F-[A-Z0-9][A-Z0-9_-]*$"}
+    },
+    "characterId": {"type": "string", "pattern": "^SB-CHAR-[A-Z0-9][A-Z0-9_-]*$"},
+    "character": {
+      "type": "object",
+      "required": ["id", "display_name", "status", "state_revision", "fact_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/characterId"},
+        "display_name": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "INACTIVE", "DECEASED", "UNKNOWN"]},
+        "state_revision": {"type": "integer", "minimum": 1},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "required": ["id", "participants", "relationship_type", "status", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-REL-[A-Z0-9][A-Z0-9_-]*$"},
+        "participants": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/characterId"}
+        },
+        "relationship_type": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "ENDED", "UNKNOWN"]},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "location": {
+      "type": "object",
+      "required": ["id", "name", "status", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-LOC-[A-Z0-9][A-Z0-9_-]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "INACTIVE", "UNKNOWN"]},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "assetMoney": {
+      "type": "object",
+      "required": ["id", "owner_id", "asset_type", "status", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-ASSET-[A-Z0-9][A-Z0-9_-]*$"},
+        "owner_id": {"type": "string", "minLength": 1},
+        "asset_type": {
+          "enum": ["MONEY", "ACCOUNT", "PROPERTY", "VEHICLE", "ITEM", "BUSINESS", "CRYPTO", "OTHER"]
+        },
+        "currency": {"type": ["string", "null"], "minLength": 3},
+        "amount": {"type": ["number", "null"]},
+        "status": {"enum": ["ACTIVE", "DISPOSED", "UNKNOWN"]},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "thread": {
+      "type": "object",
+      "required": ["id", "summary", "status", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-THREAD-[A-Z0-9][A-Z0-9_-]*$"},
+        "summary": {"type": "string", "minLength": 1},
+        "status": {"enum": ["OPEN", "BLOCKED", "RESOLVED", "DROPPED"]},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "futureLock": {
+      "type": "object",
+      "required": ["id", "lock_type", "summary", "status", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-LOCK-[A-Z0-9][A-Z0-9_-]*$"},
+        "lock_type": {"enum": ["MUST_HAPPEN", "MUST_NOT_HAPPEN", "NOT_BEFORE", "NOT_AFTER"]},
+        "summary": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "SATISFIED", "SUPERSEDED"]},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    },
+    "proposal": {
+      "type": "object",
+      "required": ["id", "summary", "status", "source", "fact_ids"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^SB-PROP-[A-Z0-9][A-Z0-9_-]*$"},
+        "summary": {"type": "string", "minLength": 1},
+        "status": {"enum": ["OPEN", "ACCEPTED", "REJECTED", "SUPERSEDED"]},
+        "source": {"type": "string", "minLength": 1},
+        "fact_ids": {"$ref": "#/$defs/factIds"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
