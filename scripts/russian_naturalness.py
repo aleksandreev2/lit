@@ -25,13 +25,15 @@ def _morph_analyzer() -> pymorphy3.MorphAnalyzer:
 
 @lru_cache(maxsize=8192)
 def _morph_word(word: str) -> dict:
-    parse = _morph_analyzer().parse(word)[0]
+    parses = _morph_analyzer().parse(word)
+    primary = parses[0]
     return {
         "text": word,
         "normalized": word.casefold(),
-        "lemma": parse.normal_form.casefold(),
-        "pos": parse.tag.POS,
-        "case": parse.tag.case,
+        "lemma": primary.normal_form.casefold(),
+        "lemmas": sorted({parse.normal_form.casefold() for parse in parses}),
+        "pos": primary.tag.POS,
+        "case": primary.tag.case,
     }
 
 
@@ -66,7 +68,7 @@ def _token_pattern_evidence(tokens: list[str], matcher: dict) -> dict | None:
 
 def _lemma_matches(token: dict, spec: dict) -> bool:
     allowed_lemmas = {item.casefold() for item in spec["any_of"]}
-    if token["lemma"] not in allowed_lemmas:
+    if not allowed_lemmas.intersection(token["lemmas"]):
         return False
     allowed_surfaces = spec.get("surface_any_of")
     if allowed_surfaces is None:
