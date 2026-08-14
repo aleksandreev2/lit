@@ -12,7 +12,8 @@ permissions:
 jobs:
   deterministic:
     name: deterministic project gates
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -20,24 +21,48 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
-          python-version: "3.12"
+          python-version: "3.12.13"
           cache: pip
 
       - name: Install QA dependencies
-        run: python -m pip install --upgrade pip && pip install '.[qa]'
+        run: python -m pip install '.[qa]'
 
       - name: Project preflight
         run: python scripts/project_preflight.py
 
       - name: YAML lint
-        run: yamllint canon config rules templates
+        run: yamllint canon config current rules templates
+
+      - name: Python lint
+        run: ruff check scripts tests
 
       - name: Invariant tests
         run: pytest -q
 
+  dependency-audit:
+    name: Python dependency vulnerability audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12.13"
+          cache: pip
+
+      - name: Install pip-audit
+        run: python -m pip install pip-audit==2.10.1
+
+      - name: Audit project dependencies
+        run: pip-audit . --progress-spinner off
+
   vale:
     name: Vale deterministic prose/meta rules
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -47,3 +72,4 @@ jobs:
         with:
           files: '["README.md", "docs"]'
           fail_on_error: true
+          version: "3.17.1"
