@@ -38,6 +38,8 @@ def _make_inputs(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
                     {
                         "id": "SB-CHAR-IRINA",
                         "display_name": "Ирина",
+                        "aliases": ["Ира"],
+                        "grammatical_gender": "FEM",
                     }
                 ]
             },
@@ -58,9 +60,10 @@ def test_generate_editor_artifacts_and_verify_hashes(tmp_path: Path) -> None:
         character_state=state,
     )
 
-    assert len(manifest["artifacts"]) == 14
+    assert len(manifest["artifacts"]) == 15
     assert not Path(manifest["source"]["path"]).is_absolute()
     assert not Path(manifest["regression_rules"]["path"]).is_absolute()
+    assert not Path(manifest["pronoun_rules"]["path"]).is_absolute()
     assert validate_manifest(output / "artifact_manifest.json") == []
 
     dialogue = (output / "dialogue_only.txt").read_text(encoding="utf-8")
@@ -94,6 +97,10 @@ def test_question_knowledge_money_and_text_signals_are_review_candidates(tmp_pat
     naturalness = json.loads((output / "russian_naturalness.json").read_text(encoding="utf-8"))
     assert naturalness["status"] == "BLOCK"
     assert {item["rule"] for item in naturalness["findings"]} == {"SB-RUS-002"}
+
+    pronouns = json.loads((output / "pronoun_coreference.json").read_text(encoding="utf-8"))
+    assert pronouns["status"] == "PASS"
+    assert pronouns["automatic_rewrite_allowed"] is False
 
 
 def test_continuity_and_delta_reports_cannot_promote_canon(tmp_path: Path) -> None:
@@ -139,8 +146,29 @@ def test_rule_change_invalidates_generated_artifacts(tmp_path: Path) -> None:
     assert any("QA_ARTIFACT_RULES hash mismatch" in error for error in errors)
 
 
+def test_pronoun_rule_change_invalidates_generated_artifacts(tmp_path: Path) -> None:
+    source, runtime, state, output = _make_inputs(tmp_path)
+    rules_copy = tmp_path / "pronoun-regressions.yaml"
+    rules_copy.write_text(
+        (ROOT / "rules/pronoun_regressions.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    generate_artifacts(
+        source,
+        output,
+        parent_runtime=runtime,
+        character_state=state,
+        pronoun_rules=rules_copy,
+    )
+    rules_copy.write_text(rules_copy.read_text(encoding="utf-8") + "\n# changed\n", encoding="utf-8")
+
+    errors = validate_manifest(output / "artifact_manifest.json")
+    assert any("QA_ARTIFACT_PRONOUN_RULES hash mismatch" in error for error in errors)
+
+
 def test_regression_register_has_fixture_coverage() -> None:
     assert validate_regressions(ROOT / "rules/regressions.yaml") == []
+    assert validate_regressions(ROOT / "rules/pronoun_regressions.yaml") == []
 
 
 def test_machine_regression_without_fixture_is_rejected(tmp_path: Path) -> None:
