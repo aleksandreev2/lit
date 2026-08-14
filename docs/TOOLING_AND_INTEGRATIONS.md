@@ -16,6 +16,9 @@ Runs invariant tests in CI.
 ### yamllint
 Checks YAML quality/parse hygiene in CI.
 
+### Razdel
+Rule-based Russian tokenization/sentence segmentation. Used by deterministic dialogue/prose signal scanners so short-turn heuristics count Russian words more reliably than whitespace splitting.
+
 ### Vale
 Official markup-aware prose linter. We use it primarily as a configurable deterministic rule engine for project-specific anti-regressions (for example foreign-book contamination). It is **not** treated as a Russian literary editor and cannot replace dialogue/POV review.
 
