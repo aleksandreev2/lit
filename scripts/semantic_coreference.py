@@ -16,9 +16,9 @@ from pronoun_coreference import (
     _extract_candidates,
     _profile_aliases,
     _word_tokens,
-    analyze_text as analyze_fast_pronouns,
     load_character_profiles,
 )
+from pronoun_coreference import analyze_text as analyze_fast_pronouns
 from razdel import sentenize
 from regression_check import validate_regressions
 from text_signals import DIALOGUE_RE
