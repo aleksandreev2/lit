@@ -45,7 +45,7 @@ nodes:
     depends_on: [research, chapter_text]
   - id: generated_artifact_manifest
     kind: EVIDENCE
-    depends_on: [rules, chapter_text]
+    depends_on: [rules, character_state, chapter_text]
   - id: qa_manifest
     kind: EVIDENCE
     depends_on:
