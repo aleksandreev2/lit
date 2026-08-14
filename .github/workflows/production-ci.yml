@@ -10,10 +10,10 @@ permissions:
   contents: read
 
 jobs:
-  deterministic:
-    name: deterministic project gates
+  required:
+    name: required production engine gates
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -30,117 +30,26 @@ jobs:
       - name: Project preflight
         run: python scripts/project_preflight.py
 
+      - name: Structured state and provenance
+        run: python scripts/provenance_check.py
+
+      - name: Regression lock metadata and fixtures
+        run: python scripts/regression_check.py
+
+      - name: Dependency DAG
+        run: python scripts/dependency_graph.py config/dependency_graph.yaml
+
+      - name: Prove runtime invalidation path
+        run: python scripts/dependency_graph.py config/dependency_graph.yaml --changed runtime
+
       - name: YAML lint
         run: yamllint canon config current research rules templates
 
       - name: Python lint
         run: ruff check scripts tests
 
-      - name: Invariant tests
+      - name: Invariant and contract tests
         run: pytest -q
-
-  provenance:
-    name: structured state and provenance
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12.13"
-          cache: pip
-
-      - name: Install project dependencies
-        run: python -m pip install .
-
-      - name: Validate state and provenance
-        run: python scripts/provenance_check.py
-
-  regression-locks:
-    name: regression lock metadata and fixtures
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12.13"
-          cache: pip
-
-      - name: Install project dependencies
-        run: python -m pip install .
-
-      - name: Validate regression register
-        run: python scripts/regression_check.py
-
-  qa-artifacts:
-    name: text signal artifact generation
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12.13"
-          cache: pip
-
-      - name: Install QA dependencies
-        run: python -m pip install '.[qa]'
-
-      - name: Run artifact contract tests
-        run: pytest -q tests/test_qa_artifacts.py
-
-  promotion:
-    name: approval-gated promotion transaction
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12.13"
-          cache: pip
-
-      - name: Install QA dependencies
-        run: python -m pip install '.[qa]'
-
-      - name: Prove promotion invariants and rollback
-        run: pytest -q tests/test_promotion.py
-
-  invalidation:
-    name: dependency graph and invalidation
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12.13"
-          cache: pip
-
-      - name: Install project dependencies
-        run: python -m pip install .
-
-      - name: Validate dependency DAG
-        run: python scripts/dependency_graph.py config/dependency_graph.yaml
-
-      - name: Prove runtime invalidation path
-        run: python scripts/dependency_graph.py config/dependency_graph.yaml --changed runtime
 
   dependency-audit:
     name: Python dependency vulnerability audit
