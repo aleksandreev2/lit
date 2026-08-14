@@ -1,5 +1,5 @@
 book_id: SISTEMA_BOGATSTVA
-schema_version: 3
+schema_version: 4
 rules:
   - id: SB-DIA-001
     owner_family: dialogue
@@ -299,3 +299,437 @@ rules:
       suggestions:
         - "Ты рано пришёл."
         - "Он поздно вернулся."
+
+  - id: SB-RUS-005
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: ACCORDING_REQUIRES_DATIVE
+    description: >-
+      The preposition "согласно" governs the dative case in standard Russian.
+    positive_examples:
+      - "Согласно приказу директора, офис закроют раньше."
+      - "Согласно его приказу, офис закроют раньше."
+    negative_examples:
+      - "Согласно приказа директора, офис закроют раньше."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: CASE_AFTER
+      trigger_lemmas: [согласно]
+      allowed_cases: [datv]
+      target_pos: [NOUN]
+      max_scan: 4
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        "Согласно" requires the dative case; the following noun is parsed in a
+        different case.
+      suggestions:
+        - "Согласно приказу директора..."
+
+  - id: SB-RUS-006
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: DESPITE_REQUIRES_DATIVE
+    description: >-
+      The preposition "вопреки" governs the dative case in standard Russian.
+    positive_examples:
+      - "Вопреки приказу он остался."
+    negative_examples:
+      - "Вопреки приказа он остался."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: CASE_AFTER
+      trigger_lemmas: [вопреки]
+      allowed_cases: [datv]
+      target_pos: [NOUN]
+      max_scan: 4
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        "Вопреки" requires the dative case; the following noun is parsed in a
+        different case.
+      suggestions:
+        - "Вопреки приказу он остался."
+
+  - id: SB-RUS-007
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: PAY_FOR_GOVERNMENT
+    description: >-
+      "Оплатить" takes a direct object; "за" belongs with "заплатить" in this construction.
+    positive_examples:
+      - "Я оплатил квартиру."
+      - "Я заплатил за квартиру."
+    negative_examples:
+      - "Я оплатил за квартиру."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [оплатить]
+        - any_of: [за]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Nonstandard government: use "оплатить что" or "заплатить за что".
+      suggestions:
+        - "Я оплатил квартиру."
+        - "Я заплатил за квартиру."
+
+  - id: SB-RUS-008
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: DISCUSS_WITHOUT_O
+    description: >-
+      "Обсудить" takes a direct object and does not normally govern "о/об" directly.
+    positive_examples:
+      - "Мы обсудили проблему."
+      - "Мы обсудили вопрос о переезде."
+    negative_examples:
+      - "Мы обсудили о проблеме."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [обсудить]
+        - any_of: [о, об, обо]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Broken government after "обсудить"; use a direct object or another verb
+        such as "поговорить о".
+      suggestions:
+        - "Мы обсудили проблему."
+        - "Мы поговорили о проблеме."
+
+  - id: SB-RUS-009
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: HOPE_REQUIRES_NA
+    description: >-
+      "Надеяться" normally governs "на", not "о/об", for the hoped-for outcome.
+    positive_examples:
+      - "Я надеюсь на победу."
+    negative_examples:
+      - "Я надеюсь о победе."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [надеяться]
+        - any_of: [о, об, обо]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Broken government after "надеяться"; the intended Russian construction
+        is normally "надеяться на".
+      suggestions:
+        - "Я надеюсь на победу."
+
+  - id: SB-RUS-010
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: INTERESTED_WITHOUT_O
+    description: >-
+      "Интересоваться" governs the instrumental case rather than "о/об" directly.
+    positive_examples:
+      - "Я интересуюсь проектом."
+    negative_examples:
+      - "Я интересуюсь о проекте."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [интересоваться]
+        - any_of: [о, об, обо]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Broken government after "интересоваться"; use the instrumental case.
+      suggestions:
+        - "Я интересуюсь проектом."
+
+  - id: SB-RUS-011
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: CONCERN_WITHOUT_O
+    description: >-
+      "Касаться" governs the genitive case and does not take "о/об" directly.
+    positive_examples:
+      - "Это касается проблемы."
+    negative_examples:
+      - "Это касается о проблеме."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [касаться]
+        - any_of: [о, об, обо]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Broken government after "касаться"; use a genitive object without "о/об".
+      suggestions:
+        - "Это касается проблемы."
+
+  - id: SB-RUS-012
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: MAKE_SENSE_CALQUE
+    description: >-
+      A form of "делать смысл" is a high-confidence calque of English "make sense".
+    positive_examples:
+      - "Это имеет смысл."
+      - "В этом есть смысл."
+    negative_examples:
+      - "Это делает смысл."
+      - "Это не делает никакого смысла."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [делать]
+        - any_of: [смысл]
+      max_gap: 2
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Likely English calque "make sense"; Russian normally uses "иметь смысл"
+        or "в этом есть смысл".
+      suggestions:
+        - "Это имеет смысл."
+        - "В этом есть смысл."
+
+  - id: SB-RUS-013
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: HAVE_IDEA_CALQUE
+    description: >-
+      Bare "я имею идею" is grammatical but usually sounds translated or marked in modern dialogue.
+    positive_examples:
+      - "У меня есть идея."
+      - "Есть идея."
+    negative_examples:
+      - "Я имею идею."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [я]
+        - any_of: [иметь]
+        - any_of: [идея]
+      max_gap: 0
+      require_full_sentence: true
+      skip_if_question: false
+      confidence: MEDIUM
+      message: >-
+        Possible possession calque in dialogue; verify that the marked phrasing is intentional.
+      suggestions:
+        - "У меня есть идея."
+        - "Есть идея."
+
+  - id: SB-RUS-014
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: HAVE_QUESTION_CALQUE
+    description: >-
+      Bare "я имею вопрос" is a common translation-shaped construction in modern dialogue.
+    positive_examples:
+      - "У меня вопрос."
+      - "Можно задать вопрос?"
+    negative_examples:
+      - "Я имею вопрос."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [я]
+        - any_of: [иметь]
+        - any_of: [вопрос]
+      max_gap: 0
+      require_full_sentence: true
+      skip_if_question: false
+      confidence: MEDIUM
+      message: >-
+        Possible possession calque; in ordinary Russian dialogue "у меня вопрос"
+        is usually more natural.
+      suggestions:
+        - "У меня вопрос."
+        - "Можно задать вопрос?"
+
+  - id: SB-RUS-015
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: TAKE_SHOWER_CALQUE
+    description: >-
+      "Взять душ" is a high-confidence English-influenced collocation in standard Russian prose.
+    positive_examples:
+      - "Я принял душ."
+      - "Я сходил в душ."
+    negative_examples:
+      - "Я взял душ."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [взять]
+        - any_of: [душ]
+      max_gap: 1
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Unnatural collocation for standard Russian; use "принять душ" or a context-appropriate form.
+      suggestions:
+        - "Я принял душ."
+        - "Я сходил в душ."
+
+  - id: SB-RUS-016
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: ASK_QUESTION_COLLOCATION
+    description: >-
+      "Спросить вопрос" is a nonstandard or strongly colloquial collocation; fiction should review it.
+    positive_examples:
+      - "Он задал вопрос."
+      - "Он спросил меня о работе."
+    negative_examples:
+      - "Он спросил вопрос."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [спросить]
+        - any_of: [вопрос]
+      max_gap: 1
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: MEDIUM
+      message: >-
+        Possible nonstandard collocation; standard neutral Russian normally uses "задать вопрос".
+      suggestions:
+        - "Он задал вопрос."
+        - "Он спросил меня о работе."
+
+  - id: SB-RUS-017
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: OK_WITH_THIS_CALQUE
+    description: >-
+      "Я в порядке с этим" is a high-confidence calque of English "I'm okay with this".
+    positive_examples:
+      - "Я не против."
+      - "Меня это устраивает."
+      - "Со мной всё в порядке."
+    negative_examples:
+      - "Я в порядке с этим."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [я]
+        - any_of: [в]
+        - any_of: [порядок]
+        - any_of: [с]
+        - any_of: [это]
+      max_gap: 0
+      require_full_sentence: true
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Likely English calque; choose a Russian acceptance construction appropriate to context.
+      suggestions:
+        - "Я не против."
+        - "Меня это устраивает."
+
+  - id: SB-RUS-018
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: CONFIDENCE_WITH_O
+    description: >-
+      "Уверенность о" is usually a translated or malformed government pattern in neutral Russian.
+    positive_examples:
+      - "Уверенность в победе росла."
+    negative_examples:
+      - "Уверенность о победе росла."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v2-2026-08-14
+    superseded_by: null
+    matcher:
+      type: LEMMA_WINDOW
+      lemmas:
+        - any_of: [уверенность]
+        - any_of: [о, об, обо]
+      max_gap: 0
+      require_full_sentence: false
+      skip_if_question: false
+      confidence: MEDIUM
+      message: >-
+        Suspicious government after "уверенность"; neutral Russian normally uses "уверенность в".
+      suggestions:
+        - "Уверенность в победе росла."
