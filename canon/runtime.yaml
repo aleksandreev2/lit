@@ -1,15 +1,15 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 24
+through_chapter: 25
 last_approved_chapter:
-  number: 24
-  title: "Весь остаток"
-current_chapter:
   number: 25
-  status: AUTHOR_APPROVED
+  title: "Ещё не домой"
+current_chapter:
+  number: 26
+  status: NOT_STARTED
 story:
   date: "2026-07-25"
-  time_anchor: "late evening after Ch25 scene; promotion pending"
+  time_anchor: "late evening after Karine returned home and messaged German; Ch25 complete"
 system:
   current_quota_usd: 1000000.00
   deadline: "2026-08-01T12:36:18+04:00"
@@ -19,6 +19,14 @@ assets:
     amount_btc: 7.74166346
     acquisition_cost_usd: 498717.96
     custody_state: CLIENT_ACCOUNT_PENDING_CUSTODY_DECISION
+relationship_state:
+  karine_affair:
+    status: ACTIVE
+    gyumri_apartment_private_location: true
+    german_foot_fetish_known_to_karine: true
+    allowance_agreement: false
+    exclusivity_agreement: false
+    night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
 open_operational_tasks:
   - id: REVUELTO_RESEARCH
     owner: ARMAN_PETROSYAN
