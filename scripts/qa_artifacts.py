@@ -16,6 +16,8 @@ from pronoun_coreference import load_rules as load_pronoun_rules
 from razdel import sentenize, tokenize
 from russian_naturalness import analyze_lines as analyze_naturalness_lines
 from russian_naturalness import load_rules as load_naturalness_rules
+from semantic_coreference import analyze_lines as analyze_semantic_coreference_lines
+from semantic_coreference import load_rules as load_semantic_coreference_rules
 from text_signals import DIALOGUE_RE, token_count
 from text_signals import analyze_lines as analyze_text_signals
 
@@ -282,11 +284,15 @@ def generate_artifacts(
     character_state: Path | None = None,
     regression_rules: Path | None = None,
     pronoun_rules: Path | None = None,
+    semantic_coreference_rules: Path | None = None,
 ) -> dict:
     source = source.resolve()
     output_dir = output_dir.resolve()
     regression_rules = (regression_rules or ROOT / "rules/regressions.yaml").resolve()
     pronoun_rules = (pronoun_rules or ROOT / "rules/pronoun_regressions.yaml").resolve()
+    semantic_coreference_rules = (
+        semantic_coreference_rules or ROOT / "rules/semantic_coreference_regressions.yaml"
+    ).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     text = source.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -299,10 +305,16 @@ def generate_artifacts(
     questions = question_audit(turns)
     signals = analyze_text_signals(lines)
     naturalness = analyze_naturalness_lines(lines, load_naturalness_rules(regression_rules))
+    profiles = load_pronoun_profiles(character_state)
     pronouns = analyze_pronoun_lines(
         lines,
         load_pronoun_rules(pronoun_rules),
-        load_pronoun_profiles(character_state),
+        profiles,
+    )
+    semantic_coreference = analyze_semantic_coreference_lines(
+        lines,
+        load_semantic_coreference_rules(semantic_coreference_rules),
+        profiles,
     )
 
     (output_dir / "dialogue_only.txt").write_text("\n".join(dialogue_lines) + "\n", encoding="utf-8")
@@ -315,6 +327,7 @@ def generate_artifacts(
         "text_signals.json": {"findings": signals, "count": len(signals)},
         "russian_naturalness.json": naturalness,
         "pronoun_coreference.json": pronouns,
+        "semantic_coreference.json": semantic_coreference,
         "comeback_signals.json": {"candidates": comeback_candidates(lines)},
         "entity_mentions.json": {"candidates": entities},
         "knowledge_claim_candidates.json": {"candidates": knowledge_candidates(lines)},
@@ -360,6 +373,10 @@ def generate_artifacts(
             "path": os.path.relpath(pronoun_rules, output_dir),
             "sha256": sha256(pronoun_rules),
         },
+        "semantic_coreference_rules": {
+            "path": os.path.relpath(semantic_coreference_rules, output_dir),
+            "sha256": sha256(semantic_coreference_rules),
+        },
         "parent_runtime_sha256": sha256(parent_runtime) if parent_runtime else None,
         "character_state_sha256": sha256(character_state) if character_state else None,
         "artifacts": artifacts,
@@ -369,7 +386,9 @@ def generate_artifacts(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate deterministic editor-support artifacts from a chapter candidate.")
+    parser = argparse.ArgumentParser(
+        description="Generate deterministic editor-support artifacts from a chapter candidate."
+    )
     parser.add_argument("source", type=Path)
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("--parent-runtime", type=Path)
@@ -380,6 +399,11 @@ def main() -> int:
         type=Path,
         default=ROOT / "rules/pronoun_regressions.yaml",
     )
+    parser.add_argument(
+        "--semantic-coreference-rules",
+        type=Path,
+        default=ROOT / "rules/semantic_coreference_regressions.yaml",
+    )
     args = parser.parse_args()
 
     manifest = generate_artifacts(
@@ -389,6 +413,7 @@ def main() -> int:
         character_state=args.character_state,
         regression_rules=args.regression_rules,
         pronoun_rules=args.pronoun_rules,
+        semantic_coreference_rules=args.semantic_coreference_rules,
     )
     print(
         f"QA_ARTIFACTS: PASS count={len(manifest['artifacts'])} "
