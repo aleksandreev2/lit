@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/freeze-manifest.schema.json",
+  "title": "Sistema Bogatstva Cryptographic Freeze Manifest",
+  "type": "object",
+  "required": [
+    "book_id",
+    "schema_version",
+    "chapter",
+    "inputs",
+    "qa_gates",
+    "graph_path"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "chapter": {"type": "integer", "minimum": 1},
+    "inputs": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["role", "node_id", "path", "sha256"],
+        "properties": {
+          "role": {
+            "enum": [
+              "CHAPTER_TEXT",
+              "PARENT_RUNTIME",
+              "CHARACTER_STATE",
+              "REGRESSION_RULES",
+              "RESEARCH_MANIFEST",
+              "QA_MANIFEST",
+              "GENERATED_ARTIFACT_MANIFEST"
+            ]
+          },
+          "node_id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "qa_gates": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"enum": ["PASS", "BLOCK", "REVIEW", "STALE"]}
+    },
+    "graph_path": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}
