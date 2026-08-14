@@ -11,8 +11,11 @@ from pathlib import Path
 
 import yaml
 from razdel import sentenize, tokenize
-from text_signals import DIALOGUE_RE, analyze_lines, token_count
+from russian_naturalness import analyze_lines as analyze_naturalness_lines
+from russian_naturalness import load_rules as load_naturalness_rules
+from text_signals import DIALOGUE_RE, analyze_lines as analyze_text_signals, token_count
 
+ROOT = Path(__file__).resolve().parents[1]
 ENTITY_RE = re.compile(r"(?<![.!?]\s)\b(?:[А-ЯЁ][а-яё]{2,}|[A-Z][A-Za-z0-9&._-]{2,})(?:\s+[А-ЯЁA-Z][\w.-]{2,}){0,2}\b")
 NUMBER_RE = re.compile(
     r"(?<!\w)(?:\d{1,3}(?:[\s\u00a0]\d{3})+|\d+(?:[.,]\d+)?)"
@@ -278,9 +281,11 @@ def generate_artifacts(
     *,
     parent_runtime: Path | None = None,
     character_state: Path | None = None,
+    regression_rules: Path | None = None,
 ) -> dict:
     source = source.resolve()
     output_dir = output_dir.resolve()
+    regression_rules = (regression_rules or ROOT / "rules/regressions.yaml").resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     text = source.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -291,7 +296,8 @@ def generate_artifacts(
     entities = entity_candidates(lines)
     numbers = numeric_mentions(lines)
     questions = question_audit(turns)
-    signals = analyze_lines(lines)
+    signals = analyze_text_signals(lines)
+    naturalness = analyze_naturalness_lines(lines, load_naturalness_rules(regression_rules))
 
     (output_dir / "dialogue_only.txt").write_text("\n".join(dialogue_lines) + "\n", encoding="utf-8")
     (output_dir / "narration_only.txt").write_text("\n".join(narration_lines) + "\n", encoding="utf-8")
@@ -301,6 +307,7 @@ def generate_artifacts(
         "dialogue_windows.json": {"windows": turn_windows(turns), "count": len(turns)},
         "repeated_phrases.json": {"phrases": repeated_phrases(text)},
         "text_signals.json": {"findings": signals, "count": len(signals)},
+        "russian_naturalness.json": naturalness,
         "comeback_signals.json": {"candidates": comeback_candidates(lines)},
         "entity_mentions.json": {"candidates": entities},
         "knowledge_claim_candidates.json": {"candidates": knowledge_candidates(lines)},
@@ -338,6 +345,10 @@ def generate_artifacts(
             "path": os.path.relpath(source, output_dir),
             "sha256": sha256(source),
         },
+        "regression_rules": {
+            "path": os.path.relpath(regression_rules, output_dir),
+            "sha256": sha256(regression_rules),
+        },
         "parent_runtime_sha256": sha256(parent_runtime) if parent_runtime else None,
         "character_state_sha256": sha256(character_state) if character_state else None,
         "artifacts": artifacts,
@@ -352,6 +363,7 @@ def main() -> int:
     parser.add_argument("output_dir", type=Path)
     parser.add_argument("--parent-runtime", type=Path)
     parser.add_argument("--character-state", type=Path)
+    parser.add_argument("--regression-rules", type=Path, default=ROOT / "rules/regressions.yaml")
     args = parser.parse_args()
 
     manifest = generate_artifacts(
@@ -359,6 +371,7 @@ def main() -> int:
         args.output_dir,
         parent_runtime=args.parent_runtime,
         character_state=args.character_state,
+        regression_rules=args.regression_rules,
     )
     print(
         f"QA_ARTIFACTS: PASS count={len(manifest['artifacts'])} "
