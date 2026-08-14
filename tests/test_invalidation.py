@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import yaml
-
 from dependency_graph import graph_errors, transitive_dependents, validate_graph_file
 from freeze_manifest import build_manifest, verify_manifest
 
