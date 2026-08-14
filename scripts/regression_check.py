@@ -9,6 +9,10 @@ import yaml
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_REGISTRIES = (
+    ROOT / "rules/regressions.yaml",
+    ROOT / "rules/pronoun_regressions.yaml",
+)
 
 
 def validate_regressions(path: Path, root: Path = ROOT) -> list[str]:
@@ -48,12 +52,37 @@ def validate_regressions(path: Path, root: Path = ROOT) -> list[str]:
     return errors
 
 
+def validate_regression_registries(paths: tuple[Path, ...] = DEFAULT_REGISTRIES) -> list[str]:
+    errors: list[str] = []
+    seen_ids: dict[str, Path] = {}
+    for path in paths:
+        errors.extend(validate_regressions(path))
+        if not path.is_file():
+            continue
+        document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        for rule in document.get("rules", []):
+            rule_id = rule.get("id")
+            if not rule_id:
+                continue
+            if rule_id in seen_ids:
+                errors.append(
+                    f"REGRESSION_ID {rule_id}: duplicated across {seen_ids[rule_id]} and {path}"
+                )
+            else:
+                seen_ids[rule_id] = path
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate regression-lock metadata and fixture coverage.")
-    parser.add_argument("path", type=Path, nargs="?", default=ROOT / "rules/regressions.yaml")
+    parser.add_argument("path", type=Path, nargs="?")
     args = parser.parse_args()
 
-    errors = validate_regressions(args.path)
+    errors = (
+        validate_regressions(args.path)
+        if args.path is not None
+        else validate_regression_registries()
+    )
     if errors:
         print("REGRESSION_CHECK: FAIL")
         for error in errors:

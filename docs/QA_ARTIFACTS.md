@@ -21,6 +21,8 @@ No command is wired to `current/025` automatically. Chapter 25 remains `NOT_STAR
 - `dialogue_windows.json` — local dialogue windows for semantic review.
 - `repeated_phrases.json` — deterministic repeated 3–5 token phrases.
 - `text_signals.json` — existing short-reply/reviewer-agent rules exposed as reusable data.
+- `russian_naturalness.json` — morphology-aware Russian government/calque/collocation findings.
+- `pronoun_coreference.json` — local pronoun/coreference candidate evidence for ambiguous antecedents, gender/number conflicts and possessive/reflexive review.
 - `comeback_signals.json` — `поэтому / вот именно / тем более` candidates.
 - `entity_mentions.json` — low-confidence capitalized entity/name candidates.
 - `knowledge_claim_candidates.json` — lines containing knowledge/belief acquisition language.
@@ -28,9 +30,9 @@ No command is wired to `current/025` automatically. Chapter 25 remains `NOT_STAR
 - `research_candidates.json` — money/rate, URL and Latin-script entity candidates that may require source work.
 - `continuity_audit.json` — source hashes plus known/unresolved entity mentions against optional structured state.
 - `chapter_delta_candidate.json` — deliberately empty promotion proposal scaffold with `automatic_promotion_allowed: false`.
-- `artifact_manifest.json` — source hash plus every generated artifact hash and byte size.
+- `artifact_manifest.json` — source/rule bindings plus every generated artifact hash and byte size.
 
-`qa_artifact_check.py` validates the manifest schema, source hash, artifact path containment, SHA-256 and byte size. Any post-generation mutation breaks verification.
+`qa_artifact_check.py` validates the manifest schema, source hash, both regression-rule registry hashes, artifact path containment, SHA-256 and byte size. Any post-generation mutation of the source, rules or artifacts breaks verification.
 
 ## Detection classes
 
@@ -40,17 +42,20 @@ Deterministic output means the same input/revision produces the same report. It 
 - `HEURISTIC` — a reproducible review candidate that needs editor judgment.
 - semantic-only rules remain outside automatic PASS/BLOCK unless a later semantic reviewer records evidence.
 
-Entity extraction is intentionally conservative and labeled low confidence. It does not claim NER-grade truth.
+Entity extraction is intentionally conservative and labeled low confidence. It does not claim NER-grade truth. Pronoun/coreference findings are also REVIEW candidates rather than automatic corrections; see `docs/PRONOUN_COREFERENCE_QA.md`.
 
 ## Russian NLP evaluation
 
-The Natasha ecosystem was evaluated for this phase. Natasha/SlovNet provides Russian NER, morphology and syntax under MIT licensing and is production-oriented, but its published compact NER model is optimized for news and requires model assets. That is useful for an optional heavier language-analysis tier, not for the fast deterministic gate here.
+The fast artifact layer uses two compact, local dependencies:
 
-Razdel remains the connected dependency because it is MIT-licensed, rule-based, compact and explicitly evaluated on Russian corpora including fiction. It already provides the token/sentence segmentation needed by these reports without model downloads.
+- Razdel for rule-based sentence/token segmentation;
+- `pymorphy3` for Russian morphology and normalized lemma/case/gender/number evidence.
+
+The Natasha/SlovNet ecosystem remains useful for an optional heavier syntax tier, but its model assets are unnecessary for the fast deterministic candidate reports. Stanza 1.14.0 is connected separately as an optional dependency/coreference semantic challenger and is deliberately excluded from the required fast CI dependency set.
 
 ## Regression locks
 
-`rules/regressions.yaml` is now schema-backed and each rule records:
+Machine-detectable rules are schema-backed and carry:
 
 - stable ID and owner family;
 - BLOCK/REVIEW severity;
@@ -62,10 +67,14 @@ Razdel remains the connected dependency because it is MIT-licensed, rule-based, 
 - introduction provenance;
 - supersession link.
 
+The main naturalness/dialogue registry lives at `rules/regressions.yaml`. Pronoun/coreference rules live at `rules/pronoun_regressions.yaml`; `scripts/regression_check.py` validates both and rejects duplicate stable IDs across registries.
+
 Run:
 
 ```bash
 python scripts/regression_check.py
+python scripts/russian_naturalness.py --self-test
+python scripts/pronoun_coreference.py --self-test
 ```
 
-Deterministic or heuristic rules without an existing fixture/test file fail the register check. This does not pretend that a test file fully proves a semantic rule; it ensures every claimed machine-detectable lock has executable coverage somewhere in the suite.
+Deterministic or heuristic rules without an existing fixture/test file fail the register check. The specialized corpora additionally require both bad-case coverage and explicit false-positive guards for their executable rules.

@@ -45,6 +45,9 @@ jobs:
       - name: Russian naturalness regression corpus
         run: python scripts/russian_naturalness.py --self-test
 
+      - name: Pronoun coreference regression corpus
+        run: python scripts/pronoun_coreference.py --self-test
+
       - name: Dependency DAG
         run: python scripts/dependency_graph.py config/dependency_graph.yaml
 

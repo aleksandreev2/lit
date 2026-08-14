@@ -34,6 +34,9 @@ nodes:
   - id: naturalness_qa
     kind: QA
     depends_on: [rules, chapter_text]
+  - id: pronoun_coreference_qa
+    kind: QA
+    depends_on: [rules, character_state, chapter_text]
   - id: fact_qa
     kind: QA
     depends_on: [research, chapter_text]
@@ -49,6 +52,7 @@ nodes:
       - continuity_qa
       - regression_qa
       - naturalness_qa
+      - pronoun_coreference_qa
       - fact_qa
   - id: freeze
     kind: FREEZE

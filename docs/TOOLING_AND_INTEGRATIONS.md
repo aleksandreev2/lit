@@ -39,6 +39,13 @@ Source: `https://github.com/actions/upload-artifact`
 ### Razdel
 Rule-based Russian tokenization/sentence segmentation. Used by deterministic dialogue/prose signal scanners so short-turn heuristics count Russian words more reliably than whitespace splitting.
 
+Source: `https://github.com/natasha/razdel`
+
+### pymorphy3 2.0.6
+Pinned Russian morphological analyzer used by the naturalness and fast pronoun/coreference QA layers. It provides local lemma, part-of-speech, case, gender and number evidence without a model-server dependency. Ambiguous forms are handled conservatively; a low-probability noun parse is not allowed to override the analyzer's top part-of-speech parse merely to create a pronoun antecedent.
+
+Source: `https://github.com/no-plagiarism/pymorphy3`
+
 ### Vale 3.17.1
 Official markup-aware prose linter. We use it primarily as a configurable deterministic rule engine for project-specific anti-regressions. It is **not** treated as a Russian literary editor and cannot replace dialogue/POV review. CI pins the Vale binary version rather than using `latest`.
 
@@ -47,6 +54,13 @@ The connected Drive account is used to discover stable file IDs/revision IDs for
 
 ### LanguageTool — optional adapter
 LanguageTool supports Russian proofreading and can be run locally. It is intentionally optional because a full local installation is comparatively heavy and remote public API use is not appropriate for automated CI or unpublished text. When enabled, run it locally/self-hosted and treat findings as REVIEW signals rather than automatic rewrites.
+
+### Stanza 1.14.0 — optional semantic challenger
+Stanford NLP Stanza is available through the optional `coref` dependency group. Current Stanza exposes dependency parsing and Russian CorefUD coreference. The project adapter requests `tokenize,pos,lemma,depparse,coref`, records dependency/coreference evidence, and always returns reviewer evidence rather than an editorial PASS.
+
+The adapter sets `download_method=None`, so it does not silently download or refresh Stanza or Hugging Face model assets during chapter review. Russian model installation must be an explicit separate operation. Stanza remains outside `.[qa]` because the transformer coreference tier is materially heavier than the fast mandatory morphology-based audit.
+
+Source: `https://github.com/stanfordnlp/stanza`
 
 ## Evaluated, not imported as runtime dependencies
 
@@ -71,9 +85,14 @@ Mature BSD-3-Clause graph library. It was evaluated for the dependency/invalidat
 Source: `https://github.com/networkx/networkx`
 
 ### Natasha / SlovNet
-MIT-licensed Russian NLP ecosystem with NER, morphology and syntax. Useful as an optional heavier semantic-support tier, but its model assets and news-oriented compact NER are unnecessary for the fast deterministic candidate-report layer. Razdel supplies the segmentation needed there without model downloads.
+MIT-licensed Russian NLP ecosystem with morphology, syntax and NER. It remains a useful optional syntax/NER candidate, but its model assets do not replace the direct Russian coreference capability selected in Stanza. Razdel already supplies the segmentation needed by the fast tier, while pymorphy3 supplies local morphology.
 
 Source: `https://github.com/natasha/natasha`
+
+### Coreferee
+spaCy-based coreference extension evaluated specifically for the pronoun/coreference phase. Its documented supported languages are English, French, German and Polish; Russian is not supported, so it was rejected instead of adding a non-working dependency.
+
+Source: `https://github.com/richardpaulhudson/coreferee`
 
 ### NousResearch/autonovel
 Useful ideas: mechanical + LLM “two immune systems”, state propagation debt, chapter comparison/revision loops. Not imported directly because it is an autonomous generation pipeline and would conflict with the author-approval/freeze workflow. We adapt architectural ideas instead.

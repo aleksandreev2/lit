@@ -24,6 +24,9 @@ qa = [
 grammar = [
   "language-tool-python>=2.9,<3",
 ]
+coref = [
+  "stanza==1.14.0",
+]
 
 [tool.setuptools]
 packages = []

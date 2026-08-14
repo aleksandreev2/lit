@@ -10,6 +10,9 @@ from collections import Counter
 from pathlib import Path
 
 import yaml
+from pronoun_coreference import analyze_lines as analyze_pronoun_lines
+from pronoun_coreference import load_character_profiles as load_pronoun_profiles
+from pronoun_coreference import load_rules as load_pronoun_rules
 from razdel import sentenize, tokenize
 from russian_naturalness import analyze_lines as analyze_naturalness_lines
 from russian_naturalness import load_rules as load_naturalness_rules
@@ -108,12 +111,7 @@ def turn_windows(turns: list[dict], radius: int = 1) -> list[dict]:
     for index, turn in enumerate(turns):
         start = max(0, index - radius)
         end = min(len(turns), index + radius + 1)
-        windows.append(
-            {
-                "focus_turn": turn["turn"],
-                "turns": turns[start:end],
-            }
-        )
+        windows.append({"focus_turn": turn["turn"], "turns": turns[start:end]})
     return windows
 
 
@@ -283,10 +281,12 @@ def generate_artifacts(
     parent_runtime: Path | None = None,
     character_state: Path | None = None,
     regression_rules: Path | None = None,
+    pronoun_rules: Path | None = None,
 ) -> dict:
     source = source.resolve()
     output_dir = output_dir.resolve()
     regression_rules = (regression_rules or ROOT / "rules/regressions.yaml").resolve()
+    pronoun_rules = (pronoun_rules or ROOT / "rules/pronoun_regressions.yaml").resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     text = source.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -299,6 +299,11 @@ def generate_artifacts(
     questions = question_audit(turns)
     signals = analyze_text_signals(lines)
     naturalness = analyze_naturalness_lines(lines, load_naturalness_rules(regression_rules))
+    pronouns = analyze_pronoun_lines(
+        lines,
+        load_pronoun_rules(pronoun_rules),
+        load_pronoun_profiles(character_state),
+    )
 
     (output_dir / "dialogue_only.txt").write_text("\n".join(dialogue_lines) + "\n", encoding="utf-8")
     (output_dir / "narration_only.txt").write_text("\n".join(narration_lines) + "\n", encoding="utf-8")
@@ -309,6 +314,7 @@ def generate_artifacts(
         "repeated_phrases.json": {"phrases": repeated_phrases(text)},
         "text_signals.json": {"findings": signals, "count": len(signals)},
         "russian_naturalness.json": naturalness,
+        "pronoun_coreference.json": pronouns,
         "comeback_signals.json": {"candidates": comeback_candidates(lines)},
         "entity_mentions.json": {"candidates": entities},
         "knowledge_claim_candidates.json": {"candidates": knowledge_candidates(lines)},
@@ -350,6 +356,10 @@ def generate_artifacts(
             "path": os.path.relpath(regression_rules, output_dir),
             "sha256": sha256(regression_rules),
         },
+        "pronoun_rules": {
+            "path": os.path.relpath(pronoun_rules, output_dir),
+            "sha256": sha256(pronoun_rules),
+        },
         "parent_runtime_sha256": sha256(parent_runtime) if parent_runtime else None,
         "character_state_sha256": sha256(character_state) if character_state else None,
         "artifacts": artifacts,
@@ -365,6 +375,11 @@ def main() -> int:
     parser.add_argument("--parent-runtime", type=Path)
     parser.add_argument("--character-state", type=Path)
     parser.add_argument("--regression-rules", type=Path, default=ROOT / "rules/regressions.yaml")
+    parser.add_argument(
+        "--pronoun-rules",
+        type=Path,
+        default=ROOT / "rules/pronoun_regressions.yaml",
+    )
     args = parser.parse_args()
 
     manifest = generate_artifacts(
@@ -373,6 +388,7 @@ def main() -> int:
         parent_runtime=args.parent_runtime,
         character_state=args.character_state,
         regression_rules=args.regression_rules,
+        pronoun_rules=args.pronoun_rules,
     )
     print(
         f"QA_ARTIFACTS: PASS count={len(manifest['artifacts'])} "

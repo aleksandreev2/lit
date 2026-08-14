@@ -40,6 +40,12 @@
       "properties": {
         "id": {"$ref": "#/$defs/characterId"},
         "display_name": {"type": "string", "minLength": 1},
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "grammatical_gender": {"enum": ["MASC", "FEM", "NEUT", "UNKNOWN"]},
         "status": {"enum": ["ACTIVE", "INACTIVE", "DECEASED", "UNKNOWN"]},
         "state_revision": {"type": "integer", "minimum": 1},
         "fact_ids": {"$ref": "#/$defs/factIds"}
