@@ -34,6 +34,9 @@ nodes:
   - id: fact_qa
     kind: QA
     depends_on: [research, chapter_text]
+  - id: generated_artifact_manifest
+    kind: EVIDENCE
+    depends_on: [chapter_text]
   - id: qa_manifest
     kind: EVIDENCE
     depends_on:
@@ -52,9 +55,10 @@ nodes:
       - rules
       - research
       - qa_manifest
-  - id: artifact_manifest
+      - generated_artifact_manifest
+  - id: release_artifact_manifest
     kind: ARTIFACT
     depends_on: [freeze]
   - id: pdf_release
     kind: DELIVERABLE
-    depends_on: [freeze, artifact_manifest]
+    depends_on: [freeze, release_artifact_manifest]
