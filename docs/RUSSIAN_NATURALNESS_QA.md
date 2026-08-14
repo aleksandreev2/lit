@@ -76,9 +76,9 @@ as stale.
 ## What v1 does not claim
 
 This is not yet general Russian grammar, morphology, dependency parsing, pronoun coreference, or
-semantic lexical choice. LanguageTool remains useful as an independent optional reviewer, and a
-later NLP tier can add morphology/syntax when it demonstrably improves recall without unacceptable
-false positives.
+semantic lexical choice. The existing optional LanguageTool adapter remains a secondary reviewer;
+it is not treated as the sole authority for fiction naturalness. A later NLP tier can add
+morphology/syntax when it demonstrably improves recall without unacceptable false positives.
 
 The v1 goal is narrower: convert recurring, high-value machine-Russian defects into permanent,
 testable regression locks instead of relying on memory during editing.
