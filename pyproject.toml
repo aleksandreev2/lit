@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "sistema-bogatstva-production"
 version = "0.1.0"
@@ -17,6 +21,9 @@ qa = [
 grammar = [
   "language-tool-python>=2.9,<3",
 ]
+
+[tool.setuptools]
+packages = []
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
