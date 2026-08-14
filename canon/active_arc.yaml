@@ -1,0 +1,35 @@
+book_id: SISTEMA_BOGATSTVA
+schema_version: 1
+canon_through: 24
+happened:
+  - chapter: 23
+    event: FIRST_SEX_WITH_KARINE
+  - chapter: 24
+    event: MORNING_AFTER_LOVER_RITUAL
+  - chapter: 24
+    event: BITCOIN_PURCHASE_AND_500K_CYCLE_CLOSE
+  - chapter: 24
+    event: NEW_1M_CYCLE
+active_threads:
+  - id: KARINE_AFFAIR
+    status: ACTIVE
+    note: "Affair/lover relationship is factual; secrecy remains active. No love/exclusivity/allowance agreement."
+  - id: EVENING_KARINE_PICKUP
+    status: OPEN
+    note: "Karine agreed to pickup after work around 19:00, away from the store entrance."
+  - id: BTC_CUSTODY
+    status: OPEN
+    owner: ARMAN_PETROSYAN
+  - id: REVUELTO_RESEARCH
+    status: OPEN
+    owner: ARMAN_PETROSYAN
+hard_future_locks:
+  - id: MILENA_SOCIAL_BRIDGE
+    rule: "No expensive ask/material flirt before encounter -> ordinary exchange -> recognition -> small foothold."
+  - id: LILIT_EARNED_ACCESS
+    rule: "No instant German-facing romantic/sexual progression."
+  - id: GERMAN_SEXUAL_SKILL
+    rule: "First sex does not make German sexually expert; competence must grow through feedback/correction."
+  - id: REVUELTO_NOT_OWNED
+    rule: "Research only. Do not narrate purchase/contact/import as happened until shown and researched."
+proposals: []
