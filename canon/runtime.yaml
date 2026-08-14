@@ -6,10 +6,10 @@ last_approved_chapter:
   title: "Весь остаток"
 current_chapter:
   number: 25
-  status: NOT_STARTED
+  status: AUTHOR_APPROVED
 story:
   date: "2026-07-25"
-  time_anchor: "after 12:36, later driving back toward Artik"
+  time_anchor: "late evening after Ch25 scene; promotion pending"
 system:
   current_quota_usd: 1000000.00
   deadline: "2026-08-01T12:36:18+04:00"
