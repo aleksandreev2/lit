@@ -1,0 +1,29 @@
+book_id: SISTEMA_BOGATSTVA
+chapter: 26
+stage: NOT_STARTED
+parent_runtime_through: 25
+author_instructions: []
+source_sync:
+  runtime_sha256: null
+  character_profiles: []
+  approved_chapters: []
+  production_rules: []
+research:
+  required: []
+  completed: []
+qa:
+  structural: PENDING
+  dialogue: PENDING
+  prose_pov: PENDING
+  character: PENDING
+  continuity_knowledge: PENDING
+  regression: PENDING
+  russian_proofread: PENDING
+  fact_recheck: PENDING
+  text_preflight: PENDING
+  final_reread: PENDING
+freeze:
+  chapter_sha256: null
+  final_text_frozen: false
+  author_approved: false
+  author_approval_evidence_id: null
