@@ -13,7 +13,8 @@ import yaml
 from razdel import sentenize, tokenize
 from russian_naturalness import analyze_lines as analyze_naturalness_lines
 from russian_naturalness import load_rules as load_naturalness_rules
-from text_signals import DIALOGUE_RE, analyze_lines as analyze_text_signals, token_count
+from text_signals import DIALOGUE_RE, token_count
+from text_signals import analyze_lines as analyze_text_signals
 
 ROOT = Path(__file__).resolve().parents[1]
 ENTITY_RE = re.compile(r"(?<![.!?]\s)\b(?:[А-ЯЁ][а-яё]{2,}|[A-Z][A-Za-z0-9&._-]{2,})(?:\s+[А-ЯЁA-Z][\w.-]{2,}){0,2}\b")
