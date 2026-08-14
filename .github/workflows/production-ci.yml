@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: "3.12"
           cache: pip
@@ -30,7 +30,7 @@ jobs:
         run: python scripts/project_preflight.py
 
       - name: YAML lint
-        run: yamllint canon config
+        run: yamllint canon config rules templates
 
       - name: Invariant tests
         run: pytest -q
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Vale
         uses: vale-cli/vale-action@518a9136acc6e6668ce7c00d367051e0941e87ff
