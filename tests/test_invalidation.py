@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_repository_dependency_graph_is_valid_and_acyclic() -> None:
     graph, errors = validate_graph_file(ROOT / "config/dependency_graph.yaml")
     assert errors == []
-    assert len(graph["nodes"]) >= 15
+    assert len(graph["nodes"]) >= 19
 
 
 def test_runtime_change_invalidates_only_transitive_dependents() -> None:
@@ -28,6 +28,17 @@ def test_runtime_change_invalidates_only_transitive_dependents() -> None:
     assert "dialogue_qa" not in stale
 
 
+def test_character_state_invalidates_coreference_and_generated_evidence() -> None:
+    graph = yaml.safe_load((ROOT / "config/dependency_graph.yaml").read_text(encoding="utf-8"))
+    stale = transitive_dependents(graph, {"character_state"})
+    assert "pronoun_coreference_qa" in stale
+    assert "semantic_coreference_qa" in stale
+    assert "generated_artifact_manifest" in stale
+    assert "qa_manifest" in stale
+    assert "freeze" in stale
+    assert "pdf_release" in stale
+
+
 def test_cycle_is_rejected() -> None:
     graph = {
         "nodes": [
@@ -40,7 +51,10 @@ def test_cycle_is_rejected() -> None:
 
 def _write_freeze_fixture(tmp_path: Path) -> Path:
     graph_path = tmp_path / "dependency_graph.yaml"
-    graph_path.write_text((ROOT / "config/dependency_graph.yaml").read_text(encoding="utf-8"), encoding="utf-8")
+    graph_path.write_text(
+        (ROOT / "config/dependency_graph.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
 
     role_to_file_and_node = {
         "CHAPTER_TEXT": ("chapter.txt", "chapter_text"),
