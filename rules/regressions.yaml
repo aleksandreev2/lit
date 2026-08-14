@@ -24,7 +24,9 @@ rules:
   - id: SB-KNW-001
     severity: BLOCK
     name: KNOWLEDGE_PROVENANCE
-    description: "Exact secret/sum/private fact used by a character needs an on-page or previously approved source, explicit inference, or current reveal."
+    description: >-
+      Exact secret/sum/private fact used by a character needs an on-page or
+      previously approved source, explicit inference, or current reveal.
   - id: SB-CHR-001
     severity: BLOCK
     name: MILENA_ACCESS_GATE
