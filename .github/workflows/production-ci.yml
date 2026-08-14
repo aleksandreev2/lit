@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: production-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   required:
     name: required production engine gates
@@ -17,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
@@ -42,14 +48,36 @@ jobs:
       - name: Prove runtime invalidation path
         run: python scripts/dependency_graph.py config/dependency_graph.yaml --changed runtime
 
+      - name: Drive sync contract
+        run: python scripts/sync_conflicts.py sync/manifest.yaml
+
       - name: YAML lint
-        run: yamllint canon config current research rules templates
+        run: yamllint canon config current research rules sync templates
 
       - name: Python lint
         run: ruff check scripts tests
 
       - name: Invariant and contract tests
         run: pytest -q
+
+      - name: Build QA report
+        id: qa-report
+        if: ${{ always() }}
+        run: python scripts/qa_report.py qa-report --revision "$GITHUB_SHA"
+
+      - name: Verify QA report
+        if: ${{ always() && steps.qa-report.outcome == 'success' }}
+        run: python scripts/qa_report_check.py qa-report
+
+      - name: Upload QA report
+        if: ${{ always() && steps.qa-report.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: qa-report
+          path: qa-report
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 9
 
   dependency-audit:
     name: Python dependency vulnerability audit
@@ -58,6 +86,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
@@ -71,6 +101,28 @@ jobs:
       - name: Audit project dependencies
         run: pip-audit . --progress-spinner off
 
+  workflow-security:
+    name: GitHub Actions security audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054
+        with:
+          advanced-security: false
+          annotations: true
+          online-audits: false
+          collect: workflows
+          persona: regular
+          min-severity: medium
+          min-confidence: medium
+          version: "1.29.0"
+
   vale:
     name: Vale deterministic prose/meta rules
     runs-on: ubuntu-24.04
@@ -78,6 +130,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
 
       - name: Vale
         uses: vale-cli/vale-action@518a9136acc6e6668ce7c00d367051e0941e87ff
