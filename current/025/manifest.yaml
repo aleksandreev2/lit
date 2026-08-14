@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 25
-stage: DRAFT_READY_FOR_EDITOR
+stage: QA_IN_PROGRESS
 parent_runtime_through: 24
 author_instructions:
 - Rewrite Ch25 from zero; rejected «После смены» is non-canon.
@@ -44,10 +44,10 @@ research:
   - Drive arousal/manual research applied
   - Drive voice/moan research applied
 qa:
-  structural: PENDING
-  dialogue: PENDING
-  prose_pov: PENDING
-  character: PENDING
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
   continuity_knowledge: PENDING
   regression: PENDING
   russian_proofread: PENDING
