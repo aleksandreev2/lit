@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/chapter-delta.schema.json",
+  "title": "Sistema Bogatstva Declared Chapter Delta",
+  "type": "object",
+  "required": [
+    "book_id",
+    "chapter",
+    "source_sha256",
+    "fact_changes",
+    "knowledge_changes",
+    "state_changes",
+    "research_changes",
+    "system_changes",
+    "arc_changes"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "chapter": {"type": "integer", "minimum": 1},
+    "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "fact_changes": {"$ref": "#/$defs/changeList"},
+    "knowledge_changes": {"$ref": "#/$defs/changeList"},
+    "state_changes": {"$ref": "#/$defs/changeList"},
+    "research_changes": {"$ref": "#/$defs/changeList"},
+    "system_changes": {"$ref": "#/$defs/changeList"},
+    "arc_changes": {"$ref": "#/$defs/changeList"}
+  },
+  "$defs": {
+    "changeList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "action", "summary"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "action": {"enum": ["ADD", "UPDATE", "SUPERSEDE", "REMOVE", "NO_CHANGE"]},
+          "summary": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
