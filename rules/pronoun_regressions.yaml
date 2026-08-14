@@ -1,0 +1,91 @@
+book_id: SISTEMA_BOGATSTVA
+schema_version: 1
+rules:
+  - id: SB-PRN-001
+    owner_family: pronoun_coreference
+    severity: REVIEW
+    name: AMBIGUOUS_PERSONAL_ANTECEDENT
+    description: >-
+      A third-person personal pronoun has multiple morphologically compatible recent
+      person antecedent candidates. The sentence may be correct, but the referent is
+      not mechanically unique and must be reviewed in literary context.
+    positive_examples:
+      - "Герман вошёл в комнату. Он достал телефон."
+    negative_examples:
+      - "Герман подошёл к Максиму. Он достал телефон."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_pronoun_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: pronoun-coreference-v1-2026-08-14
+    superseded_by: null
+
+  - id: SB-PRN-002
+    owner_family: pronoun_coreference
+    severity: REVIEW
+    name: GENDER_OR_NUMBER_CONFLICT
+    description: >-
+      A third-person pronoun has no morphologically compatible recent antecedent while
+      recent candidates with known gender or number exist. Off-page or omitted referents
+      remain possible, so this is REVIEW rather than an automatic error.
+    positive_examples:
+      - "Анна закрыла дверь. Она сняла куртку."
+    negative_examples:
+      - "Анна закрыла дверь. Он снял куртку."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_pronoun_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: pronoun-coreference-v1-2026-08-14
+    superseded_by: null
+
+  - id: SB-PRN-003
+    owner_family: pronoun_coreference
+    severity: REVIEW
+    name: POSSESSIVE_OWNER_AMBIGUITY
+    description: >-
+      An invariant possessive form such as "его/её/их" before a noun has multiple
+      compatible recent person-owner candidates. Review whose object is meant.
+    positive_examples:
+      - "Анна посмотрела на Германа и поправила его воротник."
+    negative_examples:
+      - "Анна посмотрела на Милену и поправила её платье."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_pronoun_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: pronoun-coreference-v1-2026-08-14
+    superseded_by: null
+
+  - id: SB-PRN-004
+    owner_family: pronoun_coreference
+    severity: REVIEW
+    name: NONREFLEXIVE_SELF_POSSESSION_CANDIDATE
+    description: >-
+      A non-reflexive possessive form appears to point to the current nominative subject.
+      Review whether Russian reflexive "свой" was intended; the non-reflexive wording can
+      still be deliberate when contrast or another owner is understood from context.
+    positive_examples:
+      - "Анна взяла свою сумку."
+    negative_examples:
+      - "Анна взяла её сумку."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_pronoun_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: pronoun-coreference-v1-2026-08-14
+    superseded_by: null
+
+  - id: SB-PRN-005
+    owner_family: pronoun_coreference
+    severity: REVIEW
+    name: REFLEXIVE_CHAIN_AMBIGUITY
+    description: >-
+      A reflexive possessive "свой" depends on a clause whose preceding personal subject
+      pronoun is already ambiguous. The reflexive form can therefore inherit the unresolved
+      referent and deserves a focused review.
+    positive_examples:
+      - "Анна сказала Герману, что она забрала свою сумку."
+    negative_examples:
+      - "Анна сказала Милене, что она забрала свою сумку."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_pronoun_coreference.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: pronoun-coreference-v1-2026-08-14
+    superseded_by: null
