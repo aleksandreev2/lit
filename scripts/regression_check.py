@@ -34,6 +34,9 @@ def validate_regressions(path: Path, root: Path = ROOT) -> list[str]:
             if not fixture_path.is_relative_to(root.resolve()) or not fixture_path.is_file():
                 errors.append(f"REGRESSION_FIXTURE {rule_id}: missing fixture/test file {fixture}")
 
+        if rule["owner_family"] == "russian_naturalness" and not rule.get("matcher"):
+            errors.append(f"REGRESSION_MATCHER {rule_id}: naturalness rule requires matcher")
+
         superseded_by = rule["superseded_by"]
         if superseded_by:
             if superseded_by == rule_id:
