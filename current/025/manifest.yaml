@@ -26,3 +26,4 @@ freeze:
   chapter_sha256: null
   final_text_frozen: false
   author_approved: false
+  author_approval_evidence_id: null
