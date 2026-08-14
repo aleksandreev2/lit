@@ -1,0 +1,43 @@
+book_id: SISTEMA_BOGATSTVA
+schema_version: 1
+rules:
+  - id: SB-DIA-001
+    severity: BLOCK
+    name: TELEGRAPH_AI_PING_PONG
+    description: "Do not build calm dialogue from chained minimal service turns. Short turns require a pragmatic reason."
+  - id: SB-DIA-002
+    severity: BLOCK
+    name: CONVENIENT_QUESTION
+    description: "A question must belong to the character, not exist only to cue the next exposition answer."
+  - id: SB-DIA-003
+    severity: BLOCK
+    name: REVIEWER_AGENT
+    description: "Characters must not routinely certify German's answer as logical/honest/correct for the reader."
+  - id: SB-DIA-004
+    severity: BLOCK
+    name: SEMANTIC_ECHO
+    description: "Do not automatically mirror an already-complete instruction or meaning in the next turn."
+  - id: SB-DIA-005
+    severity: REVIEW
+    name: MICRO_PUNCHLINE_DEFAULT
+    description: "Do not force clever symmetrical one-liners or witty comeback closure into ordinary dialogue."
+  - id: SB-KNW-001
+    severity: BLOCK
+    name: KNOWLEDGE_PROVENANCE
+    description: "Exact secret/sum/private fact used by a character needs an on-page or previously approved source, explicit inference, or current reveal."
+  - id: SB-CHR-001
+    severity: BLOCK
+    name: MILENA_ACCESS_GATE
+    description: "No expensive request/material flirt before earned social bridge and personal recognition."
+  - id: SB-CHR-002
+    severity: BLOCK
+    name: GERMAN_EXPERTISE_LEAP
+    description: "Wealth does not instantly make German expert in finance, crypto, business, cars, sex, fashion or property."
+  - id: SB-PROC-001
+    severity: BLOCK
+    name: FROZEN_HASH_MISMATCH
+    description: "Any post-freeze text change invalidates dependent QA until rerun against the exact revision hash."
+  - id: SB-RES-001
+    severity: BLOCK
+    name: SEARCH_FIRST_REALITY
+    description: "Date-sensitive or real-world claims require research evidence appropriate to story date/location before prose promotion."
