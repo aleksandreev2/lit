@@ -67,12 +67,14 @@ def test_sync_without_live_drive_observation_is_unknown_not_clean() -> None:
 def test_qa_report_is_compact_hashed_and_honest_about_not_started_chapter(tmp_path: Path) -> None:
     report_dir = tmp_path / "qa-report"
     summary = generate_report(ROOT, report_dir, "deadbeefcafebabe")
-    assert summary["counts"] == {"PASS": 6, "BLOCK": 0, "REVIEW": 1}
+    assert summary["counts"] == {"PASS": 7, "BLOCK": 0, "REVIEW": 1}
     assert {item["id"] for item in summary["checks"]} >= {
         "russian_naturalness_corpus",
         "pronoun_coreference_corpus",
+        "semantic_coreference_corpus",
     }
     assert "rules/pronoun_regressions.yaml" in summary["dependency_hashes"]
+    assert "rules/semantic_coreference_regressions.yaml" in summary["dependency_hashes"]
     assert summary["current_chapter"] == 25
     assert summary["current_stage"] == "NOT_STARTED"
     assert summary["freeze"]["status"] == "NOT_AVAILABLE"
