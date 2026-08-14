@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_RULES = ROOT / "rules/regressions.yaml"
 DEFAULT_FIXTURES = ROOT / "tests/fixtures/russian_naturalness_cases.yaml"
 WORD_RE = re.compile(r"[A-Za-zА-Яа-яЁё]+(?:-[A-Za-zА-Яа-яЁё]+)*")
+DEFAULT_GAP_POS = {"ADJF", "ADJS", "PRTF", "PRTS", "ADVB", "PRCL"}
 
 
 @lru_cache(maxsize=1)
@@ -79,7 +80,7 @@ def _lemma_matches(token: dict, spec: dict) -> bool:
 def _lemma_window_evidence(tokens: list[dict], matcher: dict) -> dict | None:
     pattern = matcher["lemmas"]
     max_gap = matcher["max_gap"]
-    allowed_gap_pos = set(matcher.get("allowed_gap_pos", []))
+    allowed_gap_pos = set(matcher.get("allowed_gap_pos", DEFAULT_GAP_POS))
     require_full_sentence = matcher["require_full_sentence"]
     if len(tokens) < len(pattern):
         return None
@@ -99,9 +100,7 @@ def _lemma_window_evidence(tokens: list[dict], matcher: dict) -> dict | None:
             stop = min(len(tokens), previous + max_gap + 2)
             for index in range(previous + 1, stop):
                 gap_tokens = tokens[previous + 1 : index]
-                if allowed_gap_pos and any(
-                    token["pos"] not in allowed_gap_pos for token in gap_tokens
-                ):
+                if gap_tokens and any(token["pos"] not in allowed_gap_pos for token in gap_tokens):
                     continue
                 if _lemma_matches(tokens[index], spec):
                     next_paths.append([*path, index])
