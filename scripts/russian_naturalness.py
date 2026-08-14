@@ -65,13 +65,19 @@ def _token_pattern_evidence(tokens: list[str], matcher: dict) -> dict | None:
 
 
 def _lemma_matches(token: dict, spec: dict) -> bool:
-    allowed = {item.casefold() for item in spec["any_of"]}
-    return token["lemma"] in allowed
+    allowed_lemmas = {item.casefold() for item in spec["any_of"]}
+    if token["lemma"] not in allowed_lemmas:
+        return False
+    allowed_surfaces = spec.get("surface_any_of")
+    if allowed_surfaces is None:
+        return True
+    return token["normalized"] in {item.casefold() for item in allowed_surfaces}
 
 
 def _lemma_window_evidence(tokens: list[dict], matcher: dict) -> dict | None:
     pattern = matcher["lemmas"]
     max_gap = matcher["max_gap"]
+    allowed_gap_pos = set(matcher.get("allowed_gap_pos", []))
     require_full_sentence = matcher["require_full_sentence"]
     if len(tokens) < len(pattern):
         return None
@@ -90,6 +96,11 @@ def _lemma_window_evidence(tokens: list[dict], matcher: dict) -> dict | None:
             previous = path[-1]
             stop = min(len(tokens), previous + max_gap + 2)
             for index in range(previous + 1, stop):
+                gap_tokens = tokens[previous + 1 : index]
+                if allowed_gap_pos and any(
+                    token["pos"] not in allowed_gap_pos for token in gap_tokens
+                ):
+                    continue
                 if _lemma_matches(tokens[index], spec):
                     next_paths.append([*path, index])
         paths = next_paths
