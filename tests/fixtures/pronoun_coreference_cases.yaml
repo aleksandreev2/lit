@@ -1,0 +1,89 @@
+schema_version: 1
+cases:
+  - id: ambiguous_masculine_personal
+    text: "Герман подошёл к Максиму. Он достал телефон."
+    expected_rules: [SB-PRN-001]
+    expected_status: REVIEW
+
+  - id: unique_masculine_personal_guard
+    text: "Герман вошёл в комнату. Он достал телефон."
+    expected_rules: []
+    guards_rules: [SB-PRN-001]
+    expected_status: PASS
+
+  - id: gender_conflict
+    text: "Анна закрыла дверь. Он снял куртку."
+    expected_rules: [SB-PRN-002]
+    expected_status: REVIEW
+
+  - id: gender_match_guard
+    text: "Анна закрыла дверь. Она сняла куртку."
+    expected_rules: []
+    guards_rules: [SB-PRN-002]
+    expected_status: PASS
+
+  - id: common_noun_antecedent_guard
+    text: "Анна взяла телефон. Он зазвонил."
+    expected_rules: []
+    guards_rules: [SB-PRN-002]
+    expected_status: PASS
+
+  - id: plural_pair_group_guard
+    text: "Анна встретила Милену. Они ушли вместе."
+    expected_rules: []
+    guards_rules: [SB-PRN-001]
+    expected_status: PASS
+
+  - id: possessive_owner_ambiguity
+    text: "Анна посмотрела на Милену и поправила её платье."
+    expected_rules: [SB-PRN-003]
+    expected_status: REVIEW
+
+  - id: possessive_unique_owner_guard
+    text: "Анна посмотрела на Германа и поправила его воротник."
+    expected_rules: []
+    guards_rules: [SB-PRN-003]
+    expected_status: PASS
+
+  - id: nonreflexive_self_possession
+    text: "Анна взяла её сумку."
+    expected_rules: [SB-PRN-004]
+    expected_status: REVIEW
+
+  - id: reflexive_self_possession_guard
+    text: "Анна взяла свою сумку."
+    expected_rules: []
+    guards_rules: [SB-PRN-004]
+    expected_status: PASS
+
+  - id: inherited_reflexive_ambiguity
+    text: "Анна сказала Милене, что она забрала свою сумку."
+    expected_rules: [SB-PRN-001, SB-PRN-005]
+    expected_status: REVIEW
+
+  - id: reflexive_chain_unique_guard
+    text: "Анна сказала Герману, что она забрала свою сумку."
+    expected_rules: []
+    guards_rules: [SB-PRN-005]
+    expected_status: PASS
+
+  - id: character_profile_alias_conflict
+    text: "Саша вошёл. Она улыбнулась."
+    characters:
+      - id: SB-CHAR-ALEX
+        display_name: "Александр"
+        aliases: ["Саша"]
+        grammatical_gender: MASC
+    expected_rules: [SB-PRN-002]
+    expected_status: REVIEW
+
+  - id: character_profile_alias_match
+    text: "Саша вошёл. Он улыбнулся."
+    characters:
+      - id: SB-CHAR-ALEX
+        display_name: "Александр"
+        aliases: ["Саша"]
+        grammatical_gender: MASC
+    expected_rules: []
+    guards_rules: [SB-PRN-002]
+    expected_status: PASS
