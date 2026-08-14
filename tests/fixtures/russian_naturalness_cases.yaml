@@ -1,98 +1,407 @@
-schema_version: 1
+schema_version: 2
 cases:
   - id: bad-001
     text: "— Я ладно."
     expected_rules: [SB-RUS-001]
+    expected_status: BLOCK
   - id: bad-002
     text: "Я ладно!"
     expected_rules: [SB-RUS-001]
+    expected_status: BLOCK
   - id: bad-003
     text: "— Он ладно."
     expected_rules: [SB-RUS-001]
+    expected_status: BLOCK
   - id: bad-004
     text: "— Я нормально."
     expected_rules: [SB-RUS-002]
+    expected_status: BLOCK
   - id: bad-005
     text: "— Я хорошо."
     expected_rules: [SB-RUS-002]
+    expected_status: BLOCK
   - id: bad-006
     text: "— Я плохо."
     expected_rules: [SB-RUS-002]
+    expected_status: BLOCK
   - id: bad-007
     text: "— Мы нормально."
     expected_rules: [SB-RUS-002]
+    expected_status: BLOCK
   - id: bad-008
     text: "— Она хорошо."
     expected_rules: [SB-RUS-002]
+    expected_status: BLOCK
   - id: bad-009
     text: "— Я всё нормально."
     expected_rules: [SB-RUS-003]
+    expected_status: BLOCK
   - id: bad-010
     text: "— Она всё хорошо."
     expected_rules: [SB-RUS-003]
+    expected_status: BLOCK
   - id: bad-011
     text: "— Мы все нормально."
     expected_rules: [SB-RUS-003]
+    expected_status: BLOCK
   - id: bad-012
     text: "— Ты рано."
     expected_rules: [SB-RUS-004]
+    expected_status: REVIEW
   - id: bad-013
     text: "— Он поздно."
     expected_rules: [SB-RUS-004]
+    expected_status: REVIEW
+  - id: bad-014
+    text: "Согласно приказа директора, офис закроют раньше."
+    expected_rules: [SB-RUS-005]
+    expected_status: BLOCK
+  - id: bad-015
+    text: "Согласно плана мы должны закончить сегодня."
+    expected_rules: [SB-RUS-005]
+    expected_status: BLOCK
+  - id: bad-016
+    text: "Вопреки приказа он остался."
+    expected_rules: [SB-RUS-006]
+    expected_status: BLOCK
+  - id: bad-017
+    text: "Я оплатил за квартиру."
+    expected_rules: [SB-RUS-007]
+    expected_status: BLOCK
+  - id: bad-018
+    text: "Она оплатила за билет."
+    expected_rules: [SB-RUS-007]
+    expected_status: BLOCK
+  - id: bad-019
+    text: "Мы обсудили о проблеме."
+    expected_rules: [SB-RUS-008]
+    expected_status: BLOCK
+  - id: bad-020
+    text: "Он обсудит об этом завтра."
+    expected_rules: [SB-RUS-008]
+    expected_status: BLOCK
+  - id: bad-021
+    text: "Я надеюсь о победе."
+    expected_rules: [SB-RUS-009]
+    expected_status: BLOCK
+  - id: bad-022
+    text: "Она надеялась об успехе."
+    expected_rules: [SB-RUS-009]
+    expected_status: BLOCK
+  - id: bad-023
+    text: "Я интересуюсь о проекте."
+    expected_rules: [SB-RUS-010]
+    expected_status: BLOCK
+  - id: bad-024
+    text: "Он интересовался об этой компании."
+    expected_rules: [SB-RUS-010]
+    expected_status: BLOCK
+  - id: bad-025
+    text: "Это касается о проблеме."
+    expected_rules: [SB-RUS-011]
+    expected_status: BLOCK
+  - id: bad-026
+    text: "Разговор касался об их будущем."
+    expected_rules: [SB-RUS-011]
+    expected_status: BLOCK
+  - id: bad-027
+    text: "Это делает смысл."
+    expected_rules: [SB-RUS-012]
+    expected_status: BLOCK
+  - id: bad-028
+    text: "Это не делает никакого смысла."
+    expected_rules: [SB-RUS-012]
+    expected_status: BLOCK
+  - id: bad-029
+    text: "— Я имею идею."
+    expected_rules: [SB-RUS-013]
+    expected_status: REVIEW
+  - id: bad-030
+    text: "— Я имею вопрос."
+    expected_rules: [SB-RUS-014]
+    expected_status: REVIEW
+  - id: bad-031
+    text: "Я взял душ."
+    expected_rules: [SB-RUS-015]
+    expected_status: BLOCK
+  - id: bad-032
+    text: "Он быстро взял горячий душ."
+    expected_rules: [SB-RUS-015]
+    expected_status: BLOCK
+  - id: bad-033
+    text: "Он спросил вопрос."
+    expected_rules: [SB-RUS-016]
+    expected_status: REVIEW
+  - id: bad-034
+    text: "Она спросила неудобный вопрос."
+    expected_rules: [SB-RUS-016]
+    expected_status: REVIEW
+  - id: bad-035
+    text: "— Я в порядке с этим."
+    expected_rules: [SB-RUS-017]
+    expected_status: BLOCK
+  - id: bad-036
+    text: "Уверенность о победе росла."
+    expected_rules: [SB-RUS-018]
+    expected_status: REVIEW
+
   - id: good-001
     text: "— Ладно."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-001]
   - id: good-002
     text: "— Я в порядке."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-001, SB-RUS-002]
   - id: good-003
     text: "— У меня всё нормально."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002, SB-RUS-003]
   - id: good-004
     text: "— Со мной всё нормально."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-005
     text: "— Всё нормально."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-006
     text: "— Я нормально себя чувствую."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-007
     text: "— Я нормально говорю по-русски."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-008
     text: "— Я хорошо помню этот день."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-009
     text: "— Я плохо спал."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-010
     text: "— Я всё нормально сделал."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-003]
   - id: good-011
     text: "— Я нормально, спасибо."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-012
     text: "— Ты нормально?"
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-013
     text: "— Ты рано пришёл."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-004]
   - id: good-014
     text: "— Ты рано?"
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-004]
   - id: good-015
     text: "— Я, ладно, пойду домой."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-001]
   - id: good-016
     text: "Он нормально работал."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-017
     text: "Я поздно вернулся."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-004]
   - id: good-018
     text: "Она хорошо выглядела."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-002]
   - id: good-019
     text: "Мы всё нормально обсудили."
     expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-003]
+  - id: good-020
+    text: "Согласно приказу директора, офис закроют раньше."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-005]
+  - id: good-021
+    text: "Согласно его приказу, офис закроют раньше."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-005]
+  - id: good-022
+    text: "Согласно новому плану мы должны закончить сегодня."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-005]
+  - id: good-023
+    text: "Вопреки приказу он остался."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-006]
+  - id: good-024
+    text: "Я оплатил квартиру."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-007]
+  - id: good-025
+    text: "Я заплатил за квартиру."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-007]
+  - id: good-026
+    text: "Мы обсудили проблему."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-008]
+  - id: good-027
+    text: "Мы обсудили вопрос о переезде."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-008]
+  - id: good-028
+    text: "Мы поговорили о проблеме."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-008]
+  - id: good-029
+    text: "Я надеюсь на победу."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-009]
+  - id: good-030
+    text: "Я думаю о победе."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-009]
+  - id: good-031
+    text: "Я интересуюсь проектом."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-010]
+  - id: good-032
+    text: "Я спрашиваю о проекте."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-010]
+  - id: good-033
+    text: "Это касается проблемы."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-011]
+  - id: good-034
+    text: "Он говорил о проблеме."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-011]
+  - id: good-035
+    text: "Это имеет смысл."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-012]
+  - id: good-036
+    text: "В этом есть смысл."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-012]
+  - id: good-037
+    text: "Он делает смысловые пометки на полях."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-012]
+  - id: good-038
+    text: "— У меня есть идея."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-013]
+  - id: good-039
+    text: "— Есть идея."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-013]
+  - id: good-040
+    text: "Я имею представление о рисках."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-013]
+  - id: good-041
+    text: "— У меня вопрос."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-014]
+  - id: good-042
+    text: "— Можно задать вопрос?"
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-014, SB-RUS-016]
+  - id: good-043
+    text: "Я имею право задать вопрос."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-014]
+  - id: good-044
+    text: "Я принял душ."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-015]
+  - id: good-045
+    text: "Я сходил в душ."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-015]
+  - id: good-046
+    text: "Он взял душевую насадку со стола."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-015]
+  - id: good-047
+    text: "Он задал вопрос."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-016]
+  - id: good-048
+    text: "Он спросил меня о работе."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-016]
+  - id: good-049
+    text: "— Я не против."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-017]
+  - id: good-050
+    text: "— Меня это устраивает."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-017]
+  - id: good-051
+    text: "— Со мной всё в порядке."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-017]
+  - id: good-052
+    text: "Уверенность в победе росла."
+    expected_rules: []
+    expected_status: PASS
+    guards_rules: [SB-RUS-018]

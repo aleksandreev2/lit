@@ -65,44 +65,184 @@
             ]
           },
           "matcher": {
-            "type": "object",
-            "required": [
-              "type",
-              "tokens",
-              "skip_if_question",
-              "confidence",
-              "message",
-              "suggestions"
-            ],
-            "properties": {
-              "type": {"const": "TOKEN_PATTERN"},
-              "tokens": {
-                "type": "array",
-                "minItems": 1,
-                "items": {
-                  "type": "object",
-                  "required": ["any_of"],
-                  "properties": {
-                    "any_of": {
-                      "type": "array",
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {"type": "string", "minLength": 1}
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "tokens",
+                  "skip_if_question",
+                  "confidence",
+                  "message",
+                  "suggestions"
+                ],
+                "properties": {
+                  "type": {"const": "TOKEN_PATTERN"},
+                  "tokens": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": ["any_of"],
+                      "properties": {
+                        "any_of": {
+                          "type": "array",
+                          "minItems": 1,
+                          "uniqueItems": true,
+                          "items": {"type": "string", "minLength": 1}
+                        }
+                      },
+                      "additionalProperties": false
                     }
                   },
-                  "additionalProperties": false
-                }
+                  "skip_if_question": {"type": "boolean"},
+                  "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+                  "message": {"type": "string", "minLength": 1},
+                  "suggestions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {"type": "string", "minLength": 1}
+                  }
+                },
+                "additionalProperties": false
               },
-              "skip_if_question": {"type": "boolean"},
-              "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
-              "message": {"type": "string", "minLength": 1},
-              "suggestions": {
-                "type": "array",
-                "minItems": 1,
-                "items": {"type": "string", "minLength": 1}
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "lemmas",
+                  "max_gap",
+                  "require_full_sentence",
+                  "skip_if_question",
+                  "confidence",
+                  "message",
+                  "suggestions"
+                ],
+                "properties": {
+                  "type": {"const": "LEMMA_WINDOW"},
+                  "lemmas": {
+                    "type": "array",
+                    "minItems": 2,
+                    "items": {
+                      "type": "object",
+                      "required": ["any_of"],
+                      "properties": {
+                        "any_of": {
+                          "type": "array",
+                          "minItems": 1,
+                          "uniqueItems": true,
+                          "items": {"type": "string", "minLength": 1}
+                        },
+                        "surface_any_of": {
+                          "type": "array",
+                          "minItems": 1,
+                          "uniqueItems": true,
+                          "items": {"type": "string", "minLength": 1}
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "max_gap": {"type": "integer", "minimum": 0, "maximum": 5},
+                  "allowed_gap_pos": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "NOUN",
+                        "NPRO",
+                        "ADJF",
+                        "ADJS",
+                        "COMP",
+                        "VERB",
+                        "INFN",
+                        "PRTF",
+                        "PRTS",
+                        "GRND",
+                        "NUMR",
+                        "ADVB",
+                        "PRED",
+                        "PREP",
+                        "CONJ",
+                        "PRCL",
+                        "INTJ"
+                      ]
+                    }
+                  },
+                  "require_full_sentence": {"type": "boolean"},
+                  "skip_if_question": {"type": "boolean"},
+                  "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+                  "message": {"type": "string", "minLength": 1},
+                  "suggestions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {"type": "string", "minLength": 1}
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "trigger_lemmas",
+                  "allowed_cases",
+                  "target_pos",
+                  "max_scan",
+                  "skip_if_question",
+                  "confidence",
+                  "message",
+                  "suggestions"
+                ],
+                "properties": {
+                  "type": {"const": "CASE_AFTER"},
+                  "trigger_lemmas": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {"type": "string", "minLength": 1}
+                  },
+                  "allowed_cases": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "nomn",
+                        "gent",
+                        "datv",
+                        "accs",
+                        "ablt",
+                        "loct",
+                        "voct",
+                        "gen1",
+                        "gen2",
+                        "acc2",
+                        "loc1",
+                        "loc2"
+                      ]
+                    }
+                  },
+                  "target_pos": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {"enum": ["NOUN", "NPRO", "ADJF", "PRTF", "NUMR"]}
+                  },
+                  "max_scan": {"type": "integer", "minimum": 1, "maximum": 8},
+                  "skip_if_question": {"type": "boolean"},
+                  "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+                  "message": {"type": "string", "minLength": 1},
+                  "suggestions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {"type": "string", "minLength": 1}
+                  }
+                },
+                "additionalProperties": false
               }
-            },
-            "additionalProperties": false
+            ]
           }
         },
         "allOf": [
