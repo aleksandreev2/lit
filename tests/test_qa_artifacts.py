@@ -17,6 +17,7 @@ SYNTHETIC_TEXT = """Ирина открыла дверь и проверила �
 — Нет.
 — Ладно.
 — Логично.
+— Я нормально.
 Цена в примере — 100 000 USD.
 Ирина ещё раз проверила официальный источник перед разговором.
 """
@@ -57,8 +58,9 @@ def test_generate_editor_artifacts_and_verify_hashes(tmp_path: Path) -> None:
         character_state=state,
     )
 
-    assert len(manifest["artifacts"]) == 13
+    assert len(manifest["artifacts"]) == 14
     assert not Path(manifest["source"]["path"]).is_absolute()
+    assert not Path(manifest["regression_rules"]["path"]).is_absolute()
     assert validate_manifest(output / "artifact_manifest.json") == []
 
     dialogue = (output / "dialogue_only.txt").read_text(encoding="utf-8")
@@ -89,6 +91,10 @@ def test_question_knowledge_money_and_text_signals_are_review_candidates(tmp_pat
     assert "SB-DIA-001" in rules
     assert "SB-DIA-003" in rules
 
+    naturalness = json.loads((output / "russian_naturalness.json").read_text(encoding="utf-8"))
+    assert naturalness["status"] == "REVIEW"
+    assert {item["rule"] for item in naturalness["findings"]} == {"SB-RUS-002"}
+
 
 def test_continuity_and_delta_reports_cannot_promote_canon(tmp_path: Path) -> None:
     source, runtime, state, output = _make_inputs(tmp_path)
@@ -111,6 +117,26 @@ def test_artifact_tamper_breaks_manifest_verification(tmp_path: Path) -> None:
 
     errors = validate_manifest(output / "artifact_manifest.json")
     assert any("hash mismatch dialogue_only.txt" in error for error in errors)
+
+
+def test_rule_change_invalidates_generated_artifacts(tmp_path: Path) -> None:
+    source, runtime, state, output = _make_inputs(tmp_path)
+    rules_copy = tmp_path / "regressions.yaml"
+    rules_copy.write_text(
+        (ROOT / "rules/regressions.yaml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    generate_artifacts(
+        source,
+        output,
+        parent_runtime=runtime,
+        character_state=state,
+        regression_rules=rules_copy,
+    )
+    rules_copy.write_text(rules_copy.read_text(encoding="utf-8") + "\n# changed\n", encoding="utf-8")
+
+    errors = validate_manifest(output / "artifact_manifest.json")
+    assert any("QA_ARTIFACT_RULES hash mismatch" in error for error in errors)
 
 
 def test_regression_register_has_fixture_coverage() -> None:
