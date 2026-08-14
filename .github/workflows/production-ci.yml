@@ -1,0 +1,49 @@
+name: Production CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deterministic:
+    name: deterministic project gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install QA dependencies
+        run: python -m pip install --upgrade pip && pip install '.[qa]'
+
+      - name: Project preflight
+        run: python scripts/project_preflight.py
+
+      - name: YAML lint
+        run: yamllint canon config
+
+      - name: Invariant tests
+        run: pytest -q
+
+  vale:
+    name: Vale deterministic prose/meta rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Vale
+        uses: vale-cli/vale-action@518a9136acc6e6668ce7c00d367051e0941e87ff
+        with:
+          files: '["README.md", "docs"]'
+          fail_on_error: true
