@@ -11,9 +11,10 @@ from pathlib import Path
 import pymorphy3
 import yaml
 from razdel import sentenize
+from regression_check import validate_regressions
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_RULES = ROOT / "rules/regressions.yaml"
+DEFAULT_RULES = ROOT / "rules/pronoun_regressions.yaml"
 DEFAULT_FIXTURES = ROOT / "tests/fixtures/pronoun_coreference_cases.yaml"
 WORD_RE = re.compile(r"[A-Za-zА-Яа-яЁё]+(?:-[A-Za-zА-Яа-яЁё]+)*")
 
@@ -31,7 +32,6 @@ POSSESSIVE_FORMS = {
 }
 PROFILE_GENDER = {"MASC": "masc", "FEM": "femn", "NEUT": "neut", "UNKNOWN": None}
 PERSON_GRAMMEMES = {"Name", "Surn", "Patr"}
-NOUN_LIKE_POS = {"NOUN"}
 POSSESSIVE_GAP_POS = {"ADJF", "PRTF", "NUMR"}
 
 
@@ -43,7 +43,7 @@ def _morph_analyzer() -> pymorphy3.MorphAnalyzer:
 @lru_cache(maxsize=8192)
 def _morph_word(word: str) -> dict:
     parses = _morph_analyzer().parse(word)
-    noun_parses = [parse for parse in parses if parse.tag.POS in NOUN_LIKE_POS]
+    noun_parses = [parse for parse in parses if parse.tag.POS == "NOUN"]
     primary = noun_parses[0] if noun_parses else parses[0]
     grammemes = set(primary.tag.grammemes)
     return {
@@ -53,10 +53,7 @@ def _morph_word(word: str) -> dict:
         "pos": primary.tag.POS,
         "gender": primary.tag.gender,
         "number": primary.tag.number,
-        "case": primary.tag.case,
         "cases": sorted({parse.tag.case for parse in noun_parses if parse.tag.case}),
-        "genders": sorted({parse.tag.gender for parse in noun_parses if parse.tag.gender}),
-        "numbers": sorted({parse.tag.number for parse in noun_parses if parse.tag.number}),
         "is_person_name": bool(grammemes & PERSON_GRAMMEMES),
         "is_animate": "anim" in grammemes,
     }
@@ -78,28 +75,27 @@ def load_rules(path: Path = DEFAULT_RULES) -> dict[str, dict]:
 def load_character_profiles(path: Path | None) -> list[dict]:
     if path is None:
         return []
-    document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return document.get("characters", [])
+    return (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("characters", [])
 
 
 def _profile_aliases(profiles: list[dict]) -> list[dict]:
     aliases: list[dict] = []
     for profile in profiles:
-        names = [profile.get("display_name"), *profile.get("aliases", [])]
-        for name in names:
+        for name in [profile.get("display_name"), *profile.get("aliases", [])]:
             if not name:
                 continue
             words = tuple(match.group(0).casefold() for match in WORD_RE.finditer(name))
-            if not words:
-                continue
-            aliases.append(
-                {
-                    "words": words,
-                    "character_id": profile.get("id"),
-                    "display_name": profile.get("display_name") or name,
-                    "gender": PROFILE_GENDER.get(profile.get("grammatical_gender", "UNKNOWN")),
-                }
-            )
+            if words:
+                aliases.append(
+                    {
+                        "words": words,
+                        "character_id": profile.get("id"),
+                        "display_name": profile.get("display_name") or name,
+                        "gender": PROFILE_GENDER.get(
+                            profile.get("grammatical_gender", "UNKNOWN")
+                        ),
+                    }
+                )
     return sorted(aliases, key=lambda item: len(item["words"]), reverse=True)
 
 
@@ -204,10 +200,9 @@ def _recent_candidates(
     seen: set[tuple] = set()
     for candidate in recent:
         key = _candidate_key(candidate)
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append(candidate)
+        if key not in seen:
+            seen.add(key)
+            deduped.append(candidate)
     return deduped
 
 
@@ -249,7 +244,11 @@ def _possessive_target(tokens: list[dict], index: int) -> dict | None:
     for target_index in range(index + 1, min(len(tokens), index + 4)):
         target = tokens[target_index]
         if target["pos"] == "NOUN":
-            return {"token_index": target_index, "text": target["text"], "lemma": target["lemma"]}
+            return {
+                "token_index": target_index,
+                "text": target["text"],
+                "lemma": target["lemma"],
+            }
         if target["pos"] not in POSSESSIVE_GAP_POS:
             return None
     return None
@@ -263,17 +262,21 @@ def _rule_finding(
     token_index: int,
     evidence: dict,
 ) -> dict:
+    evidence = dict(evidence)
+    confidence = evidence.pop("confidence")
     return {
         "rule": rule["id"],
         "name": rule["name"],
         "severity": rule["severity"],
-        "confidence": evidence.pop("confidence"),
+        "confidence": confidence,
         "detection": rule["detection_type"],
         "line": entry["line"],
         "sentence": entry["sentence"],
         "previous_sentence": entries[sentence_index - 1]["sentence"] if sentence_index else None,
         "next_sentence": (
-            entries[sentence_index + 1]["sentence"] if sentence_index + 1 < len(entries) else None
+            entries[sentence_index + 1]["sentence"]
+            if sentence_index + 1 < len(entries)
+            else None
         ),
         "token_index": token_index,
         "evidence": evidence,
@@ -288,9 +291,8 @@ def analyze_lines(
     character_profiles: list[dict] | None = None,
 ) -> dict:
     rules = rules if rules is not None else load_rules()
-    profiles = character_profiles or []
-    aliases = _profile_aliases(profiles)
     entries = _sentence_entries(lines)
+    aliases = _profile_aliases(character_profiles or [])
     candidates_by_sentence = [
         _extract_candidates(entry, index, aliases) for index, entry in enumerate(entries)
     ]
@@ -312,7 +314,7 @@ def analyze_lines(
                     if group:
                         compatible = [group]
 
-                if len(compatible) >= 2 and "SB-PRN-001" in rules:
+                if len(compatible) >= 2:
                     coverage["ambiguous"] += 1
                     ambiguous_personal_positions.add((sentence_index, token_index))
                     findings.append(
@@ -339,7 +341,7 @@ def analyze_lines(
                         for item in recent
                         if item.get("gender") is not None or item.get("number") is not None
                     ]
-                    if known_recent and "SB-PRN-002" in rules:
+                    if known_recent:
                         coverage["gender_or_number_conflict"] += 1
                         findings.append(
                             _rule_finding(
@@ -381,7 +383,7 @@ def analyze_lines(
                     if group:
                         owners = [group]
 
-                if len(owners) >= 2 and "SB-PRN-003" in rules:
+                if len(owners) >= 2:
                     findings.append(
                         _rule_finding(
                             rules["SB-PRN-003"],
@@ -397,15 +399,15 @@ def analyze_lines(
                             },
                         )
                     )
-                elif len(owners) == 1 and "SB-PRN-004" in rules:
-                    same_sentence_subjects = [
+                elif len(owners) == 1:
+                    subjects = [
                         item
                         for item in recent
                         if item["sentence_index"] == sentence_index
                         and item["is_person"]
                         and item["subject_candidate"]
                     ]
-                    subject = same_sentence_subjects[0] if same_sentence_subjects else None
+                    subject = subjects[0] if subjects else None
                     if subject and _candidate_key(subject) == _candidate_key(owners[0]):
                         findings.append(
                             _rule_finding(
@@ -431,7 +433,7 @@ def analyze_lines(
                     for position in ambiguous_personal_positions
                     if position[0] == sentence_index and position[1] < token_index
                 ]
-                if ambiguous and "SB-PRN-005" in rules:
+                if ambiguous:
                     findings.append(
                         _rule_finding(
                             rules["SB-PRN-005"],
@@ -451,22 +453,20 @@ def analyze_lines(
                     )
 
     counts = Counter(item["severity"] for item in findings)
+    coverage_keys = (
+        "personal_pronouns",
+        "possessive_markers",
+        "reflexive_possessives",
+        "unique_candidate",
+        "ambiguous",
+        "gender_or_number_conflict",
+        "unresolved",
+    )
     return {
         "status": "REVIEW" if findings else "PASS",
         "count": len(findings),
         "counts": {"BLOCK": counts["BLOCK"], "REVIEW": counts["REVIEW"]},
-        "coverage": {
-            key: coverage[key]
-            for key in (
-                "personal_pronouns",
-                "possessive_markers",
-                "reflexive_possessives",
-                "unique_candidate",
-                "ambiguous",
-                "gender_or_number_conflict",
-                "unresolved",
-            )
-        },
+        "coverage": {key: coverage[key] for key in coverage_keys},
         "findings": findings,
         "automatic_rewrite_allowed": False,
         "note": (
@@ -488,10 +488,12 @@ def validate_fixture_corpus(
     rules_path: Path = DEFAULT_RULES,
     fixtures_path: Path = DEFAULT_FIXTURES,
 ) -> list[str]:
+    errors = validate_regressions(rules_path)
+    if errors:
+        return errors
     rules = load_rules(rules_path)
     rule_ids = set(rules)
     fixture_doc = yaml.safe_load(fixtures_path.read_text(encoding="utf-8"))
-    errors: list[str] = []
     seen_ids: set[str] = set()
     exercised_rules: set[str] = set()
     guarded_rules: set[str] = set()
@@ -505,9 +507,13 @@ def validate_fixture_corpus(
         expected = set(case.get("expected_rules", []))
         guards = set(case.get("guards_rules", []))
         if expected - rule_ids:
-            errors.append(f"PRONOUN_FIXTURE {case_id}: unknown expected rules {sorted(expected - rule_ids)}")
+            errors.append(
+                f"PRONOUN_FIXTURE {case_id}: unknown expected rules {sorted(expected - rule_ids)}"
+            )
         if guards - rule_ids:
-            errors.append(f"PRONOUN_FIXTURE {case_id}: unknown guarded rules {sorted(guards - rule_ids)}")
+            errors.append(
+                f"PRONOUN_FIXTURE {case_id}: unknown guarded rules {sorted(guards - rule_ids)}"
+            )
 
         payload = analyze_text(case["text"], rules, case.get("characters", []))
         actual = {item["rule"] for item in payload["findings"]}
@@ -560,11 +566,10 @@ def main() -> int:
 
     if args.path is None:
         parser.error("path is required unless --self-test is used")
-    profiles = load_character_profiles(args.character_state)
     payload = analyze_text(
         args.path.read_text(encoding="utf-8"),
         load_rules(args.rules),
-        profiles,
+        load_character_profiles(args.character_state),
     )
     payload["file"] = str(args.path)
     payload["character_state"] = str(args.character_state) if args.character_state else None
