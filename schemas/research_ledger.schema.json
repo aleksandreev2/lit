@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/research-ledger.schema.json",
+  "title": "Sistema Bogatstva Research Provenance Ledger",
+  "type": "object",
+  "required": ["book_id", "schema_version", "records"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "claim_id",
+          "subject",
+          "source_url",
+          "source_id",
+          "domain",
+          "title",
+          "accessed_date",
+          "historical_date_lock",
+          "geography",
+          "scope",
+          "confidence",
+          "freshness_class",
+          "recheck_after",
+          "event_trigger",
+          "dependent_fact_ids",
+          "dependent_chapters"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SB-RES-[A-Z0-9][A-Z0-9_-]*$"},
+          "claim_id": {"type": "string", "pattern": "^SB-F-[A-Z0-9][A-Z0-9_-]*$"},
+          "subject": {"type": "string", "minLength": 1},
+          "source_url": {"type": "string", "format": "uri", "pattern": "^https://"},
+          "source_id": {"type": "string", "minLength": 1},
+          "domain": {"type": "string", "minLength": 1},
+          "title": {"type": "string", "minLength": 1},
+          "accessed_date": {"type": "string", "format": "date"},
+          "historical_date_lock": {"type": ["string", "null"], "format": "date"},
+          "geography": {"type": ["string", "null"]},
+          "scope": {"type": "string", "minLength": 1},
+          "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+          "freshness_class": {"enum": ["STABLE", "PERIODIC", "VOLATILE", "EVENT_DRIVEN"]},
+          "recheck_after": {"type": ["string", "null"], "format": "date"},
+          "event_trigger": {"type": ["string", "null"], "minLength": 1},
+          "dependent_fact_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^SB-F-[A-Z0-9][A-Z0-9_-]*$"}
+          },
+          "dependent_chapters": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "integer", "minimum": 1}
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
