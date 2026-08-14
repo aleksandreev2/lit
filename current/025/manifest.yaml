@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 25
-stage: FINAL_TEXT_FROZEN
+stage: AUTHOR_APPROVED
 parent_runtime_through: 24
 author_instructions:
 - Rewrite Ch25 from zero; rejected «После смены» is non-canon.
@@ -57,5 +57,5 @@ qa:
 freeze:
   chapter_sha256: 829c14ba9527a537df8eb3b116d52f501fd2dfc98147c4ba4c65b0cd042da320
   final_text_frozen: true
-  author_approved: false
-  author_approval_evidence_id: null
+  author_approved: true
+  author_approval_evidence_id: AUTHOR_CHAT_APPROVAL_2026-08-15T00:21+04:00_CH25
