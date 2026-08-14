@@ -1,0 +1,61 @@
+book_id: SISTEMA_BOGATSTVA
+chapter: 25
+stage: HAPPENED
+parent_runtime_through: 24
+author_instructions:
+- Rewrite Ch25 from zero; rejected «После смены» is non-canon.
+- Evening Karine pickup after shift away from Danielyan entrance.
+- Lovers already; no reset to first date.
+- Karine remains mercantile/cunning/status-adaptive; no moral softening.
+- Natural dialogue; avoid telegraph ping-pong, Q-A ladders, reviewer-agent, semantic echo, obligatory responses, micro-punchline default.
+- Close-third German.
+- Sex mechanics spatially legible; German remains inexperienced and learns through feedback/correction.
+- Add explicit German foot fetish, dirty talk, and more/longer natural dialogue.
+- No PDF; chapter delivery by Drive link only.
+source_sync:
+  runtime_sha256: null
+  character_profiles:
+  - GERMAN_FULL_PROFILE
+  - KARINE_FULL_PROFILE
+  approved_chapters:
+  - 23
+  - 24
+  production_rules:
+  - STRICT_CHAPTER_PROTOCOL_V3
+  - EDITOR_QA_ENGINE_V2
+  - DIALOGUE_CALIBRATION
+  - SEX_SCENE_PRODUCTION_CHECKLIST
+  - SB_TEXT_PREFLIGHT_V2
+research:
+  required:
+  - Danielyan Artik evening operation
+  - Artik↔Gyumri travel plausibility
+  - 25.07.2026 Gyumri daylight
+  - Karine×German body mechanics
+  - male sexual physiology
+  - arousal/manual stimulation
+  - voice/moan/breath
+  completed:
+  - Danielyan official branch/hours checked
+  - Artik↔Gyumri public route estimates checked
+  - Gyumri sunset timing checked
+  - Drive body-mechanics research applied
+  - Drive male physiology research applied
+  - Drive arousal/manual research applied
+  - Drive voice/moan research applied
+qa:
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  text_preflight: PASS
+  final_reread: PASS
+freeze:
+  chapter_sha256: 829c14ba9527a537df8eb3b116d52f501fd2dfc98147c4ba4c65b0cd042da320
+  final_text_frozen: true
+  author_approved: true
+  author_approval_evidence_id: AUTHOR_CHAT_APPROVAL_2026-08-15T00:21+04:00_CH25
