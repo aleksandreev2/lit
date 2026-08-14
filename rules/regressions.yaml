@@ -1,5 +1,5 @@
 book_id: SISTEMA_BOGATSTVA
-schema_version: 2
+schema_version: 3
 rules:
   - id: SB-DIA-001
     owner_family: dialogue
@@ -170,3 +170,131 @@ rules:
     affected_stages: [PREWRITE, QA_IN_PROGRESS, FINAL_CANDIDATE, FINAL_TEXT_FROZEN]
     introduced_by: bootstrap-v2-2026-08-14
     superseded_by: null
+
+  - id: SB-RUS-001
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: BARE_PERSONAL_LADNO
+    description: >-
+      Bare personal pronoun plus "ладно" is not a complete Russian state
+      construction and is a high-confidence machine-Russian signal.
+    positive_examples:
+      - "Ладно."
+      - "Я, ладно, пойду домой."
+    negative_examples:
+      - "Я ладно."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v1-2026-08-14
+    superseded_by: null
+    matcher:
+      type: TOKEN_PATTERN
+      tokens:
+        - any_of: [я, ты, он, она, мы, вы, они]
+        - any_of: [ладно]
+      skip_if_question: false
+      confidence: HIGH
+      message: >-
+        Incomplete personal-state construction: "ладно" cannot normally stand
+        as the predicate of a bare personal pronoun.
+      suggestions:
+        - "Ладно."
+        - "Я в порядке."
+
+  - id: SB-RUS-002
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: BARE_PERSONAL_STATE_ADVERB
+    description: >-
+      Bare personal pronoun plus a state adverb often signals machine-like
+      ellipsis or a dropped verb/complement.
+    positive_examples:
+      - "Я нормально себя чувствую."
+      - "У меня всё нормально."
+    negative_examples:
+      - "Я нормально."
+      - "Она хорошо."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v1-2026-08-14
+    superseded_by: null
+    matcher:
+      type: TOKEN_PATTERN
+      tokens:
+        - any_of: [я, ты, он, она, мы, вы, они]
+        - any_of: [нормально, хорошо, плохо]
+      skip_if_question: true
+      confidence: HIGH
+      message: >-
+        Possible incomplete personal-state predicate; check whether a required
+        verb or complement was dropped.
+      suggestions:
+        - "Я в порядке."
+        - "У меня всё нормально."
+        - "Я нормально себя чувствую."
+
+  - id: SB-RUS-003
+    owner_family: russian_naturalness
+    severity: BLOCK
+    name: PERSONAL_ALL_STATE_FRAGMENT
+    description: >-
+      Personal pronoun plus "всё/все" plus a state adverb without a finite verb
+      is normally a malformed fragment.
+    positive_examples:
+      - "Я всё нормально сделал."
+      - "У меня всё нормально."
+    negative_examples:
+      - "Я всё нормально."
+    detection_type: DETERMINISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v1-2026-08-14
+    superseded_by: null
+    matcher:
+      type: TOKEN_PATTERN
+      tokens:
+        - any_of: [я, ты, он, она, мы, вы, они]
+        - any_of: [всё, все]
+        - any_of: [нормально, хорошо, плохо]
+      skip_if_question: true
+      confidence: HIGH
+      message: >-
+        Broken personal-state fragment; likely missing an "у меня/него..."
+        construction or a finite verb.
+      suggestions:
+        - "У меня всё нормально."
+        - "Я всё нормально сделал."
+
+  - id: SB-RUS-004
+    owner_family: russian_naturalness
+    severity: REVIEW
+    name: BARE_PERSONAL_TIME_ADVERB
+    description: >-
+      Bare personal pronoun plus "рано/поздно" can be an over-compressed calque
+      or a missing-verb fragment.
+    positive_examples:
+      - "Ты рано пришёл."
+      - "Я поздно вернулся."
+    negative_examples:
+      - "Ты рано."
+      - "Он поздно."
+    detection_type: HEURISTIC
+    fixture_test_path: tests/test_russian_naturalness.py
+    affected_stages: [DRAFT_READY_FOR_EDITOR, QA_IN_PROGRESS, FINAL_CANDIDATE]
+    introduced_by: russian-naturalness-v1-2026-08-14
+    superseded_by: null
+    matcher:
+      type: TOKEN_PATTERN
+      tokens:
+        - any_of: [я, ты, он, она, мы, вы, они]
+        - any_of: [рано, поздно]
+      skip_if_question: true
+      confidence: MEDIUM
+      message: >-
+        Possible missing-verb temporal construction; verify that the ellipsis
+        is deliberate and natural in context.
+      suggestions:
+        - "Ты рано пришёл."
+        - "Он поздно вернулся."
