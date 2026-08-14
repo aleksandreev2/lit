@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/chapter-manifest.schema.json",
+  "title": "Sistema Bogatstva Chapter Manifest",
+  "type": "object",
+  "required": ["book_id", "chapter", "stage", "parent_runtime_through", "source_sync", "research", "qa", "freeze"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "chapter": {"type": "integer", "minimum": 1},
+    "stage": {"enum": ["NOT_STARTED", "PREWRITE", "WORKING", "DRAFT_READY_FOR_EDITOR", "FROZEN_FOR_AUTHOR_REVIEW", "APPROVED"]},
+    "parent_runtime_through": {"type": "integer", "minimum": 0},
+    "author_instructions": {"type": "array"},
+    "source_sync": {"type": "object"},
+    "research": {"type": "object"},
+    "qa": {"type": "object"},
+    "freeze": {
+      "type": "object",
+      "required": ["chapter_sha256", "final_text_frozen", "author_approved"],
+      "properties": {
+        "chapter_sha256": {"type": ["string", "null"]},
+        "final_text_frozen": {"type": "boolean"},
+        "author_approved": {"type": "boolean"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
