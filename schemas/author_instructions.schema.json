@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/author-instructions.schema.json",
+  "title": "Sistema Bogatstva Author Instruction Register",
+  "type": "object",
+  "required": ["book_id", "schema_version", "instructions"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "instructions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "scope",
+          "created_date",
+          "status",
+          "owner_family",
+          "positive_instruction",
+          "negative_calibration",
+          "source_context",
+          "applicable_entities",
+          "regression_rule_ids",
+          "superseded_by"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SB-AUTH-[A-Z0-9][A-Z0-9_-]*$"},
+          "scope": {"type": "string", "minLength": 1},
+          "created_date": {"type": "string", "format": "date"},
+          "status": {"enum": ["ACTIVE", "SUPERSEDED", "RETIRED"]},
+          "owner_family": {"type": "string", "minLength": 1},
+          "positive_instruction": {"type": "string", "minLength": 1},
+          "negative_calibration": {"type": ["string", "null"]},
+          "source_context": {"type": "string", "minLength": 1},
+          "applicable_entities": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "regression_rule_ids": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^SB-[A-Z]+-[0-9]{3}$"}
+          },
+          "superseded_by": {
+            "anyOf": [
+              {"type": "null"},
+              {"type": "string", "pattern": "^SB-AUTH-[A-Z0-9][A-Z0-9_-]*$"}
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"status": {"const": "ACTIVE"}}},
+            "then": {"properties": {"superseded_by": {"type": "null"}}}
+          },
+          {
+            "if": {"properties": {"status": {"const": "SUPERSEDED"}}},
+            "then": {
+              "properties": {
+                "superseded_by": {
+                  "type": "string",
+                  "pattern": "^SB-AUTH-[A-Z0-9][A-Z0-9_-]*$"
+                }
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/knowledge.schema.json",
+  "title": "Sistema Bogatstva Character Knowledge Ledger",
+  "type": "object",
+  "required": ["book_id", "schema_version", "entries"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "character_id", "fact_id", "status", "acquisition"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SB-KNW-[A-Z0-9][A-Z0-9_-]*$"},
+          "character_id": {"type": "string", "pattern": "^SB-CHAR-[A-Z0-9][A-Z0-9_-]*$"},
+          "fact_id": {"type": "string", "pattern": "^SB-F-[A-Z0-9][A-Z0-9_-]*$"},
+          "status": {"enum": ["KNOWN", "BELIEVED", "SUSPECTED", "FORGOTTEN"]},
+          "acquisition": {
+            "type": "object",
+            "required": ["method", "chapter", "source_id", "from_character_id"],
+            "properties": {
+              "method": {
+                "enum": [
+                  "WITNESSED",
+                  "TOLD_BY",
+                  "PUBLIC_KNOWLEDGE",
+                  "DOCUMENT_MESSAGE",
+                  "LEGITIMATE_INFERENCE",
+                  "PRE_STORY_KNOWLEDGE"
+                ]
+              },
+              "chapter": {"type": ["integer", "null"], "minimum": 1},
+              "source_id": {"type": "string", "minLength": 1},
+              "from_character_id": {
+                "anyOf": [
+                  {"type": "null"},
+                  {"type": "string", "pattern": "^SB-CHAR-[A-Z0-9][A-Z0-9_-]*$"}
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {"properties": {"method": {"const": "TOLD_BY"}}},
+                "then": {
+                  "properties": {
+                    "from_character_id": {
+                      "type": "string",
+                      "pattern": "^SB-CHAR-[A-Z0-9][A-Z0-9_-]*$"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {"properties": {"method": {"const": "PRE_STORY_KNOWLEDGE"}}},
+                "then": {"properties": {"chapter": {"type": "null"}}}
+              }
+            ],
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/fact-ledger.schema.json",
+  "title": "Sistema Bogatstva Fact Ledger",
+  "type": "object",
+  "required": ["book_id", "schema_version", "facts"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "facts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/fact"}
+    }
+  },
+  "$defs": {
+    "factId": {
+      "type": "string",
+      "pattern": "^SB-F-[A-Z0-9][A-Z0-9_-]*$"
+    },
+    "sourceRef": {
+      "type": "object",
+      "required": ["source_type", "source_id", "revision"],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "HAPPENED_CHAPTER",
+            "RUNTIME",
+            "SYSTEM",
+            "AUTHOR_INSTRUCTION",
+            "RESEARCH",
+            "FACT"
+          ]
+        },
+        "source_id": {"type": "string", "minLength": 1},
+        "revision": {"type": ["string", "null"], "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "fact": {
+      "type": "object",
+      "required": [
+        "id",
+        "classification",
+        "summary",
+        "status",
+        "happened_chapter",
+        "sources",
+        "supersedes",
+        "superseded_by"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/factId"},
+        "classification": {
+          "enum": ["OBJECTIVE_FACT", "BELIEF", "RUMOR", "PLAN", "PROPOSAL"]
+        },
+        "summary": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "SUPERSEDED"]},
+        "happened_chapter": {"type": ["integer", "null"], "minimum": 1},
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/sourceRef"}
+        },
+        "supersedes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/factId"}
+        },
+        "superseded_by": {
+          "anyOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/factId"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "classification": {"enum": ["PLAN", "PROPOSAL"]}
+            }
+          },
+          "then": {
+            "properties": {
+              "happened_chapter": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"status": {"const": "ACTIVE"}}
+          },
+          "then": {
+            "properties": {"superseded_by": {"type": "null"}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"status": {"const": "SUPERSEDED"}}
+          },
+          "then": {
+            "properties": {
+              "superseded_by": {"$ref": "#/$defs/factId"}
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

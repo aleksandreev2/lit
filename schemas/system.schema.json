@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/system.schema.json",
+  "title": "Sistema Bogatstva System State",
+  "type": "object",
+  "required": ["book_id", "schema_version", "rules", "history"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "rules": {
+      "type": "object",
+      "required": ["cycle_length_days", "spending_recognition", "current_transition_overrides"],
+      "properties": {
+        "cycle_length_days": {"type": "integer", "minimum": 1},
+        "spending_recognition": {
+          "type": "object",
+          "required": ["bitcoin_purchase_counts_1_to_1", "direct_transfer_counts_1_to_1"],
+          "properties": {
+            "bitcoin_purchase_counts_1_to_1": {"type": "boolean"},
+            "direct_transfer_counts_1_to_1": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "current_transition_overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from_quota_usd", "to_quota_usd", "source", "universal_formula"],
+            "properties": {
+              "from_quota_usd": {"type": "number", "minimum": 0},
+              "to_quota_usd": {"type": "number", "minimum": 0},
+              "source": {"type": "string", "minLength": 1},
+              "universal_formula": {"type": "boolean"}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/cycleClosed"},
+          {"$ref": "#/$defs/newCycle"}
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "cycleClosed": {
+      "type": "object",
+      "required": ["chapter", "event", "spend_usd", "vehicle", "resulting_asset"],
+      "properties": {
+        "chapter": {"type": "integer", "minimum": 1},
+        "event": {"const": "CYCLE_CLOSED"},
+        "spend_usd": {"type": "number", "minimum": 0},
+        "vehicle": {"type": "string", "minLength": 1},
+        "resulting_asset": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"type": "number"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "newCycle": {
+      "type": "object",
+      "required": ["chapter", "event", "quota_usd", "deadline"],
+      "properties": {
+        "chapter": {"type": "integer", "minimum": 1},
+        "event": {"const": "NEW_CYCLE"},
+        "quota_usd": {"type": "number", "minimum": 0},
+        "deadline": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
