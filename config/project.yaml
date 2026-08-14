@@ -1,0 +1,25 @@
+book_id: SISTEMA_BOGATSTVA
+repository_role: EXECUTION_AND_MACHINE_STATE
+content_policy:
+  repository_is_public: true
+  commit_full_unpublished_chapters: false
+  commit_sensitive_visual_references: false
+  drive_is_human_facing_library: true
+source_authority:
+  - CURRENT_USER_INSTRUCTION
+  - CANON_RUNTIME
+  - APPROVED_CHAPTER
+  - STABLE_CANON
+  - FULL_CHARACTER_PROFILE
+  - ACTIVE_ARC
+  - PRODUCTION_RULES
+  - RESEARCH_EVIDENCE
+foreign_book_markers:
+  - "Система политики"
+  - "Я пробудил систему геймдизайнера"
+  - "SISTEMA_POLITIKI"
+checks:
+  require_current_equals_through_plus_one: true
+  require_last_approved_equals_through: true
+  require_system_runtime_sync: true
+  block_foreign_book_dependencies: true

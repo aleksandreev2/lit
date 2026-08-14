@@ -1,0 +1,8 @@
+extends: existence
+message: "Foreign-project marker found: '%s'. Active production files must not import another book's canon or workflow identity."
+level: error
+ignorecase: true
+tokens:
+  - 'Система политики'
+  - 'Я пробудил систему геймдизайнера'
+  - 'SISTEMA_POLITIKI'

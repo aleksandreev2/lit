@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/runtime.schema.json",
+  "title": "Sistema Bogatstva Runtime",
+  "type": "object",
+  "required": ["book_id", "schema_version", "through_chapter", "last_approved_chapter", "current_chapter", "system"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "through_chapter": {"type": "integer", "minimum": 0},
+    "last_approved_chapter": {
+      "type": "object",
+      "required": ["number", "title"],
+      "properties": {
+        "number": {"type": "integer", "minimum": 0},
+        "title": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    },
+    "current_chapter": {
+      "type": "object",
+      "required": ["number", "status"],
+      "properties": {
+        "number": {"type": "integer", "minimum": 1},
+        "status": {"enum": ["NOT_STARTED", "PREWRITE", "WORKING", "FROZEN_FOR_AUTHOR_REVIEW"]}
+      },
+      "additionalProperties": true
+    },
+    "system": {
+      "type": "object",
+      "required": ["current_quota_usd", "deadline"],
+      "properties": {
+        "current_quota_usd": {"type": "number", "minimum": 0},
+        "deadline": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
