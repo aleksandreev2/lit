@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REGISTRIES = (
     ROOT / "rules/regressions.yaml",
     ROOT / "rules/pronoun_regressions.yaml",
+    ROOT / "rules/semantic_coreference_regressions.yaml",
 )
 
 
