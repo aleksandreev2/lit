@@ -92,7 +92,7 @@ def test_question_knowledge_money_and_text_signals_are_review_candidates(tmp_pat
     assert "SB-DIA-003" in rules
 
     naturalness = json.loads((output / "russian_naturalness.json").read_text(encoding="utf-8"))
-    assert naturalness["status"] == "REVIEW"
+    assert naturalness["status"] == "BLOCK"
     assert {item["rule"] for item in naturalness["findings"]} == {"SB-RUS-002"}
 
 
