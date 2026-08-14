@@ -61,16 +61,16 @@ jobs:
         run: pytest -q
 
       - name: Build QA report
-        id: qa-report
+        id: qa_report
         if: ${{ always() }}
         run: python scripts/qa_report.py qa-report --revision "$GITHUB_SHA"
 
       - name: Verify QA report
-        if: ${{ always() && steps.qa-report.outcome == 'success' }}
+        if: ${{ always() && steps.qa_report.outcome == 'success' }}
         run: python scripts/qa_report_check.py qa-report
 
       - name: Upload QA report
-        if: ${{ always() && steps.qa-report.outcome == 'success' }}
+        if: ${{ always() && steps.qa_report.outcome == 'success' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: qa-report
