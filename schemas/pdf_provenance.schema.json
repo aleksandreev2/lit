@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/pdf-provenance.schema.json",
+  "title": "Sistema Bogatstva PDF Provenance Record",
+  "type": "object",
+  "required": [
+    "book_id",
+    "schema_version",
+    "chapter",
+    "frozen_source",
+    "freeze_manifest",
+    "pdf",
+    "technical_preflight",
+    "visual_qa",
+    "deliverable_status"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "chapter": {"type": "integer", "minimum": 1},
+    "frozen_source": {"$ref": "#/$defs/fileBinding"},
+    "freeze_manifest": {"$ref": "#/$defs/fileBinding"},
+    "pdf": {"$ref": "#/$defs/fileBinding"},
+    "technical_preflight": {"$ref": "#/$defs/evidenceGate"},
+    "visual_qa": {"$ref": "#/$defs/evidenceGate"},
+    "deliverable_status": {"enum": ["BLOCKED", "READY"]}
+  },
+  "$defs": {
+    "fileBinding": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "evidenceGate": {
+      "type": "object",
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": {"enum": ["PASS", "BLOCK", "NOT_RUN"]},
+        "evidence": {
+          "anyOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/fileBinding"}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "PASS"}}},
+          "then": {"properties": {"evidence": {"$ref": "#/$defs/fileBinding"}}}
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"deliverable_status": {"const": "READY"}}},
+      "then": {
+        "properties": {
+          "technical_preflight": {"properties": {"status": {"const": "PASS"}}},
+          "visual_qa": {"properties": {"status": {"const": "PASS"}}}
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}
