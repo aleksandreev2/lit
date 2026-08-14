@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/author-approval-evidence.schema.json",
+  "title": "Sistema Bogatstva Explicit Author Approval Evidence",
+  "type": "object",
+  "required": [
+    "id",
+    "book_id",
+    "chapter",
+    "approver_role",
+    "source_type",
+    "approved_at",
+    "freeze_manifest_sha256",
+    "chapter_sha256",
+    "source_context",
+    "status"
+  ],
+  "properties": {
+    "id": {"type": "string", "pattern": "^SB-APP-[A-Z0-9][A-Z0-9_-]*$"},
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "chapter": {"type": "integer", "minimum": 1},
+    "approver_role": {"const": "AUTHOR"},
+    "source_type": {"const": "EXPLICIT_AUTHOR_ACTION"},
+    "approved_at": {"type": "string", "format": "date-time"},
+    "freeze_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "chapter_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_context": {"type": "string", "minLength": 1},
+    "status": {"const": "ACTIVE"}
+  },
+  "additionalProperties": false
+}
