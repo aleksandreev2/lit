@@ -18,6 +18,7 @@ CHECK_COMMANDS = (
     ("project_preflight", ["scripts/project_preflight.py"]),
     ("provenance", ["scripts/provenance_check.py"]),
     ("regression_locks", ["scripts/regression_check.py"]),
+    ("russian_naturalness_corpus", ["scripts/russian_naturalness.py", "--self-test"]),
     ("dependency_graph", ["scripts/dependency_graph.py", "config/dependency_graph.yaml"]),
 )
 
@@ -119,7 +120,10 @@ def generate_report(root: Path, output_dir: Path, revision: str) -> dict:
         {
             "id": "chapter_qa_artifacts",
             "status": "NOT_RUN",
-            "note": "No explicit current chapter source was supplied to the artifact generator.",
+            "note": (
+                "No explicit current chapter source was supplied; per-chapter naturalness findings "
+                "are generated only with the chapter QA artifact package."
+            ),
         },
         {
             "id": "drive_sync",

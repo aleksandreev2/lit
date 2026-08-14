@@ -67,7 +67,8 @@ def test_sync_without_live_drive_observation_is_unknown_not_clean() -> None:
 def test_qa_report_is_compact_hashed_and_honest_about_not_started_chapter(tmp_path: Path) -> None:
     report_dir = tmp_path / "qa-report"
     summary = generate_report(ROOT, report_dir, "deadbeefcafebabe")
-    assert summary["counts"] == {"PASS": 4, "BLOCK": 0, "REVIEW": 1}
+    assert summary["counts"] == {"PASS": 5, "BLOCK": 0, "REVIEW": 1}
+    assert {item["id"] for item in summary["checks"]} >= {"russian_naturalness_corpus"}
     assert summary["current_chapter"] == 25
     assert summary["current_stage"] == "NOT_STARTED"
     assert summary["freeze"]["status"] == "NOT_AVAILABLE"

@@ -42,6 +42,9 @@ jobs:
       - name: Regression lock metadata and fixtures
         run: python scripts/regression_check.py
 
+      - name: Russian naturalness regression corpus
+        run: python scripts/russian_naturalness.py --self-test
+
       - name: Dependency DAG
         run: python scripts/dependency_graph.py config/dependency_graph.yaml
 
@@ -52,7 +55,7 @@ jobs:
         run: python scripts/sync_conflicts.py sync/manifest.yaml
 
       - name: YAML lint
-        run: yamllint canon config current research rules sync templates
+        run: yamllint canon config current research rules sync templates tests/fixtures
 
       - name: Python lint
         run: ruff check scripts tests

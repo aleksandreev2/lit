@@ -15,6 +15,21 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _verify_binding(base: Path, binding: dict, label: str) -> list[str]:
+    errors: list[str] = []
+    path = (base / binding["path"]).resolve()
+    if not path.exists():
+        errors.append(f"QA_ARTIFACT_{label} missing: {path}")
+        return errors
+    actual = sha256(path)
+    if actual != binding["sha256"]:
+        errors.append(
+            f"QA_ARTIFACT_{label} hash mismatch: "
+            f"expected={binding['sha256']} actual={actual}"
+        )
+    return errors
+
+
 def validate_manifest(manifest_path: Path) -> list[str]:
     manifest_path = manifest_path.resolve()
     base = manifest_path.parent
@@ -29,16 +44,8 @@ def validate_manifest(manifest_path: Path) -> list[str]:
     if errors:
         return errors
 
-    source_path = (base / manifest["source"]["path"]).resolve()
-    if not source_path.exists():
-        errors.append(f"QA_ARTIFACT_SOURCE missing: {source_path}")
-    else:
-        actual_source = sha256(source_path)
-        if actual_source != manifest["source"]["sha256"]:
-            errors.append(
-                "QA_ARTIFACT_SOURCE hash mismatch: "
-                f"expected={manifest['source']['sha256']} actual={actual_source}"
-            )
+    errors.extend(_verify_binding(base, manifest["source"], "SOURCE"))
+    errors.extend(_verify_binding(base, manifest["regression_rules"], "RULES"))
 
     seen_paths: set[str] = set()
     for artifact in manifest["artifacts"]:

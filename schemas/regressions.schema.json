@@ -63,6 +63,46 @@
               {"type": "null"},
               {"type": "string", "pattern": "^SB-[A-Z]+-[0-9]{3}$"}
             ]
+          },
+          "matcher": {
+            "type": "object",
+            "required": [
+              "type",
+              "tokens",
+              "skip_if_question",
+              "confidence",
+              "message",
+              "suggestions"
+            ],
+            "properties": {
+              "type": {"const": "TOKEN_PATTERN"},
+              "tokens": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["any_of"],
+                  "properties": {
+                    "any_of": {
+                      "type": "array",
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {"type": "string", "minLength": 1}
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "skip_if_question": {"type": "boolean"},
+              "confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+              "message": {"type": "string", "minLength": 1},
+              "suggestions": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "minLength": 1}
+              }
+            },
+            "additionalProperties": false
           }
         },
         "allOf": [

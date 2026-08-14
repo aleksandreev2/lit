@@ -6,6 +6,7 @@
   "required": [
     "schema_version",
     "source",
+    "regression_rules",
     "parent_runtime_sha256",
     "character_state_sha256",
     "artifacts"
@@ -13,6 +14,15 @@
   "properties": {
     "schema_version": {"type": "integer", "minimum": 1},
     "source": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "regression_rules": {
       "type": "object",
       "required": ["path", "sha256"],
       "properties": {
