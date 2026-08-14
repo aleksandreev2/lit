@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 from collections import Counter
 from pathlib import Path
@@ -278,6 +279,8 @@ def generate_artifacts(
     parent_runtime: Path | None = None,
     character_state: Path | None = None,
 ) -> dict:
+    source = source.resolve()
+    output_dir = output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     text = source.read_text(encoding="utf-8")
     lines = text.splitlines()
@@ -331,7 +334,10 @@ def generate_artifacts(
     ]
     manifest = {
         "schema_version": 1,
-        "source": {"path": str(source), "sha256": sha256(source)},
+        "source": {
+            "path": os.path.relpath(source, output_dir),
+            "sha256": sha256(source),
+        },
         "parent_runtime_sha256": sha256(parent_runtime) if parent_runtime else None,
         "character_state_sha256": sha256(character_state) if character_state else None,
         "artifacts": artifacts,
@@ -354,7 +360,10 @@ def main() -> int:
         parent_runtime=args.parent_runtime,
         character_state=args.character_state,
     )
-    print(f"QA_ARTIFACTS: PASS count={len(manifest['artifacts'])} source_sha256={manifest['source']['sha256']}")
+    print(
+        f"QA_ARTIFACTS: PASS count={len(manifest['artifacts'])} "
+        f"source_sha256={manifest['source']['sha256']}"
+    )
     return 0
 
 
