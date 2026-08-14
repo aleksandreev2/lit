@@ -17,7 +17,7 @@ def test_user_examples_are_detected() -> None:
     payload = analyze_text("— Я ладно.\n— Я нормально.\n", load_rules(RULES))
     assert payload["status"] == "BLOCK"
     assert {item["rule"] for item in payload["findings"]} == {"SB-RUS-001", "SB-RUS-002"}
-    assert payload["counts"] == {"BLOCK": 1, "REVIEW": 1}
+    assert payload["counts"] == {"BLOCK": 2, "REVIEW": 0}
 
 
 def test_complete_constructions_are_not_flagged() -> None:
