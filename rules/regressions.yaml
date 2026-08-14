@@ -32,7 +32,9 @@ rules:
   - id: SB-CHR-002
     severity: BLOCK
     name: GERMAN_EXPERTISE_LEAP
-    description: "Wealth does not instantly make German expert in finance, crypto, business, cars, sex, fashion or property."
+    description: >-
+      Wealth does not instantly make German expert in finance, crypto, business,
+      cars, sex, fashion or property.
   - id: SB-PROC-001
     severity: BLOCK
     name: FROZEN_HASH_MISMATCH
