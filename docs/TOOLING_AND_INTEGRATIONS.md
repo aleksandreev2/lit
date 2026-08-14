@@ -37,6 +37,21 @@ LanguageTool supports Russian proofreading and can be run locally. It is intenti
 
 ## Evaluated, not imported as runtime dependencies
 
+### Pydantic 2.13.4
+Mature MIT-licensed Python validation library using type hints. It is a good fit for application-layer typed models, but the Production Engine currently needs a serialized YAML/JSON contract shared by scripts and CI. JSON Schema is already that authority, so introducing Pydantic in Phase 2 would duplicate validation definitions without adding a required capability.
+
+Source: `https://github.com/pydantic/pydantic`
+
+### prov 2.1.1
+MIT-licensed implementation of the W3C PROV data model with PROV-JSON/XML/RDF support. It is useful for general data lineage, but the novel engine needs domain rules such as fact classification, character knowledge acquisition and explicit plan/proposal promotion blocking. We keep the ledger domain-specific rather than wrapping it in a larger generic provenance model.
+
+Source: `https://github.com/trungdong/prov`
+
+### transitions
+MIT-licensed finite-state-machine library with hierarchical, async and graph extensions. It remains a candidate if chapter lifecycle behavior becomes branching or hierarchical. The present mandatory lifecycle is linear enough that explicit transition code is easier to audit and harder to configure incorrectly.
+
+Source: `https://github.com/pytransitions/transitions`
+
 ### zizmor 1.29.0
 Actively maintained MIT-licensed static analysis for GitHub Actions and related CI configuration. It is a strong candidate for the next security-hardening slice because it can detect unpinned actions, risky permissions and credential persistence. It is deliberately not mixed into the first lifecycle/schema hardening change so any new CI-security findings can be reviewed and fixed as their own focused gate.
 
