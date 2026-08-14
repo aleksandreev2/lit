@@ -31,12 +31,15 @@ nodes:
   - id: regression_qa
     kind: QA
     depends_on: [rules, chapter_text]
+  - id: naturalness_qa
+    kind: QA
+    depends_on: [rules, chapter_text]
   - id: fact_qa
     kind: QA
     depends_on: [research, chapter_text]
   - id: generated_artifact_manifest
     kind: EVIDENCE
-    depends_on: [chapter_text]
+    depends_on: [rules, chapter_text]
   - id: qa_manifest
     kind: EVIDENCE
     depends_on:
@@ -45,6 +48,7 @@ nodes:
       - prose_pov_qa
       - continuity_qa
       - regression_qa
+      - naturalness_qa
       - fact_qa
   - id: freeze
     kind: FREEZE
