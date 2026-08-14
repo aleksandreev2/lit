@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/sync-manifest.schema.json",
+  "title": "Sistema Bogatstva Drive GitHub Sync Manifest",
+  "type": "object",
+  "required": ["book_id", "schema_version", "entries"],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "github",
+          "drive",
+          "direction_allowed",
+          "authority_owner",
+          "last_sync_at",
+          "conflict_state"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SB-SYNC-[A-Z0-9][A-Z0-9_-]*$"},
+          "github": {
+            "type": "object",
+            "required": ["path", "revision", "sha256"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 7},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "additionalProperties": false
+          },
+          "drive": {
+            "type": "object",
+            "required": ["file_id", "title", "revision", "sha256"],
+            "properties": {
+              "file_id": {"type": "string", "minLength": 10},
+              "title": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {
+                "anyOf": [
+                  {"type": "null"},
+                  {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "direction_allowed": {
+            "enum": ["MANUAL_ONLY", "GITHUB_TO_DRIVE", "DRIVE_TO_GITHUB"]
+          },
+          "authority_owner": {"enum": ["MANUAL", "GITHUB", "DRIVE"]},
+          "last_sync_at": {"type": ["string", "null"], "format": "date-time"},
+          "conflict_state": {
+            "enum": ["CLEAN", "GITHUB_CHANGED", "DRIVE_CHANGED", "BOTH_CHANGED", "UNKNOWN"]
+          }
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"direction_allowed": {"const": "MANUAL_ONLY"}}},
+            "then": {"properties": {"authority_owner": {"const": "MANUAL"}}}
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

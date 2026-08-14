@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/sistema-bogatstva/qa-report.schema.json",
+  "title": "Sistema Bogatstva QA Report Summary",
+  "type": "object",
+  "required": [
+    "book_id",
+    "schema_version",
+    "revision",
+    "current_chapter",
+    "current_stage",
+    "checks",
+    "counts",
+    "dependency_hashes",
+    "generated_audits",
+    "stale_evidence",
+    "research_warnings",
+    "freeze",
+    "semantic_review_status"
+  ],
+  "properties": {
+    "book_id": {"const": "SISTEMA_BOGATSTVA"},
+    "schema_version": {"type": "integer", "minimum": 1},
+    "revision": {"type": "string", "minLength": 7},
+    "current_chapter": {"type": "integer", "minimum": 1},
+    "current_stage": {"type": "string", "minLength": 1},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "log"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "status": {"enum": ["PASS", "BLOCK", "REVIEW"]},
+          "log": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["PASS", "BLOCK", "REVIEW"],
+      "properties": {
+        "PASS": {"type": "integer", "minimum": 0},
+        "BLOCK": {"type": "integer", "minimum": 0},
+        "REVIEW": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "dependency_hashes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+    },
+    "generated_audits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status", "note"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["PASS", "BLOCK", "REVIEW", "NOT_RUN"]},
+          "note": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "stale_evidence": {"type": "array", "items": {"type": "string"}},
+    "research_warnings": {"type": "array", "items": {"type": "string"}},
+    "freeze": {
+      "type": "object",
+      "required": ["status", "manifest_path"],
+      "properties": {
+        "status": {"enum": ["NOT_AVAILABLE", "VALID", "STALE", "BLOCKED"]},
+        "manifest_path": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "semantic_review_status": {"enum": ["NOT_RUN", "REVIEW", "PASS", "BLOCK"]}
+  },
+  "additionalProperties": false
+}
