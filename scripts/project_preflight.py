@@ -6,9 +6,8 @@ import sys
 from pathlib import Path
 
 import yaml
-from jsonschema import Draft202012Validator, FormatChecker
-
 from chapter_lifecycle import validate_manifest_lifecycle
+from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 
