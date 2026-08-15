@@ -1,0 +1,48 @@
+book_id: SISTEMA_BOGATSTVA
+chapter: 30
+stage: NOT_STARTED
+parent_runtime_through: 29
+author_instructions:
+  - id: U-01
+    summary: "Continue after approved Ch29."
+  - id: U-02
+    summary: "Do not foreground routine legal/banking/export/document/logistics detail; Arman is mainly a background operations abstraction layer."
+  - id: U-03
+    summary: "Research-first still applies internally, but prose should usually surface only concise outcomes, meaningful costs, delays, forks or German-owned decisions."
+  - id: U-04
+    summary: "Do not make Arman a procedural co-protagonist or use him for long explanatory consultations unless the complication itself is dramatically important."
+  - id: U-05
+    summary: "Maintain dialogue calibration, including no reaction-recap questions such as 'ты реально это сделал?' or 'вчера X — сегодня Y'."
+source_sync:
+  approved_chapters:
+    - "CH029: Drive 13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY; story SHA 8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc"
+  runtime:
+    - "GitHub canon/runtime.yaml through 29"
+    - "Drive CURRENT STATE 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo"
+  active_arc:
+    - "Drive 1YcKLv0NxRKYedvI2mjKSQzhN2mklrzs7JTyrjm4_jMc"
+carryovers:
+  system_remainder_usd: 374531.08
+  deadline: "2026-08-01T12:36:18+04:00"
+  revuelto: "Outgoing EUR 550,000 payment executed/debited; seller clearing/release/export/shipping/import/registration remain background tasks."
+  btc_custody: "Open/background; no expert leap for German."
+  lilit_german: "Mutual attraction and direct contact active; no gift/kiss/sex/formal relationship yet."
+  karine_german: "Affair active; shopping/foot-fetish/material strategy residue survives."
+qa:
+  structural: PENDING
+  dialogue: PENDING
+  prose_pov: PENDING
+  character: PENDING
+  continuity_knowledge: PENDING
+  regression: PENDING
+  russian_proofread: PENDING
+  fact_recheck: PENDING
+  text_preflight: PENDING
+  final_reread: PENDING
+freeze:
+  chapter_sha256: null
+  final_text_frozen: false
+  author_approved: false
+  author_approval_evidence_id: null
+drive:
+  current_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
