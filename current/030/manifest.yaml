@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 30
-stage: NOT_STARTED
+stage: FINAL_TEXT_FROZEN
 parent_runtime_through: 29
 author_instructions:
   - id: U-01
@@ -13,36 +13,49 @@ author_instructions:
     summary: "Do not make Arman a procedural co-protagonist or use him for long explanatory consultations unless the complication itself is dramatically important."
   - id: U-05
     summary: "Maintain dialogue calibration, including no reaction-recap questions such as 'ты реально это сделал?' or 'вчера X — сегодня Y'."
+  - id: U-06
+    summary: "Begin Milena's social ladder through a plausible family meeting and low-stakes interaction; no iPhone or expensive ask."
+  - id: U-07
+    summary: "Keep Lilit's early attraction active without buying the dress, kissing, sex or formal relationship escalation."
+  - id: U-08
+    summary: "Keep Karine mercantile, duplicitous and strategically interested in family access while the affair remains hidden from daughters."
 source_sync:
+  runtime_sha256: "657aedf78b4b48d0dca604c8edccb346e4ec12209f30bdc8d15dc68ef1a2d2fd"
+  character_profiles:
+    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
+    - "KARINE: Drive 1hmnk3GZJx_IGl0VIBMKIt5_sayVsfSEdymFIeeR0vdw"
+    - "LILIT: Drive 1iqdKvUe-mCl_KG8SYcoGz_wHDz7-ebORV7VlfDZI3lg"
+    - "MILENA: Drive 1VeViAf4afQ0n1ByahgPMwuMZYA2uiJ7xdlYIanqahCE"
   approved_chapters:
     - "CH029: Drive 13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY; story SHA 8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc"
-  runtime:
-    - "GitHub canon/runtime.yaml through 29"
-    - "Drive CURRENT STATE 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo"
-  active_arc:
-    - "Drive 1YcKLv0NxRKYedvI2mjKSQzhN2mklrzs7JTyrjm4_jMc"
-carryovers:
-  system_remainder_usd: 374531.08
-  deadline: "2026-08-01T12:36:18+04:00"
-  revuelto: "Outgoing EUR 550,000 payment executed/debited; seller clearing/release/export/shipping/import/registration remain background tasks."
-  btc_custody: "Open/background; no expert leap for German."
-  lilit_german: "Mutual attraction and direct contact active; no gift/kiss/sex/formal relationship yet."
-  karine_german: "Affair active; shopping/foot-fetish/material strategy residue survives."
+  production_rules:
+    - "Drive Dialogue Calibration 1UpCBgtYtdSnAZ4O6CvHbYDkwpcs0bQdbAcZAPaOMcvw"
+    - "GitHub rules/regressions.yaml"
+    - "Strict Chapter Protocol v3"
+    - "Editor QA Engine v2"
+    - "Research-first Rule 1"
+research:
+  required:
+    - STORY_DATE_2026_07_29_WEEKDAY
+    - REVUELTO_COPENHAGEN_EXACT_LISTING
+    - BMW_X6M_F96_OFFICIAL
+  completed:
+    - STORY_DATE_2026_07_29_WEEKDAY
+    - REVUELTO_COPENHAGEN_EXACT_LISTING
+    - BMW_X6M_F96_OFFICIAL
 qa:
-  structural: PENDING
-  dialogue: PENDING
-  prose_pov: PENDING
-  character: PENDING
-  continuity_knowledge: PENDING
-  regression: PENDING
-  russian_proofread: PENDING
-  fact_recheck: PENDING
-  text_preflight: PENDING
-  final_reread: PENDING
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  text_preflight: PASS
+  final_reread: PASS
 freeze:
-  chapter_sha256: null
-  final_text_frozen: false
+  chapter_sha256: "665672b5d9a1a9c1e58e0531fdecf191ca11e3491513faf9542ea5c8684b0155"
+  final_text_frozen: true
   author_approved: false
   author_approval_evidence_id: null
-drive:
-  current_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
