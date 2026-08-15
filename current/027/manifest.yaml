@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 27
-stage: FINAL_TEXT_FROZEN
+stage: HAPPENED
 parent_runtime_through: 26
 author_instructions:
   - id: U-01
@@ -21,24 +21,7 @@ author_instructions:
     summary: "Do not promote Ch27 to HAPPENED before direct author approval."
   - id: U-09
     summary: "Author revision: remove semantic echo, avoid overly short dialogue turns, increase dialogue substance and earned German-Lilit progression."
-source_sync:
-  runtime_sha256: null
-  character_profiles:
-    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
-    - "LILIT: Drive 1iqdKvUe-mCl_KG8SYcoGz_wHDz7-ebORV7VlfDZI3lg"
-  approved_chapters:
-    - "CH026: Drive 1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
-  production_rules:
-    - "Strict Chapter Protocol v3"
-    - "Dialogue Calibration"
-    - "POV Calibration"
-    - "Editor QA Engine v2"
-    - "Rule 1 research-first"
 research:
-  required:
-    - REVUELTO_COPENHAGEN_OFFICIAL
-    - BMW_X6M_F96_OFFICIAL
-    - BITCOIN_CUSTODY_SECURITY
   completed:
     - REVUELTO_COPENHAGEN_OFFICIAL
     - BMW_X6M_F96_OFFICIAL
@@ -58,11 +41,12 @@ freeze:
   chapter_sha256: "ace302291715625e35c772ccaa857987b1c566720158e70dc81dadc72cb89275"
   previous_superseded_sha256: "ad055ef59ea11ea57299e135551f9cd56f3b8362d2c2c1374024515a6ffc4c3f"
   final_text_frozen: true
-  author_approved: false
-  author_approval_evidence_id: null
-  note: "SHA covers story prose only; non-canonical source/visual appendix is excluded. Revised after author dialogue feedback; exact final preflight CLEAN."
+  author_approved: true
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH27"
+  happened: true
+  note: "Author approved revised post-feedback freeze. SHA covers story prose only; non-canonical source/visual appendix excluded."
 drive:
-  current_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
+  approved_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
   prewrite: "1__e3aZdorI811tWpt9vk4p2XCQ6GulV7he0L7WJ4_AY"
-  working_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
+  approved_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
   qa_evidence: "1mju40dPN49nlE3iOngyEV9TJ1UoVsFhe0qfLYIxt0Fo"
