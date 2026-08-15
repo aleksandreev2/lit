@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 28
-stage: PREWRITE
+stage: DRAFT_READY_FOR_EDITOR
 parent_runtime_through: 27
 author_instructions:
   - id: U-01
@@ -37,12 +37,16 @@ research:
     - DENMARK_VISA_ARMENIA
     - GYUMRI_ARTIK_ROUTE
     - SHIRAK_MALL_HOURS
+    - DANIELYAN_ARTIK_OFFICIAL
+    - BMW_X6M_2020_OFFICIAL
     - CBA_2026_07_27
   completed:
     - REVUELTO_COPENHAGEN_OFFICIAL
     - DENMARK_VISA_ARMENIA
     - GYUMRI_ARTIK_ROUTE
     - SHIRAK_MALL_HOURS
+    - DANIELYAN_ARTIK_OFFICIAL
+    - BMW_X6M_2020_OFFICIAL
     - CBA_2026_07_27
 qa:
   structural: PENDING
@@ -63,3 +67,4 @@ freeze:
 drive:
   current_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
   prewrite: "1xiDV_Bb0vDjmI37p9GMw4vNbWKOrSDGKOFWC5CqAJXc"
+  working_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
