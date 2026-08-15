@@ -6,7 +6,7 @@ last_approved_chapter:
   title: "Ещё не домой"
 current_chapter:
   number: 26
-  status: NOT_STARTED
+  status: FINAL_TEXT_FROZEN
 story:
   date: "2026-07-25"
   time_anchor: "late evening after Karine returned home and messaged German; Ch25 complete"
