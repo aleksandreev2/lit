@@ -1,18 +1,19 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 28
+through_chapter: 29
 last_approved_chapter:
-  number: 28
-  title: "До закрытия"
-current_chapter:
   number: 29
-  status: FINAL_TEXT_FROZEN_AUTHOR_REVIEW
+  title: "После осмотра"
+current_chapter:
+  number: 30
+  status: NOT_STARTED
 story:
-  date: "2026-07-27"
-  time_anchor: "Monday late evening after Ch28; German has returned from Artik/Gyumri shopping route"
+  date: "2026-07-28"
+  time_anchor: "Tuesday after approved Ch29; Revuelto outgoing payment executed, later operational steps pending in background"
 system:
   current_quota_usd: 1000000.00
-  remaining_quota_usd: 999331.92
+  spent_current_cycle_usd: 625468.92
+  remaining_quota_usd: 374531.08
   deadline: "2026-08-01T12:36:18+04:00"
   prior_cycle_closed: true
 assets:
@@ -20,6 +21,15 @@ assets:
     amount_btc: 7.74166346
     acquisition_cost_usd: 498717.96
     custody_state: CLIENT_ACCOUNT_PENDING_CUSTODY_DECISION
+  revuelto_copenhagen:
+    model: "Lamborghini Revuelto 2026"
+    color: "Verde Ermes Matt"
+    public_price_eur: 550000
+    payment_state: OUTGOING_BANK_PAYMENT_EXECUTED_DEBITED
+    system_equivalent_usd: 624800.84
+    seller_receipt_clearing: PENDING
+    release_export_shipping: PENDING_BACKGROUND
+    armenia_customs_registration: PENDING_BACKGROUND
 relationship_state:
   karine_affair:
     status: ACTIVE
@@ -30,7 +40,7 @@ relationship_state:
     night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
     shopping_thread: FIRST_OUTING_HAPPENED_245000_AMD_NO_ALLOWANCE
     ch28_material_delta: "Two pairs of shoes/sandals, dresses/clothing/accessories bought; Karine explicitly learned the foot-fetish lever works in shopping and teased future use."
-    lilit_awareness: "Karine knows Lilit rode with German twice on Ch28 day and is curious/strategic about their mutual attraction; daughters still do not know the factual affair."
+    lilit_awareness: "Karine knows Lilit rode with German twice and is strategically curious about their mutual attraction; daughters still do not know the factual affair."
   lilit_german:
     status: ACTIVE_EARLY_SOCIAL_ATTRACTION
     private_contact_channel: true
@@ -41,22 +51,24 @@ relationship_state:
     expensive_ask: false
     sexual_progression: false
     ch28_delta: "Second same-day ride to Artik; Lilit directly asked whether German has a girlfriend, admitted personal interest, set a no-purchase-today boundary, and later sent a fitting-room dress photo/link."
+    ch29_delta: "After learning the Revuelto payment happened, Lilit does not re-verify the spend; she moves toward wanting to see/sit in the car and a playful passenger-seat expectation. No gift, kiss, sex or formal relationship."
 open_operational_tasks:
-  - id: REVUELTO_VERIFICATION
+  - id: REVUELTO_POST_PAYMENT
     owner: ARMAN_PETROSYAN
-    status: OPEN_ADVANCED
-    note: "Lamborghini Copenhagen says candidate is available; VIN and base documents received. Live remote video walkaround scheduled for Tuesday 28.07.2026; independent inspection to be arranged if access is approved. German has no current Schengen visa; Denmark trip cannot happen immediately. No reservation/payment/ownership yet in APPROVED canon."
+    status: OPEN_BACKGROUND
+    note: "Seller receipt/clearing, release, export/shipping, Armenian customs and registration remain unresolved. By author lock these routine steps stay mostly off-page unless a complication, cost, delay or German-owned decision becomes dramatically relevant."
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
-    status: OPEN
-    note: "Two-route custody concept explained; concrete hardware/device/scheme selection deferred to Tuesday."
+    status: OPEN_BACKGROUND
+    note: "Custody remains unresolved; routine research/implementation may stay off-page until German must choose or a material risk appears."
+production_locks:
+  arman_role_weight: "BACKGROUND_OPERATIONS_ABSTRACTION"
+  arman_rule: "Research remains rigorous, but routine legal/banking/export/document/logistics mechanics should normally be compressed to concise outcomes. Do not make Arman a procedural co-protagonist."
 production:
-  current_drive_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
-  current_ch29_drive_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
-  current_ch29_prewrite_doc: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
-  current_ch29_qa_doc: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
-  current_ch29_frozen_story_sha256: "8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc"
-  current_ch29_previous_superseded_story_sha256: "0ff38c77b173bbebed73079ac41828bb92e369e0bf43b35208751a1cd3764068"
-  approved_ch28_drive_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
-  approved_ch28_qa_doc: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
-  approved_ch28_frozen_story_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
+  current_drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
+  approved_ch29_drive_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
+  approved_ch29_drive_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
+  approved_ch29_prewrite_doc: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
+  approved_ch29_qa_doc: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
+  approved_ch29_frozen_story_sha256: "8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc"
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH29"
