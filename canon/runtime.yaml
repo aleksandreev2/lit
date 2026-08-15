@@ -6,7 +6,7 @@ last_approved_chapter:
   title: "До закрытия"
 current_chapter:
   number: 29
-  status: NOT_STARTED
+  status: FINAL_TEXT_FROZEN_AUTHOR_REVIEW
 story:
   date: "2026-07-27"
   time_anchor: "Monday late evening after Ch28; German has returned from Artik/Gyumri shopping route"
@@ -45,13 +45,17 @@ open_operational_tasks:
   - id: REVUELTO_VERIFICATION
     owner: ARMAN_PETROSYAN
     status: OPEN_ADVANCED
-    note: "Lamborghini Copenhagen says candidate is available; VIN and base documents received. Live remote video walkaround scheduled for Tuesday 28.07.2026; independent inspection to be arranged if access is approved. German has no current Schengen visa; Denmark trip cannot happen immediately. No reservation/payment/ownership yet."
+    note: "Lamborghini Copenhagen says candidate is available; VIN and base documents received. Live remote video walkaround scheduled for Tuesday 28.07.2026; independent inspection to be arranged if access is approved. German has no current Schengen visa; Denmark trip cannot happen immediately. No reservation/payment/ownership yet in APPROVED canon."
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
     status: OPEN
     note: "Two-route custody concept explained; concrete hardware/device/scheme selection deferred to Tuesday."
 production:
   current_drive_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
+  current_ch29_drive_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
+  current_ch29_prewrite_doc: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
+  current_ch29_qa_doc: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
+  current_ch29_frozen_story_sha256: "0ff38c77b173bbebed73079ac41828bb92e369e0bf43b35208751a1cd3764068"
   approved_ch28_drive_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
   approved_ch28_qa_doc: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
   approved_ch28_frozen_story_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
