@@ -9,7 +9,9 @@ current_chapter:
   status: FINAL_TEXT_FROZEN
 story:
   date: "2026-07-28"
-  time_anchor: "Tuesday after approved Ch29; Revuelto outgoing payment executed, later operational steps pending in background"
+  time_anchor: >-
+    Tuesday after approved Ch29; Revuelto outgoing payment executed,
+    later operational steps pending in background
 system:
   current_quota_usd: 1000000.00
   spent_current_cycle_usd: 625468.92
@@ -39,8 +41,12 @@ relationship_state:
     exclusivity_agreement: false
     night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
     shopping_thread: FIRST_OUTING_HAPPENED_245000_AMD_NO_ALLOWANCE
-    ch28_material_delta: "Two pairs of shoes/sandals, dresses/clothing/accessories bought; Karine explicitly learned the foot-fetish lever works in shopping and teased future use."
-    lilit_awareness: "Karine knows Lilit rode with German twice and is strategically curious about their mutual attraction; daughters still do not know the factual affair."
+    ch28_material_delta: >-
+      Two pairs of shoes/sandals, dresses/clothing/accessories bought;
+      Karine explicitly learned the foot-fetish lever works in shopping and teased future use.
+    lilit_awareness: >-
+      Karine knows Lilit rode with German twice and is strategically curious about their mutual attraction;
+      daughters still do not know the factual affair.
   lilit_german:
     status: ACTIVE_EARLY_SOCIAL_ATTRACTION
     private_contact_channel: true
@@ -50,20 +56,33 @@ relationship_state:
     girlfriend_status_probe_happened: true
     expensive_ask: false
     sexual_progression: false
-    ch28_delta: "Second same-day ride to Artik; Lilit directly asked whether German has a girlfriend, admitted personal interest, set a no-purchase-today boundary, and later sent a fitting-room dress photo/link."
-    ch29_delta: "After learning the Revuelto payment happened, Lilit does not re-verify the spend; she moves toward wanting to see/sit in the car and a playful passenger-seat expectation. No gift, kiss, sex or formal relationship."
+    ch28_delta: >-
+      Second same-day ride to Artik; Lilit directly asked whether German has a girlfriend,
+      admitted personal interest, set a no-purchase-today boundary,
+      and later sent a fitting-room dress photo/link.
+    ch29_delta: >-
+      After learning the Revuelto payment happened, Lilit does not re-verify the spend;
+      she moves toward wanting to see/sit in the car and a playful passenger-seat expectation.
+      No gift, kiss, sex or formal relationship.
 open_operational_tasks:
   - id: REVUELTO_POST_PAYMENT
     owner: ARMAN_PETROSYAN
     status: OPEN_BACKGROUND
-    note: "Seller receipt/clearing, release, export/shipping, Armenian customs and registration remain unresolved. By author lock these routine steps stay mostly off-page unless a complication, cost, delay or German-owned decision becomes dramatically relevant."
+    note: >-
+      Seller receipt/clearing, release, export/shipping, Armenian customs and registration remain unresolved.
+      By author lock these routine steps stay mostly off-page unless a complication, cost, delay
+      or German-owned decision becomes dramatically relevant.
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
     status: OPEN_BACKGROUND
-    note: "Custody remains unresolved; routine research/implementation may stay off-page until German must choose or a material risk appears."
+    note: >-
+      Custody remains unresolved; routine research/implementation may stay off-page
+      until German must choose or a material risk appears.
 production_locks:
   arman_role_weight: "BACKGROUND_OPERATIONS_ABSTRACTION"
-  arman_rule: "Research remains rigorous, but routine legal/banking/export/document/logistics mechanics should normally be compressed to concise outcomes. Do not make Arman a procedural co-protagonist."
+  arman_rule: >-
+    Research remains rigorous, but routine legal/banking/export/document/logistics mechanics
+    should normally be compressed to concise outcomes. Do not make Arman a procedural co-protagonist.
 production:
   current_drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
   current_ch30_drive_doc: "1I-cJROUe7zNOCQvirtK4xtO9iHo-cvhF4qrfhmMA02c"
