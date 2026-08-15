@@ -1,17 +1,17 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 29
+through_chapter: 30
 last_approved_chapter:
-  number: 29
-  title: "После осмотра"
-current_chapter:
   number: 30
-  status: FINAL_TEXT_FROZEN
+  title: "На кофе"
+current_chapter:
+  number: 31
+  status: NOT_STARTED
 story:
-  date: "2026-07-28"
+  date: "2026-07-29"
   time_anchor: >-
-    Tuesday after approved Ch29; Revuelto outgoing payment executed,
-    later operational steps pending in background
+    Wednesday late evening after approved Ch30; German is back in his owned Gyumri apartment
+    after the first ordinary family coffee visit at the Mkrtchyan home
 system:
   current_quota_usd: 1000000.00
   spent_current_cycle_usd: 625468.92
@@ -29,7 +29,7 @@ assets:
     public_price_eur: 550000
     payment_state: OUTGOING_BANK_PAYMENT_EXECUTED_DEBITED
     system_equivalent_usd: 624800.84
-    seller_receipt_clearing: PENDING
+    seller_receipt_clearing: PENDING_BACKGROUND
     release_export_shipping: PENDING_BACKGROUND
     armenia_customs_registration: PENDING_BACKGROUND
 relationship_state:
@@ -44,9 +44,11 @@ relationship_state:
     ch28_material_delta: >-
       Two pairs of shoes/sandals, dresses/clothing/accessories bought;
       Karine explicitly learned the foot-fetish lever works in shopping and teased future use.
-    lilit_awareness: >-
-      Karine knows Lilit rode with German twice and is strategically curious about their mutual attraction;
-      daughters still do not know the factual affair.
+    ch30_family_access_delta: >-
+      Karine invites German to ordinary coffee at the family apartment with both adult daughters present.
+      She covertly uses foot-fetish teasing under the table, later admits occasional jealousy toward Lilit,
+      and says it is more useful to know what the adult daughters choose than to pretend nothing is happening.
+      The affair remains hidden from both daughters.
   lilit_german:
     status: ACTIVE_EARLY_SOCIAL_ATTRACTION
     private_contact_channel: true
@@ -64,35 +66,57 @@ relationship_state:
       After learning the Revuelto payment happened, Lilit does not re-verify the spend;
       she moves toward wanting to see/sit in the car and a playful passenger-seat expectation.
       No gift, kiss, sex or formal relationship.
+    ch30_delta: >-
+      At the family coffee and BMW stop, Lilit twice keeps ordinary shoulder contact with German,
+      briefly lets her fingers linger on his hand, asks him to photograph her by the BMW,
+      and repeats that the 25k dress must not be bought until she asks. No kiss, gift, sex or relationship jump.
+  milena_german:
+    status: ACTIVE_EARLY_ACQUAINTANCE
+    meaningful_introduction_happened: true
+    ordinary_exchange_happened: true
+    german_socially_recognizes_milena: true
+    low_stakes_foothold_happened: true
+    expensive_ask: false
+    sexual_progression: false
+    ch30_delta: >-
+      First meaningful personal meeting happens at family coffee. Milena uses a noticeably softer tone with German,
+      asks to see the BMW interior, sits in it, and has German take photos on his phone for transfer through Lilit.
+      She mentions travel inconvenience only as ordinary conversation and makes no iPhone or expensive request.
 open_operational_tasks:
   - id: REVUELTO_POST_PAYMENT
     owner: ARMAN_PETROSYAN
     status: OPEN_BACKGROUND
     note: >-
-      Seller receipt/clearing, release, export/shipping, Armenian customs and registration remain unresolved.
-      By author lock these routine steps stay mostly off-page unless a complication, cost, delay
-      or German-owned decision becomes dramatically relevant.
+      Arman reports the car process is proceeding normally and German currently needs to do nothing.
+      Seller clearing, release, export/shipping, Armenian customs and registration remain background operations
+      unless a complication, cost, delay or German-owned decision becomes dramatically relevant.
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
-    status: OPEN_BACKGROUND
+    status: OPEN_BACKGROUND_DECISION_DUE
     note: >-
-      Custody remains unresolved; routine research/implementation may stay off-page
-      until German must choose or a material risk appears.
+      Arman says he has a reasonable custody option ready for a short discussion.
+      German explicitly defers that conversation to Thursday 30.07 after 10:00.
+  - id: NO15_RENOVATION
+    owner: ARTUR
+    status: ACTIVE_BACKGROUND
+    note: >-
+      Ch30 shows bathroom tile and wall progress; German approves an extra outlet by the future sofa.
+      Dirty work is expected to reduce substantially by the end of the week, but the apartment is still uninhabitable.
 production_locks:
   arman_role_weight: "BACKGROUND_OPERATIONS_ABSTRACTION"
   arman_rule: >-
     Research remains rigorous, but routine legal/banking/export/document/logistics mechanics
     should normally be compressed to concise outcomes. Do not make Arman a procedural co-protagonist.
 production:
-  current_drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
-  current_ch30_drive_doc: "1I-cJROUe7zNOCQvirtK4xtO9iHo-cvhF4qrfhmMA02c"
-  current_ch30_prewrite_doc: "13Nqr8sQ7p715pKcO_B9U1imErwOLsGG1lRv4o5xOpqY"
-  current_ch30_qa_doc: "1w7EuI-pf5bTtgGsfUKi33kBrIjZTdo7seIIVAmsdnqQ"
-  current_ch30_frozen_story_sha256: "665672b5d9a1a9c1e58e0531fdecf191ca11e3491513faf9542ea5c8684b0155"
-  current_ch30_status: "FINAL_TEXT_FROZEN_FOR_AUTHOR_REVIEW_NOT_HAPPENED"
-  approved_ch29_drive_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
-  approved_ch29_drive_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
-  approved_ch29_prewrite_doc: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
-  approved_ch29_qa_doc: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
-  approved_ch29_frozen_story_sha256: "8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc"
-  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH29"
+  current_drive_folder: "18ohQf1yaUJ0F7rnPmHb3-SR7S0uVq6sU"
+  current_ch31_drive_doc: null
+  current_ch31_prewrite_doc: null
+  current_ch31_qa_doc: null
+  current_ch31_frozen_story_sha256: null
+  current_ch31_status: "NOT_STARTED"
+  approved_ch30_drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
+  approved_ch30_drive_doc: "1I-cJROUe7zNOCQvirtK4xtO9iHo-cvhF4qrfhmMA02c"
+  approved_ch30_prewrite_doc: "13Nqr8sQ7p715pKcO_B9U1imErwOLsGG1lRv4o5xOpqY"
+  approved_ch30_qa_doc: "1w7EuI-pf5bTtgGsfUKi33kBrIjZTdo7seIIVAmsdnqQ"
+  approved_ch30_frozen_story_sha256: "665672b5d9a1a9c1e58e0531fdecf191ca11e3491513faf9542ea5c8684b0155"
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH30"
