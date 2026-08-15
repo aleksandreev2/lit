@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 
 import yaml
-
 from freeze_manifest import build_manifest, sha256
 from pdf_provenance_check import validate_record
 from qa_report import generate_report
