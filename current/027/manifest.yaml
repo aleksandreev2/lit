@@ -55,7 +55,7 @@ qa:
   text_preflight: PASS
   final_reread: PASS
 freeze:
-  chapter_sha256: "a3196c65c110652a1dca3f25f5ffe49dff817db9ff63f977a9b4f22411143518"
+  chapter_sha256: "ace302291715625e35c772ccaa857987b1c566720158e70dc81dadc72cb89275"
   previous_superseded_sha256: "ad055ef59ea11ea57299e135551f9cd56f3b8362d2c2c1374024515a6ffc4c3f"
   final_text_frozen: true
   author_approved: false
