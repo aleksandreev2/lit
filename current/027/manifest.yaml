@@ -19,6 +19,8 @@ author_instructions:
     summary: "No Revuelto payment/deposit/ownership or invented landed cost."
   - id: U-08
     summary: "Do not promote Ch27 to HAPPENED before direct author approval."
+  - id: U-09
+    summary: "Author revision: remove semantic echo, avoid overly short dialogue turns, increase dialogue substance and earned German-Lilit progression."
 source_sync:
   runtime_sha256: null
   character_profiles:
@@ -53,11 +55,12 @@ qa:
   text_preflight: PASS
   final_reread: PASS
 freeze:
-  chapter_sha256: "ad055ef59ea11ea57299e135551f9cd56f3b8362d2c2c1374024515a6ffc4c3f"
+  chapter_sha256: "a3196c65c110652a1dca3f25f5ffe49dff817db9ff63f977a9b4f22411143518"
+  previous_superseded_sha256: "ad055ef59ea11ea57299e135551f9cd56f3b8362d2c2c1374024515a6ffc4c3f"
   final_text_frozen: true
   author_approved: false
   author_approval_evidence_id: null
-  note: "SHA covers story prose only; non-canonical source/visual appendix is excluded."
+  note: "SHA covers story prose only; non-canonical source/visual appendix is excluded. Revised after author dialogue feedback; exact final preflight CLEAN."
 drive:
   current_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
   prewrite: "1__e3aZdorI811tWpt9vk4p2XCQ6GulV7he0L7WJ4_AY"
