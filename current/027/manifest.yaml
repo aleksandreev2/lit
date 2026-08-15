@@ -1,17 +1,46 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 27
-stage: NOT_STARTED
+stage: PREWRITE
 parent_runtime_through: 26
-author_instructions: []
+author_instructions:
+  - id: U-01
+    summary: "Write the next full chapter after approved Ch26."
+  - id: U-02
+    summary: "Apply cumulative natural-Russian dialogue/prose calibration."
+  - id: U-03
+    summary: "Earn the first meaningful German-facing Lilit scene through an ordinary reason; no instant seduction or expensive ask."
+  - id: U-04
+    summary: "Keep Lilit lazy/comfort-seeking/status-sensitive, distinct from Karine and Milena."
+  - id: U-05
+    summary: "Preserve untouched $1m quota, Revuelto verification, BTC custody Monday follow-up, and Karine shopping residue."
+  - id: U-06
+    summary: "For named real products/models, retain direct source/product links and add a visual appendix when practical."
+  - id: U-07
+    summary: "No Revuelto payment/deposit/ownership or invented landed cost."
+  - id: U-08
+    summary: "Do not promote Ch27 to HAPPENED before direct author approval."
 source_sync:
   runtime_sha256: null
-  character_profiles: []
+  character_profiles:
+    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
+    - "LILIT: Drive 1iqdKvUe-mCl_KG8SYcoGz_wHDz7-ebORV7VlfDZI3lg"
   approved_chapters:
     - "CH026: Drive 1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
-  production_rules: []
+  production_rules:
+    - "Strict Chapter Protocol v3"
+    - "Dialogue Calibration"
+    - "POV Calibration"
+    - "Editor QA Engine v2"
+    - "Rule 1 research-first"
 research:
-  required: []
-  completed: []
+  required:
+    - REVUELTO_COPENHAGEN_OFFICIAL
+    - BMW_X6M_F96_OFFICIAL
+    - BITCOIN_CUSTODY_SECURITY
+  completed:
+    - REVUELTO_COPENHAGEN_OFFICIAL
+    - BMW_X6M_F96_OFFICIAL
+    - BITCOIN_CUSTODY_SECURITY
 qa:
   structural: PENDING
   dialogue: PENDING
@@ -30,3 +59,4 @@ freeze:
   author_approval_evidence_id: null
 drive:
   current_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
+  prewrite: "1__e3aZdorI811tWpt9vk4p2XCQ6GulV7he0L7WJ4_AY"
