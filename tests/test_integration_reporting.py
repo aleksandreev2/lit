@@ -64,7 +64,7 @@ def test_sync_without_live_drive_observation_is_unknown_not_clean() -> None:
     assert {item["state"] for item in results} == {"UNKNOWN"}
 
 
-def test_qa_report_is_compact_hashed_and_honest_about_not_started_chapter(tmp_path: Path) -> None:
+def test_qa_report_is_compact_hashed_and_honest_about_current_frozen_chapter(tmp_path: Path) -> None:
     report_dir = tmp_path / "qa-report"
     summary = generate_report(ROOT, report_dir, "deadbeefcafebabe")
     assert summary["counts"] == {"PASS": 7, "BLOCK": 0, "REVIEW": 1}
@@ -75,8 +75,8 @@ def test_qa_report_is_compact_hashed_and_honest_about_not_started_chapter(tmp_pa
     }
     assert "rules/pronoun_regressions.yaml" in summary["dependency_hashes"]
     assert "rules/semantic_coreference_regressions.yaml" in summary["dependency_hashes"]
-    assert summary["current_chapter"] == 25
-    assert summary["current_stage"] == "NOT_STARTED"
+    assert summary["current_chapter"] == 30
+    assert summary["current_stage"] == "FINAL_TEXT_FROZEN"
     assert summary["freeze"]["status"] == "NOT_AVAILABLE"
     assert summary["semantic_review_status"] == "NOT_RUN"
     assert validate_report(report_dir) == []
