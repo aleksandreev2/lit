@@ -6,7 +6,7 @@ last_approved_chapter:
   title: "Пятьсот пятьдесят"
 current_chapter:
   number: 27
-  status: NOT_STARTED
+  status: FINAL_TEXT_FROZEN
 story:
   date: "2026-07-26"
   time_anchor: "after midday in Gyumri after Revuelto research; Ch26 complete"
@@ -39,4 +39,6 @@ open_operational_tasks:
     note: "Prepare custody/storage options; German should not improvise wallet setup."
 production:
   current_drive_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
+  current_ch27_drive_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
+  current_ch27_qa_doc: "1mju40dPN49nlE3iOngyEV9TJ1UoVsFhe0qfLYIxt0Fo"
   approved_ch26_drive_doc: "1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
