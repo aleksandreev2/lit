@@ -1,15 +1,15 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 25
+through_chapter: 26
 last_approved_chapter:
-  number: 25
-  title: "Ещё не домой"
-current_chapter:
   number: 26
-  status: FINAL_TEXT_FROZEN
+  title: "Пятьсот пятьдесят"
+current_chapter:
+  number: 27
+  status: NOT_STARTED
 story:
-  date: "2026-07-25"
-  time_anchor: "late evening after Karine returned home and messaged German; Ch25 complete"
+  date: "2026-07-26"
+  time_anchor: "after midday in Gyumri after Revuelto research; Ch26 complete"
 system:
   current_quota_usd: 1000000.00
   deadline: "2026-08-01T12:36:18+04:00"
@@ -27,12 +27,16 @@ relationship_state:
     allowance_agreement: false
     exclusivity_agreement: false
     night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
+    shopping_thread: SHOES_AND_SUMMER_DRESS_ACTIVE_NO_OUTING_YET
 open_operational_tasks:
-  - id: REVUELTO_RESEARCH
+  - id: REVUELTO_VERIFICATION
     owner: ARMAN_PETROSYAN
     status: OPEN
-    note: "Research Lamborghini Revuelto; dark green / Verde Ermes preferred. No purchase/contact yet."
+    note: "First preferred candidate from Ch26: Lamborghini Copenhagen CPO Revuelto 2026, Verde Ermes Matt, 60 km, public ask EUR 550000 ex-VAT. Verify live availability, VIN/status, export terms and landed execution before any money/contact in German's name."
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
     status: OPEN
     note: "Prepare custody/storage options; German should not improvise wallet setup."
+production:
+  current_drive_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
+  approved_ch26_drive_doc: "1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
