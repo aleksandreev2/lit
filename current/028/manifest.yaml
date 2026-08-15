@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 28
-stage: NOT_STARTED
+stage: PREWRITE
 parent_runtime_through: 27
 author_instructions:
   - id: U-01
@@ -15,14 +15,35 @@ author_instructions:
     summary: "Advance one or more active operational/relationship threads causally."
   - id: U-06
     summary: "Research-first for real-world details and exact named products; direct-link/visual appendix rule applies."
+  - id: U-07
+    summary: "Keep Karine mercantile/duplicitous and advance the earned shopping/foot-fetish lever without allowance retcon."
+  - id: U-08
+    summary: "Do not promote Ch28 to HAPPENED before direct author approval."
 source_sync:
   approved_chapters:
     - "CH027: Drive 1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
   runtime:
     - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo"
+  character_profiles:
+    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
+    - "LILIT: Drive 1iqdKvUe-mCl_KG8SYcoGz_wHDz7-ebORV7VlfDZI3lg"
+  production_rules:
+    - "Dialogue calibration Drive 1UpCBgtYtdSnAZ4O6CvHbYDkwpcs0bQdbAcZAPaOMcvw"
+    - "Strict Chapter Protocol v3"
+    - "Editor QA Engine v2"
 research:
-  required: []
-  completed: []
+  required:
+    - REVUELTO_COPENHAGEN_OFFICIAL
+    - DENMARK_VISA_ARMENIA
+    - GYUMRI_ARTIK_ROUTE
+    - SHIRAK_MALL_HOURS
+    - CBA_2026_07_27
+  completed:
+    - REVUELTO_COPENHAGEN_OFFICIAL
+    - DENMARK_VISA_ARMENIA
+    - GYUMRI_ARTIK_ROUTE
+    - SHIRAK_MALL_HOURS
+    - CBA_2026_07_27
 qa:
   structural: PENDING
   dialogue: PENDING
@@ -41,3 +62,4 @@ freeze:
   author_approval_evidence_id: null
 drive:
   current_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
+  prewrite: "1xiDV_Bb0vDjmI37p9GMw4vNbWKOrSDGKOFWC5CqAJXc"
