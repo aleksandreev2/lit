@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 29
-stage: FINAL_TEXT_FROZEN
+stage: HAPPENED
 parent_runtime_through: 28
 author_instructions:
   - id: U-01
@@ -21,17 +21,19 @@ author_instructions:
     summary: "Do not promote Ch29 to HAPPENED before direct author approval."
   - id: U-09
     summary: "Do not use recurring reality-check recap reactions such as 'ты реально это сделал?' or 'вчера X — сегодня Y'; reactions must move into character-owned consequence, desire, fear, envy or next action."
+  - id: U-10
+    summary: "Future routine legal/banking/export/document/logistics work should stay mostly off-page; Arman is primarily a background operations abstraction layer, not a procedural co-protagonist."
 source_sync:
   approved_chapters:
     - "CH028: Drive 1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA; story SHA 01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
   runtime:
-    - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo; canon through Ch28"
+    - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo"
   active_arc:
     - "Drive 1YcKLv0NxRKYedvI2mjKSQzhN2mklrzs7JTyrjm4_jMc"
   character_profiles:
     - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
     - "ARMAN: Drive 1f5gePFbA6PEjU8mpcOBz2Ilm-B7rvEqytLIA57GR0sw"
-    - "LILIT/KARINE: current through Ch28"
+    - "LILIT/KARINE: current through Ch28/Ch29 residue"
 research:
   required:
     - REVUELTO_COPENHAGEN_EXACT_LISTING
@@ -67,13 +69,12 @@ freeze:
   previous_superseded_sha256: "0ff38c77b173bbebed73079ac41828bb92e369e0bf43b35208751a1cd3764068"
   raw_exported_story_sha256: "914b99ab0e42668b31308580b05048dd2b1b252c162bd81b356ba61122fd42f7"
   final_text_frozen: true
-  author_approved: false
-  author_approval_evidence_id: null
-  happened: false
-  note: "SHA covers artistic story text only; noncanonical source/visual appendix excluded. Author correction U-09 invalidated prior freeze; revised exact Drive story preflight CLEAN, ERROR=0 REVIEW=0 INFO=0."
+  author_approved: true
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH29"
+  happened: true
+  note: "Approved exact artistic story revision. Noncanonical source/visual appendix excluded from story SHA."
 drive:
-  current_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
+  approved_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
   prewrite: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
-  working_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
-  working_doc_revision: "AIroW37CAkjHVKC1BUfJbIfghogFySwk5fLrdmpS8oyYP_eYI87iok8R44WLUjZl_3s5iFwXRArs87gMIdtFRytLC_DlEjYeR8KvExLCP_U"
+  approved_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
   qa_evidence: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
