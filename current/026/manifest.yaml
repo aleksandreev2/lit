@@ -1,29 +1,58 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 26
-stage: NOT_STARTED
+stage: FINAL_TEXT_FROZEN
 parent_runtime_through: 25
-author_instructions: []
+author_instructions:
+  - id: U-01
+    summary: "Write the next full chapter from approved Ch25 continuity."
+  - id: U-02
+    summary: "Apply cumulative dialogue/prose calibration; no AI ping-pong or convenient exposition."
+  - id: U-03
+    summary: "Keep German inexperienced with supercar/import execution and Arman within operations role."
+  - id: U-04
+    summary: "Research-first Revuelto progression; no purchase/deposit/contact or invented landed cost."
+  - id: U-05
+    summary: "Do not promote Ch26 to story canon before direct author approval."
 source_sync:
   runtime_sha256: null
-  character_profiles: []
-  approved_chapters: []
-  production_rules: []
+  character_profiles:
+    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
+    - "ARMAN: Drive 1f5gePFbA6PEjU8mpcOBz2Ilm-B7rvEqytLIA57GR0sw"
+    - "KARINE: Drive 1hmnk3GZJx_IGl0VIBMKIt5_sayVsfSEdymFIeeR0vdw"
+  approved_chapters:
+    - "CH025: Drive 1-sqh0uxpv2JxkmHx6gFU_fBOV0KKm9J8cNF4kMkjaVQ"
+  production_rules:
+    - "Strict Chapter Protocol v3"
+    - "Dialogue Calibration"
+    - "POV Calibration"
+    - "Editor QA Engine v2"
+    - "Rule 1 research-first"
 research:
-  required: []
-  completed: []
+  required:
+    - REVUELTO_OFFICIAL_SPECS
+    - REVUELTO_CPO_CANDIDATE
+    - LAMBORGHINI_REGIONAL_DEALERS
+    - ARMENIA_FACING_MARKET
+    - GYUMRI_DATE_WEATHER
+  completed:
+    - REVUELTO_OFFICIAL_SPECS
+    - REVUELTO_CPO_CANDIDATE
+    - LAMBORGHINI_REGIONAL_DEALERS
+    - ARMENIA_FACING_MARKET
+    - GYUMRI_DATE_WEATHER
 qa:
-  structural: PENDING
-  dialogue: PENDING
-  prose_pov: PENDING
-  character: PENDING
-  continuity_knowledge: PENDING
-  regression: PENDING
-  russian_proofread: PENDING
-  fact_recheck: PENDING
-  text_preflight: PENDING
-  final_reread: PENDING
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  text_preflight: PASS
+  final_reread: PASS
 freeze:
-  chapter_sha256: null
-  final_text_frozen: false
+  chapter_sha256: "8196541c42d3469213d4c738ab8ec1ca10b6627952e42332a030c7d26ddda546"
+  final_text_frozen: true
   author_approved: false
   author_approval_evidence_id: null
