@@ -1,0 +1,43 @@
+book_id: SISTEMA_BOGATSTVA
+chapter: 28
+stage: NOT_STARTED
+parent_runtime_through: 27
+author_instructions:
+  - id: U-01
+    summary: "Write the next full chapter after approved Ch27."
+  - id: U-02
+    summary: "Preserve revised dialogue calibration: no semantic echo, avoid overly short calm turns, use substantial natural Russian dialogue."
+  - id: U-03
+    summary: "Deliver meaningful progression, not a low-delta holding chapter."
+  - id: U-04
+    summary: "Keep Ch27 German-Lilit contact residue live without jumping straight to gifts/sex."
+  - id: U-05
+    summary: "Advance one or more active operational/relationship threads causally."
+  - id: U-06
+    summary: "Research-first for real-world details and exact named products; direct-link/visual appendix rule applies."
+source_sync:
+  approved_chapters:
+    - "CH027: Drive 1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
+  runtime:
+    - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo"
+research:
+  required: []
+  completed: []
+qa:
+  structural: PENDING
+  dialogue: PENDING
+  prose_pov: PENDING
+  character: PENDING
+  continuity_knowledge: PENDING
+  regression: PENDING
+  russian_proofread: PENDING
+  fact_recheck: PENDING
+  text_preflight: PENDING
+  final_reread: PENDING
+freeze:
+  chapter_sha256: null
+  final_text_frozen: false
+  author_approved: false
+  author_approval_evidence_id: null
+drive:
+  current_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
