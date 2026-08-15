@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 28
-stage: DRAFT_READY_FOR_EDITOR
+stage: FINAL_TEXT_FROZEN
 parent_runtime_through: 27
 author_instructions:
   - id: U-01
@@ -49,22 +49,25 @@ research:
     - BMW_X6M_2020_OFFICIAL
     - CBA_2026_07_27
 qa:
-  structural: PENDING
-  dialogue: PENDING
-  prose_pov: PENDING
-  character: PENDING
-  continuity_knowledge: PENDING
-  regression: PENDING
-  russian_proofread: PENDING
-  fact_recheck: PENDING
-  text_preflight: PENDING
-  final_reread: PENDING
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  text_preflight: PASS
+  final_reread: PASS
 freeze:
-  chapter_sha256: null
-  final_text_frozen: false
+  chapter_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
+  final_text_frozen: true
   author_approved: false
   author_approval_evidence_id: null
+  happened: false
+  note: "SHA covers artistic story text only; service source appendix excluded. Exact current Drive story preflight CLEAN, ERROR=0 REVIEW=0 INFO=0."
 drive:
   current_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
   prewrite: "1xiDV_Bb0vDjmI37p9GMw4vNbWKOrSDGKOFWC5CqAJXc"
   working_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
+  qa_evidence: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
