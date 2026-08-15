@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 28
-stage: FINAL_TEXT_FROZEN
+stage: HAPPENED
 parent_runtime_through: 27
 author_instructions:
   - id: U-01
@@ -62,12 +62,12 @@ qa:
 freeze:
   chapter_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
   final_text_frozen: true
-  author_approved: false
-  author_approval_evidence_id: null
-  happened: false
+  author_approved: true
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH28"
+  happened: true
   note: "SHA covers artistic story text only; service source appendix excluded. Exact current Drive story preflight CLEAN, ERROR=0 REVIEW=0 INFO=0."
 drive:
-  current_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
+  approved_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
   prewrite: "1xiDV_Bb0vDjmI37p9GMw4vNbWKOrSDGKOFWC5CqAJXc"
-  working_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
+  approved_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
   qa_evidence: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
