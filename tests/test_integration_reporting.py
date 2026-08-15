@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import yaml
+
 from freeze_manifest import build_manifest, sha256
 from pdf_provenance_check import validate_record
 from qa_report import generate_report
@@ -64,9 +66,10 @@ def test_sync_without_live_drive_observation_is_unknown_not_clean() -> None:
     assert {item["state"] for item in results} == {"UNKNOWN"}
 
 
-def test_qa_report_is_compact_hashed_and_honest_about_current_frozen_chapter(tmp_path: Path) -> None:
+def test_qa_report_is_compact_hashed_and_tracks_current_runtime(tmp_path: Path) -> None:
     report_dir = tmp_path / "qa-report"
     summary = generate_report(ROOT, report_dir, "deadbeefcafebabe")
+    runtime = yaml.safe_load((ROOT / "canon/runtime.yaml").read_text(encoding="utf-8"))
     assert summary["counts"] == {"PASS": 7, "BLOCK": 0, "REVIEW": 1}
     assert {item["id"] for item in summary["checks"]} >= {
         "russian_naturalness_corpus",
@@ -75,8 +78,8 @@ def test_qa_report_is_compact_hashed_and_honest_about_current_frozen_chapter(tmp
     }
     assert "rules/pronoun_regressions.yaml" in summary["dependency_hashes"]
     assert "rules/semantic_coreference_regressions.yaml" in summary["dependency_hashes"]
-    assert summary["current_chapter"] == 30
-    assert summary["current_stage"] == "FINAL_TEXT_FROZEN"
+    assert summary["current_chapter"] == runtime["current_chapter"]["number"]
+    assert summary["current_stage"] == runtime["current_chapter"]["status"]
     assert summary["freeze"]["status"] == "NOT_AVAILABLE"
     assert summary["semantic_review_status"] == "NOT_RUN"
     assert validate_report(report_dir) == []
