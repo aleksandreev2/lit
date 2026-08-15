@@ -1,18 +1,18 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 27
+through_chapter: 28
 last_approved_chapter:
-  number: 27
-  title: "По пути"
-current_chapter:
   number: 28
-  status: FINAL_TEXT_FROZEN
+  title: "До закрытия"
+current_chapter:
+  number: 29
+  status: NOT_STARTED
 story:
   date: "2026-07-27"
-  time_anchor: "Monday afternoon in Gyumri after approved Ch27 ride with Lilit; Ch28 frozen draft is not canon"
+  time_anchor: "Monday late evening after Ch28; German has returned from Artik/Gyumri shopping route"
 system:
   current_quota_usd: 1000000.00
-  remaining_quota_usd: 1000000.00
+  remaining_quota_usd: 999331.92
   deadline: "2026-08-01T12:36:18+04:00"
   prior_cycle_closed: true
 assets:
@@ -28,28 +28,30 @@ relationship_state:
     allowance_agreement: false
     exclusivity_agreement: false
     night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
-    shopping_thread: SHOES_AND_SUMMER_DRESS_ACTIVE_NO_OUTING_YET
+    shopping_thread: FIRST_OUTING_HAPPENED_245000_AMD_NO_ALLOWANCE
+    ch28_material_delta: "Two pairs of shoes/sandals, dresses/clothing/accessories bought; Karine explicitly learned the foot-fetish lever works in shopping and teased future use."
+    lilit_awareness: "Karine knows Lilit rode with German twice on Ch28 day and is curious/strategic about their mutual attraction; daughters still do not know the factual affair."
   lilit_german:
-    status: FIRST_MEANINGFUL_SOCIAL_CONTACT_HAPPENED
+    status: ACTIVE_EARLY_SOCIAL_ATTRACTION
     private_contact_channel: true
     phone_numbers_exchanged: true
     mutual_appearance_awareness: true
+    mutual_attraction_explicit: true
+    girlfriend_status_probe_happened: true
     expensive_ask: false
     sexual_progression: false
-    same_day_ride_back_opening: true
+    ch28_delta: "Second same-day ride to Artik; Lilit directly asked whether German has a girlfriend, admitted personal interest, set a no-purchase-today boundary, and later sent a fitting-room dress photo/link."
 open_operational_tasks:
   - id: REVUELTO_VERIFICATION
     owner: ARMAN_PETROSYAN
-    status: OPEN
-    note: "First preferred candidate from Ch26: Lamborghini Copenhagen CPO Revuelto 2026, Verde Ermes Matt, 60 km, public ask EUR 550000 ex-VAT. Ch27 sent verification request; no canonized dealer answer/deposit/purchase yet."
+    status: OPEN_ADVANCED
+    note: "Lamborghini Copenhagen says candidate is available; VIN and base documents received. Live remote video walkaround scheduled for Tuesday 28.07.2026; independent inspection to be arranged if access is approved. German has no current Schengen visa; Denmark trip cannot happen immediately. No reservation/payment/ownership yet."
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
     status: OPEN
-    note: "Two-route custody concept explained in Ch27; concrete device/scheme decision remains open."
+    note: "Two-route custody concept explained; concrete hardware/device/scheme selection deferred to Tuesday."
 production:
-  current_drive_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
-  current_ch28_drive_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
-  current_ch28_qa_doc: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
-  current_ch28_frozen_story_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
-  approved_ch27_drive_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
-  approved_ch27_frozen_story_sha256: "ace302291715625e35c772ccaa857987b1c566720158e70dc81dadc72cb89275"
+  current_drive_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
+  approved_ch28_drive_doc: "1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA"
+  approved_ch28_qa_doc: "1TLd6BDqOFOVzV9L8SVyJ3CU-v_KLEIY16TZbAIb9yPA"
+  approved_ch28_frozen_story_sha256: "01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
