@@ -20,7 +20,7 @@ author_instructions:
   - id: U-08
     summary: "Keep Karine mercantile, duplicitous and strategically interested in family access while the affair remains hidden from daughters."
 source_sync:
-  runtime_sha256: "da02bbdc8cdce63f2db6864afc8a2d5782cd5caf2cdc8df9dc9bbbe6eb5a40cd"
+  runtime_sha256: "f5ee00d9946e1b93aa60b6dd1301c28a2e14607eff3c029c00b065683d85e72e"
   character_profiles:
     - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
     - "KARINE: Drive 1hmnk3GZJx_IGl0VIBMKIt5_sayVsfSEdymFIeeR0vdw"
