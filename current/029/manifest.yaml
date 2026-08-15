@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 29
-stage: DRAFT_READY_FOR_EDITOR
+stage: FINAL_TEXT_FROZEN
 parent_runtime_through: 28
 author_instructions:
   - id: U-01
@@ -23,9 +23,9 @@ source_sync:
   approved_chapters:
     - "CH028: Drive 1Xvw2-12kAI3rIPTXRy42x6ZX8tX80GikVVMH_dA9aIA; story SHA 01a5bf387a598ee9f40d855879ac3f7fbbf217d7b8d71c3892bb2f4da6c8928a"
   runtime:
-    - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo revision AIroW36jbrdAoNlWqFxYA3kRPTVEh0njJQk6XTTs8n6W6SXG60ETC0cFmj4ni6m4l96THYEBGbqLdVAzVP6hR9x0J_1tXF3qu8wHzW1yb-g"
+    - "Drive 113i7xhhKunw4pgGateIc1nYDiWcarfnf2A6FRjA_tXo; canon through Ch28"
   active_arc:
-    - "Drive 1YcKLv0NxRKYedvI2mjKSQzhN2mklrzs7JTyrjm4_jMc revision AIroW37inkekuBD10riZ6xtu0XN-MuBWc1C85QgDUuyB8yohvdswlqwqbTSZPDhRVW-8DDoFI9wjYT2N4KgldPJrxVg_Ib5VdkAPZlc-64A"
+    - "Drive 1YcKLv0NxRKYedvI2mjKSQzhN2mklrzs7JTyrjm4_jMc"
   character_profiles:
     - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
     - "ARMAN: Drive 1f5gePFbA6PEjU8mpcOBz2Ilm-B7rvEqytLIA57GR0sw"
@@ -46,22 +46,31 @@ research:
     - CBA_2026_07_28_FX
     - LARGE_TRANSFER_STATE_BOUNDARY_PARTIAL_FICTIONALIZED_PROVIDER
 qa:
-  structural: PENDING
-  dialogue: PENDING
-  prose_pov: PENDING
-  character: PENDING
-  continuity_knowledge: PENDING
-  regression: PENDING
-  russian_proofread: PENDING
-  fact_recheck: PENDING
-  text_preflight: PENDING
-  final_reread: PENDING
+  compliance_pass_1: PASS
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  money_materiality: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  visual_product_appendix: PASS_WITH_EXACT_LINK_NO_INLINE_IMAGE
+  text_preflight: PASS_CLEAN
+  compliance_pass_2: PASS
+  final_reread: PASS
 freeze:
-  chapter_sha256: null
-  final_text_frozen: false
+  chapter_sha256: "0ff38c77b173bbebed73079ac41828bb92e369e0bf43b35208751a1cd3764068"
+  raw_exported_story_sha256: "5b895411b162eb62fa870ad2f75bd1b02e24761cabfbeb4c63f987ab8c6a50ee"
+  final_text_frozen: true
   author_approved: false
   author_approval_evidence_id: null
+  happened: false
+  note: "SHA covers artistic story text only; noncanonical source/visual appendix excluded. Exact current Drive story preflight CLEAN, ERROR=0 REVIEW=0 INFO=0."
 drive:
   current_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
   prewrite: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
   working_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
+  working_doc_revision: "AIroW35DMjyqJG4z4G7eIJwDIjU_0bjd61-ksG2lf3stoXPKEFb7XxNR9jVZsygm4u2WVhjeQjLTk_polPZwuhG2LcVxLePyfkJwkh_tVz4"
+  qa_evidence: "1j9t1FpzTi7uHnlRTCq0g7euN7Djd5TV4lxeNT42tr-A"
