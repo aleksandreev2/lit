@@ -1,17 +1,18 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 1
-through_chapter: 26
+through_chapter: 27
 last_approved_chapter:
-  number: 26
-  title: "Пятьсот пятьдесят"
-current_chapter:
   number: 27
-  status: FINAL_TEXT_FROZEN
+  title: "По пути"
+current_chapter:
+  number: 28
+  status: NOT_STARTED
 story:
-  date: "2026-07-26"
-  time_anchor: "after midday in Gyumri after Revuelto research; Ch26 complete"
+  date: "2026-07-27"
+  time_anchor: "Monday afternoon in Gyumri after approved Ch27 ride with Lilit"
 system:
   current_quota_usd: 1000000.00
+  remaining_quota_usd: 1000000.00
   deadline: "2026-08-01T12:36:18+04:00"
   prior_cycle_closed: true
 assets:
@@ -28,18 +29,24 @@ relationship_state:
     exclusivity_agreement: false
     night_contact_rule: KARINE_INITIATES_WHEN_ARSEN_MAY_CALL
     shopping_thread: SHOES_AND_SUMMER_DRESS_ACTIVE_NO_OUTING_YET
+  lilit_german:
+    status: FIRST_MEANINGFUL_SOCIAL_CONTACT_HAPPENED
+    private_contact_channel: true
+    phone_numbers_exchanged: true
+    mutual_appearance_awareness: true
+    expensive_ask: false
+    sexual_progression: false
+    same_day_ride_back_opening: true
 open_operational_tasks:
   - id: REVUELTO_VERIFICATION
     owner: ARMAN_PETROSYAN
     status: OPEN
-    note: "First preferred candidate from Ch26: Lamborghini Copenhagen CPO Revuelto 2026, Verde Ermes Matt, 60 km, public ask EUR 550000 ex-VAT. Verify live availability, VIN/status, export terms and landed execution before any money/contact in German's name."
+    note: "First preferred candidate from Ch26: Lamborghini Copenhagen CPO Revuelto 2026, Verde Ermes Matt, 60 km, public ask EUR 550000 ex-VAT. Ch27 sent verification request; no verified dealer answer/deposit/purchase yet."
   - id: BTC_CUSTODY_OPTIONS
     owner: ARMAN_PETROSYAN
     status: OPEN
-    note: "Prepare custody/storage options; German should not improvise wallet setup."
+    note: "Two-route custody concept explained in Ch27; concrete device/scheme decision remains open."
 production:
-  current_drive_folder: "1OPlxySKwmb7ntDfNq5nRwFBg75f6sBEY"
-  current_ch27_drive_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
-  current_ch27_qa_doc: "1mju40dPN49nlE3iOngyEV9TJ1UoVsFhe0qfLYIxt0Fo"
-  current_ch27_frozen_story_sha256: "ace302291715625e35c772ccaa857987b1c566720158e70dc81dadc72cb89275"
-  approved_ch26_drive_doc: "1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
+  current_drive_folder: "1nm3UACgJd60NUr1bLTCnLPrN8Dp8b5WY"
+  approved_ch27_drive_doc: "1IIoZDo94kDOVRUEHatQcCFNkw1yDJGGgJw1xQOoFvLQ"
+  approved_ch27_frozen_story_sha256: "ace302291715625e35c772ccaa857987b1c566720158e70dc81dadc72cb89275"
