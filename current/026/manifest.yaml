@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 26
-stage: FINAL_TEXT_FROZEN
+stage: HAPPENED
 parent_runtime_through: 25
 author_instructions:
   - id: U-01
@@ -14,7 +14,6 @@ author_instructions:
   - id: U-05
     summary: "Do not promote Ch26 to story canon before direct author approval."
 source_sync:
-  runtime_sha256: null
   character_profiles:
     - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
     - "ARMAN: Drive 1f5gePFbA6PEjU8mpcOBz2Ilm-B7rvEqytLIA57GR0sw"
@@ -54,5 +53,9 @@ qa:
 freeze:
   chapter_sha256: "8196541c42d3469213d4c738ab8ec1ca10b6627952e42332a030c7d26ddda546"
   final_text_frozen: true
-  author_approved: false
-  author_approval_evidence_id: null
+  author_approved: true
+  author_approval_evidence_id: "USER_MESSAGE_2026-08-15_ODObRYAYU_CH26"
+approval:
+  date: "2026-08-15"
+  approved_drive_doc: "1Ukx7ScmM3eQg1is3x52Bmi8piHNJcPPQcyGIXUIZ3fo"
+  approved_folder: "1IUWWCHiq9BwgoxTx8tlgjEBTWioddJUt"
