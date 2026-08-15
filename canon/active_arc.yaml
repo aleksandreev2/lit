@@ -17,37 +17,57 @@ happened:
 active_threads:
   - id: SYSTEM_1M_CYCLE
     status: ACTIVE
-    note: "Current remainder 374531.08 USD; deadline 2026-08-01T12:36:18+04:00. Avoid repeating identical purchase loops."
+    note: >-
+      Current remainder 374531.08 USD; deadline 2026-08-01T12:36:18+04:00.
+      Avoid repeating identical purchase loops.
   - id: REVUELTO_POST_PAYMENT
     status: OPEN_BACKGROUND
     owner: ARMAN_PETROSYAN
-    note: "Routine seller clearing/release/export/shipping/import/registration stays mostly off-page unless a meaningful complication, cost, delay or German-owned decision appears."
+    note: >-
+      Routine seller clearing/release/export/shipping/import/registration stays mostly off-page
+      unless a meaningful complication, cost, delay or German-owned decision appears.
   - id: BTC_CUSTODY
     status: OPEN_BACKGROUND
     owner: ARMAN_PETROSYAN
-    note: "Keep specialist mechanics background; German does not become a crypto-security expert."
+    note: >-
+      Keep specialist mechanics background; German does not become a crypto-security expert.
   - id: KARINE_AFFAIR
     status: ACTIVE
-    note: "Secret repeatable affair; shopping/material calculation, adultery, foot-fetish teasing and ordinary lover habits remain active. No love/exclusivity/allowance agreement."
+    note: >-
+      Secret repeatable affair; shopping/material calculation, adultery, foot-fetish teasing and
+      ordinary lover habits remain active. No love/exclusivity/allowance agreement.
   - id: LILIT_GERMAN
     status: ACTIVE_EARLY
-    note: "Mutual attraction and private contact are established. Ch29 adds desire to see/sit in Revuelto. Her 25k dress remains explicitly not to be bought until she asks. No gift/kiss/sex/formal relationship yet."
+    note: >-
+      Mutual attraction and private contact are established. Ch29 adds desire to see/sit in Revuelto.
+      Her 25k dress remains explicitly not to be bought until she asks. No gift/kiss/sex/formal relationship yet.
   - id: MILENA_ENTRY
     status: OPEN
-    note: "Meaningful personal acquaintance remains pending through Ch29. Required ladder: encounter/introduction -> ordinary exchange -> recognition/social foothold -> low-stakes interaction -> later access testing -> expensive iPhone significantly later."
+    note: >-
+      Meaningful personal acquaintance remains pending through Ch29. Required ladder:
+      encounter/introduction -> ordinary exchange -> recognition/social foothold -> low-stakes interaction
+      -> later access testing -> expensive iPhone significantly later.
 hard_future_locks:
   - id: ARMAN_BACKGROUND_ABSTRACTION
-    rule: "Research stays rigorous, but routine legal/banking/export/document/logistics work is compressed to outcomes. Arman is not a procedural co-protagonist."
+    rule: >-
+      Research stays rigorous, but routine legal/banking/export/document/logistics work is compressed
+      to outcomes. Arman is not a procedural co-protagonist.
   - id: REACTION_RECAP
-    rule: "Do not use recurring 'ты реально/серьёзно это сделал?' or 'вчера X — сегодня Y' recap-shock dialogue after major actions. Reactions must move into character-owned consequence, desire, fear, envy or action."
+    rule: >-
+      Do not use recurring 'ты реально/серьёзно это сделал?' or 'вчера X — сегодня Y' recap-shock dialogue
+      after major actions. Reactions must move into character-owned consequence, desire, fear, envy or action.
   - id: MILENA_SOCIAL_BRIDGE
-    rule: "No expensive ask/material escalation before earned acquaintance and social foothold."
+    rule: >-
+      No expensive ask/material escalation before earned acquaintance and social foothold.
   - id: LILIT_DRESS_BOUNDARY
-    rule: "Do not buy the 25k dress until Lilit herself changes the boundary on-page."
+    rule: >-
+      Do not buy the 25k dress until Lilit herself changes the boundary on-page.
   - id: GERMAN_EXPERTISE
-    rule: "Money does not instantly make German expert in cars, finance, crypto, property or sex."
+    rule: >-
+      Money does not instantly make German expert in cars, finance, crypto, property or sex.
   - id: SYSTEM_FORMULA_UNKNOWN
-    rule: "Do not invent a universal quota-growth formula beyond the current author override."
+    rule: >-
+      Do not invent a universal quota-growth formula beyond the current author override.
 next_production_unit:
   chapter: 30
   parent_canon_through: 29
