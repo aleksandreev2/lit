@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 chapter: 29
-stage: PREWRITE
+stage: DRAFT_READY_FOR_EDITOR
 parent_runtime_through: 28
 author_instructions:
   - id: U-01
@@ -29,7 +29,7 @@ source_sync:
   character_profiles:
     - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
     - "ARMAN: Drive 1f5gePFbA6PEjU8mpcOBz2Ilm-B7rvEqytLIA57GR0sw"
-    - "LILIT/KARINE: current through Ch28 if used as brief residue"
+    - "LILIT/KARINE: current through Ch28"
 research:
   required:
     - REVUELTO_COPENHAGEN_EXACT_LISTING
@@ -64,3 +64,4 @@ freeze:
 drive:
   current_folder: "1lu7LGAe_LQ0bfKWMnCJrestc6AX9nCPu"
   prewrite: "1aSFjCAw0qV0UGR4N9ezS5FDDhk_ezoc0Cv8U9JOhT4U"
+  working_doc: "13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY"
