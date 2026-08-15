@@ -1,50 +1,56 @@
 book_id: SISTEMA_BOGATSTVA
-schema_version: 1
-canon_through: 25
+schema_version: 2
+canon_through: 29
 happened:
   - chapter: 23
     event: FIRST_SEX_WITH_KARINE
   - chapter: 24
-    event: MORNING_AFTER_LOVER_RITUAL
-  - chapter: 24
-    event: BITCOIN_PURCHASE_AND_500K_CYCLE_CLOSE
-  - chapter: 24
-    event: NEW_1M_CYCLE
+    event: BITCOIN_PURCHASE_AND_NEW_1M_CYCLE
   - chapter: 25
-    event: EVENING_KARINE_PICKUP_COMPLETED
-  - chapter: 25
-    event: GYUMRI_APARTMENT_BECOMES_AFFAIR_LOCATION
-  - chapter: 25
-    event: SECOND_SEX_WITH_KARINE
-  - chapter: 25
-    event: GERMAN_FOOT_FETISH_REVEALED_TO_KARINE
-  - chapter: 25
-    event: KARINE_SHOE_DRESS_SHOPPING_PROBE
+    event: SECOND_SEX_AND_FOOT_FETISH_REVEAL
+  - chapter: 27
+    event: FIRST_MEANINGFUL_LILIT_CONTACT
+  - chapter: 28
+    event: LILIT_MUTUAL_ATTRACTION_AND_KARINE_SHOPPING
+  - chapter: 29
+    event: REVUELTO_OUTGOING_PAYMENT_EXECUTED
 active_threads:
+  - id: SYSTEM_1M_CYCLE
+    status: ACTIVE
+    note: "Current remainder 374531.08 USD; deadline 2026-08-01T12:36:18+04:00. Avoid repeating identical purchase loops."
+  - id: REVUELTO_POST_PAYMENT
+    status: OPEN_BACKGROUND
+    owner: ARMAN_PETROSYAN
+    note: "Routine seller clearing/release/export/shipping/import/registration stays mostly off-page unless a meaningful complication, cost, delay or German-owned decision appears."
+  - id: BTC_CUSTODY
+    status: OPEN_BACKGROUND
+    owner: ARMAN_PETROSYAN
+    note: "Keep specialist mechanics background; German does not become a crypto-security expert."
   - id: KARINE_AFFAIR
     status: ACTIVE
-    note: "Affair is repeatable; Gyumri apartment is a practical private location. Karine knows German's foot fetish and has linked it to teasing/shoe shopping. Secrecy, material calculation and night-contact rules remain active; no love/exclusivity/allowance agreement."
-  - id: LILIT_ENTRY
-    status: OPEN
-    note: "First meaningful German-facing former-classmate scene remains pending; no instant seduction or item request."
+    note: "Secret repeatable affair; shopping/material calculation, adultery, foot-fetish teasing and ordinary lover habits remain active. No love/exclusivity/allowance agreement."
+  - id: LILIT_GERMAN
+    status: ACTIVE_EARLY
+    note: "Mutual attraction and private contact are established. Ch29 adds desire to see/sit in Revuelto. Her 25k dress remains explicitly not to be bought until she asks. No gift/kiss/sex/formal relationship yet."
   - id: MILENA_ENTRY
     status: OPEN
-    note: "Acquaintance ladder remains untouched; no expensive ask before real social access."
-  - id: BTC_CUSTODY
-    status: OPEN
-    owner: ARMAN_PETROSYAN
-  - id: REVUELTO_RESEARCH
-    status: OPEN
-    owner: ARMAN_PETROSYAN
+    note: "Meaningful personal acquaintance remains pending through Ch29. Required ladder: encounter/introduction -> ordinary exchange -> recognition/social foothold -> low-stakes interaction -> later access testing -> expensive iPhone significantly later."
 hard_future_locks:
+  - id: ARMAN_BACKGROUND_ABSTRACTION
+    rule: "Research stays rigorous, but routine legal/banking/export/document/logistics work is compressed to outcomes. Arman is not a procedural co-protagonist."
+  - id: REACTION_RECAP
+    rule: "Do not use recurring 'ты реально/серьёзно это сделал?' or 'вчера X — сегодня Y' recap-shock dialogue after major actions. Reactions must move into character-owned consequence, desire, fear, envy or action."
   - id: MILENA_SOCIAL_BRIDGE
-    rule: "No expensive ask/material flirt before encounter -> ordinary exchange -> recognition -> small foothold."
-  - id: LILIT_EARNED_ACCESS
-    rule: "No instant German-facing romantic/sexual progression."
-  - id: GERMAN_SEXUAL_SKILL
-    rule: "Ch25 improvement does not make German sexually expert; competence must continue through feedback/correction."
-  - id: GERMAN_FOOT_FETISH_CAUSALITY
-    rule: "Foot fetish is canon but must not be forced into every sexual scene; use when character/scene-causal."
-  - id: REVUELTO_NOT_OWNED
-    rule: "Research only. Do not narrate purchase/contact/import as happened until shown and researched."
+    rule: "No expensive ask/material escalation before earned acquaintance and social foothold."
+  - id: LILIT_DRESS_BOUNDARY
+    rule: "Do not buy the 25k dress until Lilit herself changes the boundary on-page."
+  - id: GERMAN_EXPERTISE
+    rule: "Money does not instantly make German expert in cars, finance, crypto, property or sex."
+  - id: SYSTEM_FORMULA_UNKNOWN
+    rule: "Do not invent a universal quota-growth formula beyond the current author override."
+next_production_unit:
+  chapter: 30
+  parent_canon_through: 29
+  status: IN_PRODUCTION
+  drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
 proposals: []
