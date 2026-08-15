@@ -1,0 +1,77 @@
+book_id: SISTEMA_BOGATSTVA
+chapter: 30
+stage: HAPPENED
+parent_runtime_through: 29
+author_instructions:
+  - id: U-01
+    summary: "Continue after approved Ch29."
+  - id: U-02
+    summary: >-
+      Do not foreground routine legal/banking/export/document/logistics detail;
+      Arman is mainly a background operations abstraction layer.
+  - id: U-03
+    summary: >-
+      Research-first still applies internally, but prose should usually surface only concise outcomes,
+      meaningful costs, delays, forks or German-owned decisions.
+  - id: U-04
+    summary: >-
+      Do not make Arman a procedural co-protagonist or use him for long explanatory consultations
+      unless the complication itself is dramatically important.
+  - id: U-05
+    summary: >-
+      Maintain dialogue calibration, including no reaction-recap questions such as
+      'ты реально это сделал?' or 'вчера X — сегодня Y'.
+  - id: U-06
+    summary: >-
+      Begin Milena's social ladder through a plausible family meeting and low-stakes interaction;
+      no iPhone or expensive ask.
+  - id: U-07
+    summary: >-
+      Keep Lilit's early attraction active without buying the dress, kissing, sex
+      or formal relationship escalation.
+  - id: U-08
+    summary: >-
+      Keep Karine mercantile, duplicitous and strategically interested in family access
+      while the affair remains hidden from daughters.
+source_sync:
+  runtime_sha256: "f5ee00d9946e1b93aa60b6dd1301c28a2e14607eff3c029c00b065683d85e72e"
+  character_profiles:
+    - "GERMAN: Drive 1pV-PDrtWvch7eNmaX6zIpkGr55O5EZkBGASLzBaEzGI"
+    - "KARINE: Drive 1hmnk3GZJx_IGl0VIBMKIt5_sayVsfSEdymFIeeR0vdw"
+    - "LILIT: Drive 1iqdKvUe-mCl_KG8SYcoGz_wHDz7-ebORV7VlfDZI3lg"
+    - "MILENA: Drive 1VeViAf4afQ0n1ByahgPMwuMZYA2uiJ7xdlYIanqahCE"
+  approved_chapters:
+    - >-
+      CH029: Drive 13jyZpytYMAqF7tLs44jGu82eT7JcrnIP838kWHLvrEY;
+      story SHA 8a019a25afa19c3b6846bb5bb76bf0b9be6974f4eaafbc46f53f440c964295dc
+  production_rules:
+    - "Drive Dialogue Calibration 1UpCBgtYtdSnAZ4O6CvHbYDkwpcs0bQdbAcZAPaOMcvw"
+    - "GitHub rules/regressions.yaml"
+    - "Strict Chapter Protocol v3"
+    - "Editor QA Engine v2"
+    - "Research-first Rule 1"
+research:
+  required:
+    - STORY_DATE_2026_07_29_WEEKDAY
+    - REVUELTO_COPENHAGEN_EXACT_LISTING
+    - BMW_X6M_F96_OFFICIAL
+  completed:
+    - STORY_DATE_2026_07_29_WEEKDAY
+    - REVUELTO_COPENHAGEN_EXACT_LISTING
+    - BMW_X6M_F96_OFFICIAL
+qa:
+  structural: PASS
+  dialogue: PASS
+  prose_pov: PASS
+  character: PASS
+  continuity_knowledge: PASS
+  regression: PASS
+  russian_proofread: PASS
+  fact_recheck: PASS
+  text_preflight: PASS
+  final_reread: PASS
+freeze:
+  chapter_sha256: "665672b5d9a1a9c1e58e0531fdecf191ca11e3491513faf9542ea5c8684b0155"
+  final_text_frozen: true
+  author_approved: true
+  author_approval_evidence_id: "AUTHOR_CHAT_APPROVAL_2026-08-15_CH30"
