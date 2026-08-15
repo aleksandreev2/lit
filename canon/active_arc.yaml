@@ -1,6 +1,6 @@
 book_id: SISTEMA_BOGATSTVA
 schema_version: 2
-canon_through: 29
+canon_through: 30
 happened:
   - chapter: 23
     event: FIRST_SEX_WITH_KARINE
@@ -14,39 +14,51 @@ happened:
     event: LILIT_MUTUAL_ATTRACTION_AND_KARINE_SHOPPING
   - chapter: 29
     event: REVUELTO_OUTGOING_PAYMENT_EXECUTED
+  - chapter: 30
+    event: MKRTCHYAN_FAMILY_COFFEE_AND_FIRST_MILENA_FOOTHOLD
 active_threads:
   - id: SYSTEM_1M_CYCLE
     status: ACTIVE
     note: >-
       Current remainder 374531.08 USD; deadline 2026-08-01T12:36:18+04:00.
-      Avoid repeating identical purchase loops.
+      Ch30 spends nothing. Avoid repeating identical purchase loops.
   - id: REVUELTO_POST_PAYMENT
     status: OPEN_BACKGROUND
     owner: ARMAN_PETROSYAN
     note: >-
-      Routine seller clearing/release/export/shipping/import/registration stays mostly off-page
+      Arman reports normal progress and no current German action is needed.
+      Routine clearing/release/export/shipping/import/registration stays mostly off-page
       unless a meaningful complication, cost, delay or German-owned decision appears.
   - id: BTC_CUSTODY
-    status: OPEN_BACKGROUND
+    status: OPEN_BACKGROUND_DECISION_DUE
     owner: ARMAN_PETROSYAN
     note: >-
+      Arman has a reasonable option ready for a short discussion.
+      German explicitly schedules the choice for Thursday 30.07 after 10:00.
       Keep specialist mechanics background; German does not become a crypto-security expert.
   - id: KARINE_AFFAIR
     status: ACTIVE
     note: >-
-      Secret repeatable affair; shopping/material calculation, adultery, foot-fetish teasing and
-      ordinary lover habits remain active. No love/exclusivity/allowance agreement.
+      Secret repeatable affair; shopping/material calculation, adultery and foot-fetish teasing remain active.
+      Ch30 adds ordinary family-home access while the daughters still do not know about the affair.
+      Karine admits occasional jealousy toward Lilit but prefers visibility and leverage over denial.
+  - id: MKRTCHYAN_HOME_ACCESS
+    status: ACTIVE_EARLY
+    note: >-
+      German has now spent an ordinary evening in the family apartment without delivering or buying anything.
+      Karine explicitly invites him to come again. Each woman reads the access differently.
   - id: LILIT_GERMAN
     status: ACTIVE_EARLY
     note: >-
-      Mutual attraction and private contact are established. Ch29 adds desire to see/sit in Revuelto.
-      Her 25k dress remains explicitly not to be bought until she asks. No gift/kiss/sex/formal relationship yet.
+      Mutual attraction and private contact are established. Ch30 adds repeated shoulder contact,
+      a brief hand contact and a BMW photo exchange. Her 25k dress remains not to be bought until she asks.
+      No gift, kiss, sex or formal relationship yet.
   - id: MILENA_ENTRY
-    status: OPEN
+    status: ACTIVE_EARLY_FOOTHOLD
     note: >-
-      Meaningful personal acquaintance remains pending through Ch29. Required ladder:
-      encounter/introduction -> ordinary exchange -> recognition/social foothold -> low-stakes interaction
-      -> later access testing -> expensive iPhone significantly later.
+      Ch30 completes natural introduction, ordinary exchange, recognition and a low-stakes social foothold.
+      Milena sees the BMW interior and receives photos through Lilit, but makes no expensive request.
+      Next escalation must remain earned; the iPhone is still significantly later.
 hard_future_locks:
   - id: ARMAN_BACKGROUND_ABSTRACTION
     rule: >-
@@ -58,7 +70,7 @@ hard_future_locks:
       after major actions. Reactions must move into character-owned consequence, desire, fear, envy or action.
   - id: MILENA_SOCIAL_BRIDGE
     rule: >-
-      No expensive ask/material escalation before earned acquaintance and social foothold.
+      Ch30 earns only the first social foothold. No expensive ask or instant intimacy jump from it.
   - id: LILIT_DRESS_BOUNDARY
     rule: >-
       Do not buy the 25k dress until Lilit herself changes the boundary on-page.
@@ -69,8 +81,8 @@ hard_future_locks:
     rule: >-
       Do not invent a universal quota-growth formula beyond the current author override.
 next_production_unit:
-  chapter: 30
-  parent_canon_through: 29
-  status: IN_PRODUCTION
-  drive_folder: "148UL5j7y0GRRVcfiH0Tma1lMn1n7JVCQ"
+  chapter: 31
+  parent_canon_through: 30
+  status: NOT_STARTED
+  drive_folder: "18ohQf1yaUJ0F7rnPmHb3-SR7S0uVq6sU"
 proposals: []
